@@ -1,7 +1,8 @@
 import { ConfigPage } from './../config/config';
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController,Events } from 'ionic-angular';
+import { Guimo } from './../../providers/guimo';
 
 //*,import { MainButtonComponent } from './../../components/main-button/main-button';
 
@@ -10,15 +11,20 @@ import { NavController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
-  constructor(public navCtrl: NavController) {
-    
+  btStatus: boolean = this.guimo.checkBtEnabled();
+  constructor(public navCtrl: NavController, public guimo: Guimo, public events: Events) {
+    this.events.subscribe('bt:status',(btStatus)=>{
+        this.btStatus = btStatus;
+    });
   }
   
   openPage(p){
     if(p === 'config'){
       this.navCtrl.push(ConfigPage);
     }
+  }
+
+  ionViewWillEnter(){
   }
 
 }

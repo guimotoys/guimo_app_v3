@@ -1,5 +1,6 @@
+import { Guimo } from './../../providers/guimo';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Platform,Events } from 'ionic-angular';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
@@ -15,33 +16,73 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
   templateUrl: 'config.html'
 })
 export class ConfigPage {
-  btDevice: any;
-  devices: any;
-  btStatus: boolean = false;
+  btDevice: any = {address:null,class:null, id:null, name:null};
+  public btDevices: Array<any> = [];
+  searching: boolean = false;
+  isAndroid: boolean = false;
+  isIos: boolean = false;
+  isWp: boolean = false;
+  btStatus: boolean = this.guimo.checkBtEnabled();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private bluetoothSerial: BluetoothSerial) {}
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams, 
+              private bluetoothSerial: BluetoothSerial,
+              private guimo: Guimo,
+              private plt:Platform,
+              public events:Events) 
+      {
+        
+      this.events.subscribe('bt:listDevices',(btDevices)=>{
+        this.btDevices = btDevices;
+        this.searching = false;
+      });
+
+      this.events.subscribe('bt:status',(btStatus)=>{
+        this.btStatus = btStatus;
+      });
+                
+    }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ConfigPage');
-    this.bluetoothSerial.isEnabled().then((res)=>{
-      this.btStatus = true;
-      console.log('Status->', this.btStatus);
-    }).catch((err)=>{
-      console.log('Erro:', err);
-      this.btStatus = false;
-    })
+    
+  }
+
+  ionViewWillEnter(){
+    
+    if(this.plt.is('android')){
+      this.btDevice = this.guimo.deviceAndroid;
+      this.isAndroid = true;
+      
+    }
+
+    if(this.plt.is('windows')){
+      this.isWp = true;
+    }
+
+    if(this.plt.is('iphone') || this.plt.is('ipad')){
+      this.isIos = true;
+    }
+
+    this.btStatus = this.guimo.checkBtEnabled();
+
   }
 
 
   searchDevices(){
-      //this.bluetoothSerial.
+    this.searching = true;
+    this.guimo.listDevices();
+    
   }
 
-  enableBT(){
-    this.bluetoothSerial.enable().then(()=>{
-      this.btStatus = true;
-    });
+  toggleChange(evt){
+    if(evt._checked && !this.btStatus){
+        this.guimo.enableBt();
+    }
   }
 
+  saveSelectedAndroid(evt){
+    this.guimo.deviceAndroid = this.btDevice;
+  }
+  
 
 }

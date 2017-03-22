@@ -8,6 +8,7 @@ import { ConfigPage } from './../pages/config/config';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { Guimo } from './../providers/guimo';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
     MainButtonComponent,
     StatusBar,
     SplashScreen,
+    Guimo,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

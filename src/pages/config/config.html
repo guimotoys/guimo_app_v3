@@ -14,21 +14,38 @@
 
 
 <ion-content padding>
+<ion-list>
+    <ion-list-header><span color="light">Configurações</span></ion-list-header>
 
-  <div *ngIf="btStatus">
-  <h2>Bluetooth</h2>
+  <ion-item *ngIf="isAndroid">
+    <ion-label> <ion-icon name="bluetooth"></ion-icon> &nbsp; Bluetooth</ion-label>
+    <ion-toggle *ngIf="btDevice.name == null" color="secondary" [checked]="btStatus" [disabled]="btStatus" (ionChange)="toggleChange($event)" ></ion-toggle>
+    <ion-note *ngIf="btDevice.name != null" item-right>{{btDevice.name}}</ion-note>
+  </ion-item>
 
-  <ion-list>
-    <ion-item>
-      <ion-label>Gaming</ion-label>
-      <ion-select [(ngModel)]="btDevice">
-      </ion-select>
-    </ion-item>
-  </ion-list>
-  </div>
+  <ion-item *ngIf="!isAndroid">
+    <ion-icon name="bluetooth" item-left></ion-icon>
+    Bluetooth
+    <ion-note item-right color="danger" *ngIf="!btStatus">Desligado</ion-note>
+    <ion-note item-right color="secondary" *ngIf="btStatus">Ligado</ion-note>
+  </ion-item>
 
-  <div *ngIf="!btStatus">
-      <button ion-button block color="secondary" (click)="enableBT()">Ligar BT</button>
-  </div>
 
+  <ion-item *ngIf="btStatus && btDevices.length <= 0">
+    <ion-icon name="construct"></ion-icon>
+       Dispositivo 
+      <button ion-button item-right color="ygold" *ngIf="!searching" [disabled]="searching" (click)="searchDevices()">
+        <ion-icon name="search"></ion-icon>&nbsp; Buscar
+      </button> 
+      <span item-right *ngIf="searching" color="light"><ion-spinner color="light"></ion-spinner>&nbsp;</span>
+  </ion-item>
+
+  <ion-item *ngIf="btStatus && btDevices.length > 0">
+    <ion-label color="light"><ion-icon name="construct"></ion-icon>&nbsp; Dispositivo</ion-label>
+    <ion-select [(ngModel)]="btDevice" (ionChange)="saveSelectedAndroid($event)" [cancelText]="Cancelar">
+      <ion-option *ngFor="let device of btDevices" [value]="device">{{device.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+</ion-list>
 </ion-content>
