@@ -1,11 +1,20 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      Ionic Blank
+      Guimo Soul
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  aaa
+
+  <ion-fab left bottom>
+    <button ion-fab color="ygold" mini><ion-icon name="arrow-dropup"></ion-icon></button>
+    <ion-fab-list side="top">
+      <button ion-fab><ion-icon name="bluetooth"></ion-icon></button>
+      <button ion-fab (click)="openPage('config')"><ion-icon name="cog"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
+
+
 </ion-content>
