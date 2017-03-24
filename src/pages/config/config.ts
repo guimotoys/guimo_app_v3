@@ -1,9 +1,10 @@
-import { Guimo } from './../../providers/guimo';
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform,Events } from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
+import { Guimo } from './../../providers/guimo';
+import { PlatformCheck } from './../../providers/platform-check';
 
 /*
   Generated class for the Config page.
@@ -19,22 +20,24 @@ export class ConfigPage {
   btDevice: any = {address:null,class:null, id:null, name:null};
   public btDevices: Array<any> = [];
   searching: boolean = false;
-  isAndroid: boolean = false;
-  isIos: boolean = false;
-  isWp: boolean = false;
+  isAndroid: boolean = this.plt.isAndroid();
+  isIos: boolean = this.plt.isIos();
+  isWp: boolean = this.plt.isWindows();
   btStatus: boolean = this.guimo.checkBtEnabled();
+  btConnected: boolean;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               private bluetoothSerial: BluetoothSerial,
               private guimo: Guimo,
-              private plt:Platform,
+              private plt:PlatformCheck,
               public events:Events) 
       {
         
       this.events.subscribe('bt:listDevices',(btDevices)=>{
         this.btDevices = btDevices;
         this.searching = false;
+        this.btDevice = this.btDevices[0];
       });
 
       this.events.subscribe('bt:status',(btStatus)=>{
@@ -48,19 +51,21 @@ export class ConfigPage {
   }
 
   ionViewWillEnter(){
-    
-    if(this.plt.is('android')){
+    this.guimo.checkBtConnected().then(res => {
+      this.btConnected = res;
+      console.log(this.btConnected);
+    });
+
+    if(this.isAndroid){
       this.btDevice = this.guimo.deviceAndroid;
-      this.isAndroid = true;
+    }
+
+    if(this.isWp){
       
     }
 
-    if(this.plt.is('windows')){
-      this.isWp = true;
-    }
-
-    if(this.plt.is('iphone') || this.plt.is('ipad')){
-      this.isIos = true;
+    if(this.isIos){
+      
     }
 
     this.btStatus = this.guimo.checkBtEnabled();

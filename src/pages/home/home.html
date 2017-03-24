@@ -28,11 +28,28 @@
       </ion-row>
   </ion-grid>
 
-  <ion-fab left bottom>
+  <ion-grid *ngIf="btStatus && !btConnected">
+    <ion-row>
+      <ion-col col-12>
+        <h4>Conecte ao Guimo</h4>
+        <hr>
+        <p>Agora você já pode se conectar ao Guimo utilizando o botão <ion-icon name="bluetooth"></ion-icon>, que está localizado no botão inferior!</p>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="btConnectErr">
+        <ion-col col-12>
+          <p color="danger">{{btConnectErrMsg}}</p>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+
+  <ion-fab left bottom #fab>
     <button ion-fab color="ygold" mini><ion-icon name="arrow-dropup"></ion-icon></button>
     <ion-fab-list side="top">
-      <button ion-fab><ion-icon name="bluetooth"></ion-icon></button>
-      <button ion-fab (click)="openPage('config')"><ion-icon name="cog"></ion-icon></button>
+      <button ion-fab *ngIf="btStatus && !btConnected && isAndroid" (click)="connectBtAndroid()"><ion-icon name="bluetooth"></ion-icon></button>
+      <button ion-fab (click)="openPage('config',fab)" ><ion-icon name="cog"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 

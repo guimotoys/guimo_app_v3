@@ -16,11 +16,12 @@
 <ion-content padding>
 <ion-list>
     <ion-list-header><span color="light">Configurações</span></ion-list-header>
+    <p *ngIf="btStatus && !btConnected" color="danger">Bluetooth ligado, mas não está conectado!</p>
 
   <ion-item *ngIf="isAndroid">
     <ion-label> <ion-icon name="bluetooth"></ion-icon> &nbsp; Bluetooth</ion-label>
     <ion-toggle *ngIf="btDevice.name == null" color="secondary" [checked]="btStatus" [disabled]="btStatus" (ionChange)="toggleChange($event)" ></ion-toggle>
-    <ion-note *ngIf="btDevice.name != null" item-right>{{btDevice.name}}</ion-note>
+    <ion-note *ngIf="btDevice.name != null" item-right>{{btDevice.name}}</ion-note>  
   </ion-item>
 
   <ion-item *ngIf="!isAndroid">

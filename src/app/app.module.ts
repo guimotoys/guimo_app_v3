@@ -8,7 +8,9 @@ import { ConfigPage } from './../pages/config/config';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+
 import { Guimo } from './../providers/guimo';
+import { PlatformCheck } from './../providers/platform-check';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { Guimo } from './../providers/guimo';
     StatusBar,
     SplashScreen,
     Guimo,
+    PlatformCheck,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
