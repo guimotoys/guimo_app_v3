@@ -2,6 +2,7 @@ import { ConfigPage } from './../config/config';
 import { Component } from '@angular/core';
 
 import { NavController, Events, LoadingController, FabContainer } from 'ionic-angular';
+//import { trigger, state, style,animate,transition } from '@angular/animations';
 import { Guimo } from './../../providers/guimo';
 import { PlatformCheck } from './../../providers/platform-check';
 

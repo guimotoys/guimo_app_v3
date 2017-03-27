@@ -8,7 +8,7 @@
 
 <ion-content padding>
 
-  <ion-grid *ngIf="!btStatus" text-center>
+  <!--<ion-grid *ngIf="!btStatus" text-center>
       <ion-row>
         <ion-col col-12>
           <ion-icon name="sad" class="bigicon" color="danger"></ion-icon>
@@ -42,10 +42,64 @@
           <p color="danger">{{btConnectErrMsg}}</p>
         </ion-col>
     </ion-row>
+  </ion-grid>-->
+
+<div class="card-background-page">
+  <ion-grid>
+    <ion-row no-padding no-margin>
+    
+    <ion-col col-8 no-margin no-padding>
+      <ion-card class="default-height">
+        <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+        <div class="card-subtitle">  <i class="fa fa-cutlery fa-3x" color="secondary"></i> </div>
+      </ion-card>
+    </ion-col>
+
+    <ion-col col-4 no-margin no-padding>
+        <ion-card class="default-height">
+          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png"> 
+          <div class="card-subtitle"><i class="fa fa-gamepad fa-3x" color="ygold"></i></div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row no-padding no-margin>
+      <ion-col col-12 no-margin no-padding>
+        <ion-card class="default-height">
+          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+          <div class="card-subtitle"><i class="fa fa-code fa-3x" color="light"></i></div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row no-padding no-margin>
+      <ion-col col-5 no-margin no-padding>
+        <ion-card class="default-height">
+          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+          <div class="card-subtitle"><i class="fa fa-comments-o fa-3x" color="teal"></i></div>
+        </ion-card>
+      </ion-col>
+
+      <ion-col col-7 no-margin no-padding>
+        <ion-card class="default-height">
+          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+          <div class="card-subtitle"><ion-icon name="ios-shirt" class="fa-3x" color="pink"></ion-icon></div>
+        </ion-card>
+      </ion-col>
+
+      <ion-col col-12 no-margin no-padding>
+        <ion-card class="default-height">
+          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+          <div class="card-subtitle"><i class="fa fa-hand-rock-o fa-3x" color="dark"></i> <i class="fa fa-hand-paper-o fa-3x"></i> <i class="fa fa-hand-scissors-o fa-3x" color="ygold"></i></div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
+</div>
   
 
-  <ion-fab left bottom #fab>
+  <ion-fab right bottom edge #fab>
     <button ion-fab color="ygold" mini><ion-icon name="arrow-dropup"></ion-icon></button>
     <ion-fab-list side="top">
       <button ion-fab *ngIf="btStatus && !btConnected && isAndroid" (click)="connectBtAndroid()"><ion-icon name="bluetooth"></ion-icon></button>
@@ -55,3 +109,10 @@
 
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-title>Footer</ion-title>
+  </ion-toolbar>
+</ion-footer>
+
