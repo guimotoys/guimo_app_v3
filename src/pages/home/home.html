@@ -8,111 +8,72 @@
 
 <ion-content padding>
 
-  <!--<ion-grid *ngIf="!btStatus" text-center>
-      <ion-row>
-        <ion-col col-12>
-          <ion-icon name="sad" class="bigicon" color="danger"></ion-icon>
+  <home-tips></home-tips>
+
+  <div class="card-background-page" *ngIf="btStatus && btConnected">
+    <ion-grid>
+      <ion-row no-padding no-margin>
+      
+      <ion-col col-8 no-margin no-padding>
+        <ion-card class="default-height">
+          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+          <div class="card-subtitle">  <i class="fa fa-cutlery fa-3x" color="secondary"></i> </div>
+        </ion-card>
+      </ion-col>
+
+      <ion-col col-4 no-margin no-padding>
+          <ion-card class="default-height">
+            <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png"> 
+            <div class="card-subtitle"><i class="fa fa-gamepad fa-3x" color="ygold"></i></div>
+          </ion-card>
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col col-12>
-          <h4>
-            Seu bluetooth não está ligado <ion-icon name="help"></ion-icon>
-          </h4>
-          <hr>
-          <p>
-            Para usar o Guimo, você precisa estar com o seu Bluetooth Ligado. Para Ligar, 
-            utilize o botão &nbsp;<ion-icon name="arrow-dropup"></ion-icon>&nbsp; e acesse a opção &nbsp;<ion-icon name="cog"></ion-icon>&nbsp;
-          </p>
+
+      <ion-row no-padding no-margin>
+        <ion-col col-12 no-margin no-padding>
+          <ion-card class="default-height">
+            <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+            <div class="card-subtitle"><i class="fa fa-code fa-3x" color="light"></i></div>
+          </ion-card>
         </ion-col>
       </ion-row>
-  </ion-grid>
 
-  <ion-grid *ngIf="btStatus && !btConnected">
-    <ion-row>
-      <ion-col col-12>
-        <h4>Conecte ao Guimo</h4>
-        <hr>
-        <p>Agora você já pode se conectar ao Guimo utilizando o botão <ion-icon name="bluetooth"></ion-icon>, que está localizado no botão inferior!</p>
-      </ion-col>
-    </ion-row>
-
-    <ion-row *ngIf="btConnectErr">
-        <ion-col col-12>
-          <p color="danger">{{btConnectErrMsg}}</p>
+      <ion-row no-padding no-margin>
+        <ion-col col-5 no-margin no-padding>
+          <ion-card class="default-height">
+            <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+            <div class="card-subtitle"><i class="fa fa-comments-o fa-3x" color="teal"></i></div>
+          </ion-card>
         </ion-col>
-    </ion-row>
-  </ion-grid>-->
 
-<div class="card-background-page">
-  <ion-grid>
-    <ion-row no-padding no-margin>
-    
-    <ion-col col-8 no-margin no-padding>
-      <ion-card class="default-height">
-        <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
-        <div class="card-subtitle">  <i class="fa fa-cutlery fa-3x" color="secondary"></i> </div>
-      </ion-card>
-    </ion-col>
+        <ion-col col-7 no-margin no-padding>
+          <ion-card class="default-height">
+            <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+            <div class="card-subtitle"><ion-icon name="ios-shirt" class="fa-3x" color="pink"></ion-icon></div>
+          </ion-card>
+        </ion-col>
 
-    <ion-col col-4 no-margin no-padding>
-        <ion-card class="default-height">
-          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png"> 
-          <div class="card-subtitle"><i class="fa fa-gamepad fa-3x" color="ygold"></i></div>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+        <ion-col col-12 no-margin no-padding>
+          <ion-card class="default-height">
+            <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+            <div class="card-subtitle"><i class="fa fa-hand-rock-o fa-3x" color="dark"></i> <i class="fa fa-hand-paper-o fa-3x"></i> <i class="fa fa-hand-scissors-o fa-3x" color="ygold"></i></div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
 
-    <ion-row no-padding no-margin>
-      <ion-col col-12 no-margin no-padding>
-        <ion-card class="default-height">
-          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
-          <div class="card-subtitle"><i class="fa fa-code fa-3x" color="light"></i></div>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-
-    <ion-row no-padding no-margin>
-      <ion-col col-5 no-margin no-padding>
-        <ion-card class="default-height">
-          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
-          <div class="card-subtitle"><i class="fa fa-comments-o fa-3x" color="teal"></i></div>
-        </ion-card>
-      </ion-col>
-
-      <ion-col col-7 no-margin no-padding>
-        <ion-card class="default-height">
-          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
-          <div class="card-subtitle"><ion-icon name="ios-shirt" class="fa-3x" color="pink"></ion-icon></div>
-        </ion-card>
-      </ion-col>
-
-      <ion-col col-12 no-margin no-padding>
-        <ion-card class="default-height">
-          <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
-          <div class="card-subtitle"><i class="fa fa-hand-rock-o fa-3x" color="dark"></i> <i class="fa fa-hand-paper-o fa-3x"></i> <i class="fa fa-hand-scissors-o fa-3x" color="ygold"></i></div>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-
-  </ion-grid>
-</div>
+    </ion-grid>
+  </div>
   
 
-  <ion-fab right bottom edge #fab>
-    <button ion-fab color="ygold" mini><ion-icon name="arrow-dropup"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab *ngIf="btStatus && !btConnected && isAndroid" (click)="connectBtAndroid()"><ion-icon name="bluetooth"></ion-icon></button>
-      <button ion-fab (click)="openPage('config',fab)" ><ion-icon name="cog"></ion-icon></button>
+  <ion-fab right top edge #fab>
+    <button ion-fab color="ygold" mini><ion-icon name="md-arrow-dropdown"></ion-icon></button>
+    <ion-fab-list side="bottom">
+      <button ion-fab *ngIf="btStatus && !btConnected && isAndroid" (click)="connectBtAndroid(fab)"><ion-icon name="bluetooth"></ion-icon></button>
+      <button ion-fab (click)="openPage('config',fab)" ><i class="fa fa-cog fa-2x"></i></button>
     </ion-fab-list>
   </ion-fab>
 
-
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar color="primary">
-    <ion-title>Footer</ion-title>
-  </ion-toolbar>
-</ion-footer>
+<footer-bar></footer-bar>
 

@@ -1,4 +1,4 @@
-import { MainButtonComponent } from './../components/main-button/main-button';
+import { HomeTipsComponent } from './../components/home-tips/home-tips';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -11,13 +11,15 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 import { Guimo } from './../providers/guimo';
 import { PlatformCheck } from './../providers/platform-check';
+import { FooterBarComponent } from './../components/footer-bar/footer-bar';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ConfigPage,
-    MainButtonComponent
+    FooterBarComponent,
+    HomeTipsComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -30,7 +32,6 @@ import { PlatformCheck } from './../providers/platform-check';
   ],
   providers: [
     BluetoothSerial,
-    MainButtonComponent,
     StatusBar,
     SplashScreen,
     Guimo,

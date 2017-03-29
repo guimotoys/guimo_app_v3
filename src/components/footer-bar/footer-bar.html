@@ -1,0 +1,28 @@
+<ion-footer>
+  <ion-toolbar color="primary" no-padding>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4 no-margin no-padding>
+          <button ion-button outline full color="secondary">
+            <i class="fa fa-cutlery fa-lg"></i> <span>&nbsp; {{foodStatus}}%</span>
+          </button>
+        </ion-col>
+        <ion-col col-4 no-margin no-padding>
+          <button ion-button outline full color="ygold">
+              <i class="fa fa-battery fa-lg" *ngIf="energyStatus <= 100 && energyStatus > 80"></i>
+              <i class="fa fa-battery-three-quarters fa-lg" *ngIf="energyStatus <= 80 && energyStatus > 60 "></i>
+              <i class="fa fa-battery-half fa-lg" *ngIf="energyStatus <= 60 && energyStatus > 30"></i>
+              <i class="fa fa-battery-quarter" *ngIf="energyStatus <= 30 && energyStatus > 10"></i>
+              <i class="fa fa-battery-empty" *ngIf="energyStatus <= 0 && energyStatus >= 0"></i>
+             <span>&nbsp; {{energyStatus}}%</span>
+          </button>
+        </ion-col>
+        <ion-col col-4 no-margin no-padding>
+          <button ion-button outline full color="pink">
+            <i class="fa fa-heart fa-lg"></i> <span>&nbsp; {{healthStatus}}%</span>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

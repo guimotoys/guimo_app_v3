@@ -1,0 +1,36 @@
+<!--
+  Generated template for the HomeTips component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+
+<ion-grid *ngIf="!btStatus" text-center>
+      <ion-row>
+        <ion-col col-12>
+          <ion-icon name="sad" class="bigicon" color="pink"></ion-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <h4>
+            Seu bluetooth não está ligado <ion-icon name="help"></ion-icon>
+          </h4>
+          <hr>
+          <p>
+            Para usar o Guimo, você precisa estar com o seu Bluetooth Ligado. Para Ligar, 
+            utilize o botão &nbsp;<ion-icon name="arrow-dropup"></ion-icon>&nbsp; e acesse a opção &nbsp;<ion-icon name="cog"></ion-icon>&nbsp;
+          </p>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+
+  <ion-grid *ngIf="btStatus && !btConnected">
+    <ion-row>
+      <ion-col col-12>
+        <h4>Conecte ao Guimo</h4>
+        <hr>
+        <p>Agora você já pode se conectar ao Guimo utilizando o botão <ion-icon name="bluetooth"></ion-icon>, que está localizado no botão superior!</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
