@@ -1,3 +1,5 @@
+import { SQLite } from '@ionic-native/sqlite';
+import { GuimoDb } from './../providers/guimo-db';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { HomeTipsComponent } from './../components/home-tips/home-tips';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -37,9 +39,11 @@ import { FooterBarComponent } from './../components/footer-bar/footer-bar';
     StatusBar,
     SplashScreen,
     Guimo,
+    GuimoDb,
     PlatformCheck,
     LocalNotifications,
     BackgroundMode,
+    SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

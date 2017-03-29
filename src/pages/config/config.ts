@@ -4,6 +4,7 @@ import { NavController, NavParams, Events } from 'ionic-angular';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 
 import { Guimo } from './../../providers/guimo';
+import { GuimoDb } from './../../providers/guimo-db';
 import { PlatformCheck } from './../../providers/platform-check';
 
 /*
@@ -30,6 +31,7 @@ export class ConfigPage {
               public navParams: NavParams, 
               private bluetoothSerial: BluetoothSerial,
               private guimo: Guimo,
+              private guimoDb: GuimoDb,
               private plt:PlatformCheck,
               public events:Events) 
       {
@@ -47,7 +49,10 @@ export class ConfigPage {
     }
 
   ionViewDidLoad() {
-    
+    this.guimoDb.getDeviceSelectedAndroid('guimo').then((result)=>{
+      console.log(result);
+      this.btDevice = result.rows.item(0);
+    })
   }
 
   ionViewWillEnter(){
@@ -87,6 +92,7 @@ export class ConfigPage {
 
   saveSelectedAndroid(evt){
     this.guimo.deviceAndroid = this.btDevice;
+    this.guimoDb.saveDeviceSelectedAndroid(this.btDevice);
   }
   
 
