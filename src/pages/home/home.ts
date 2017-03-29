@@ -5,8 +5,9 @@ import { NavController, Events, LoadingController, FabContainer, AlertController
 //import { trigger, state, style,animate,transition } from '@angular/animations';
 import { Guimo } from './../../providers/guimo';
 import { PlatformCheck } from './../../providers/platform-check';
-
 //*,import { MainButtonComponent } from './../../components/main-button/main-button';
+import { LocalNotifications } from '@ionic-native/local-notifications';
+import { BackgroundMode } from '@ionic-native/background-mode';
 
 @Component({
   selector: 'page-home',
@@ -25,12 +26,27 @@ export class HomePage {
     public events: Events, 
     private plt: PlatformCheck,
     private loadCtrl: LoadingController,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private localNotifications: LocalNotifications,
+    private backMode: BackgroundMode) {
 
       this.events.subscribe('bt:status',(btStatus)=>{
           this.btStatus = btStatus;
       });
 
+      this.backMode.enable();
+
+  }
+
+  ionViewDidLoad(){
+    this.localNotifications.hasPermission().then( res =>{
+      console.log('LocalNotif HasPermission: ',res);
+      if(!res){
+        this.localNotifications.registerPermission().then(resp => {
+          console.log('LocalNotif permission Register', resp);
+        });
+      }
+    });
   }
   
   openPage(p, fab?: FabContainer){
