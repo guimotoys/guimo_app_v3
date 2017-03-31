@@ -40,4 +40,7 @@ export class PlatformCheck {
     return false;
   }
 
+  public ready(){
+    return this.platform.ready()
+  }
 }

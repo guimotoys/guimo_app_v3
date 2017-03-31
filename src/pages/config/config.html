@@ -20,8 +20,8 @@
 
   <ion-item *ngIf="isAndroid">
     <ion-label> <ion-icon name="bluetooth"></ion-icon> &nbsp; Bluetooth</ion-label>
-    <ion-toggle *ngIf="btDevice.name == null" color="secondary" [checked]="btStatus" [disabled]="btStatus" (ionChange)="toggleChange($event)" ></ion-toggle>
-    <ion-note *ngIf="btDevice.name != null" item-right>{{btDevice.name}}</ion-note>  
+    <ion-toggle *ngIf="(btDevice.name == null || !btStatus)" color="secondary" [checked]="btStatus" [disabled]="btStatus" (ionChange)="toggleChange($event)" ></ion-toggle>
+    <ion-note *ngIf="(btDevice.name != null && btStatus)" item-right>{{btDevice.name}}</ion-note>  
   </ion-item>
 
   <ion-item *ngIf="!isAndroid">

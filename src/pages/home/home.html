@@ -68,8 +68,8 @@
   <ion-fab right top edge #fab>
     <button ion-fab color="ygold" mini><ion-icon name="md-arrow-dropdown"></ion-icon></button>
     <ion-fab-list side="bottom">
-      <button ion-fab *ngIf="btStatus && !btConnected && isAndroid" (click)="connectBtAndroid(fab)"><ion-icon name="bluetooth"></ion-icon></button>
       <button ion-fab (click)="openPage('config',fab)" ><i class="fa fa-cog fa-2x"></i></button>
+      <button ion-fab *ngIf="(btStatus && !btConnected && isAndroid)" (click)="connectBtAndroid(fab)"><ion-icon name="bluetooth"></ion-icon></button>
     </ion-fab-list>
   </ion-fab>
 

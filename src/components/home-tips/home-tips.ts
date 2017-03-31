@@ -15,7 +15,7 @@ import { Guimo } from './../../providers/guimo';
 })
 export class HomeTipsComponent {
 
-   btStatus: boolean = this.guimo.checkBtEnabled();
+   btStatus: boolean = this.guimo.btStatus;
    btConnected: boolean;
  
 
@@ -26,7 +26,9 @@ export class HomeTipsComponent {
   }
 
   ionViewWillEnter(){
-    this.guimo.checkBtConnected().then( res => this.btConnected = res);
+    this.events.subscribe('bt:Connected',(res)=>{
+      this.btConnected =  res;
+    });
   }
 
 }
