@@ -25,6 +25,9 @@ export class HomeTipsComponent {
       });
   }
 
+  /**
+   * Executes when view will be Loaded
+   */
   ionViewWillEnter(){
     this.events.subscribe('bt:Connected',(res)=>{
       this.btConnected =  res;

@@ -51,7 +51,9 @@ export class ConfigPage {
       });
                 
     }
-
+  /**
+   * Executes When View was loaded
+   */
   ionViewDidLoad() {
     this.guimo.checkBtEnabled();
     this.guimoDb.getDeviceSelectedAndroid().then((result)=>{
@@ -62,6 +64,9 @@ export class ConfigPage {
     })
   }
 
+  /**
+   * Executes when View Will be Loaded
+   */
   ionViewWillEnter(){
     /*this.guimo.checkBtConnected().then(res => {
       this.btConnected = res;

@@ -40,10 +40,9 @@ export class HomePage {
 
   }
 
-  ionViewWillEnter(){
-    
-  }
-
+  /**
+   * Executes When View was loaded
+   */
   ionViewDidLoad(){
       
     this.plt.ready().then( res =>{
@@ -71,8 +70,6 @@ export class HomePage {
       });
       
     });
-
-    
   }
 
   /**
