@@ -1,3 +1,4 @@
+import { VirtualControllerPage } from './../pages/virtual-controller/virtual-controller';
 import { HomeMenuComponent } from './../components/home-menu/home-menu';
 import { SQLite } from '@ionic-native/sqlite';
 import { GuimoDb } from './../providers/guimo-db';
@@ -23,6 +24,7 @@ import { FooterBarComponent } from './../components/footer-bar/footer-bar';
     MyApp,
     HomePage,
     ConfigPage,
+    VirtualControllerPage,
     FooterBarComponent,
     HomeTipsComponent,
     HomeMenuComponent,
@@ -34,7 +36,8 @@ import { FooterBarComponent } from './../components/footer-bar/footer-bar';
   entryComponents: [
     MyApp,
     HomePage,
-    ConfigPage
+    ConfigPage,
+    VirtualControllerPage
   ],
   providers: [
     BluetoothSerial,
