@@ -1,4 +1,4 @@
-import { StatusBar } from '@ionic-native/status-bar';
+//import { StatusBar } from '@ionic-native/status-bar';
 import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
 import { Events, Platform } from 'ionic-angular';

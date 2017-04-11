@@ -35,20 +35,6 @@ export class ConfigPage {
               private plt:PlatformCheck,
               public events:Events) 
       {
-        
-      this.events.subscribe('bt:listDevices',(btDevices)=>{
-        this.btDevices = btDevices;
-        this.searching = false;
-        this.btDevice = this.btDevices[0];
-      });
-
-      this.events.subscribe('bt:Connected',(res)=>{
-        this.btConnected = res;       
-      });
-
-      this.events.subscribe('bt:status',(btStatus)=>{
-        this.btStatus = btStatus;
-      });
                 
     }
   /**
@@ -61,7 +47,21 @@ export class ConfigPage {
       if(result.rows.item(0) != undefined){
         this.btDevice = result.rows.item(0);
       }
-    })
+    });
+
+    this.events.subscribe('bt:listDevices',(btDevices)=>{
+        this.btDevices = btDevices;
+        this.searching = false;
+        this.btDevice = this.btDevices[0];
+      });
+
+      this.events.subscribe('bt:Connected',(res)=>{
+        this.btConnected = res;       
+      });
+
+      this.events.subscribe('bt:status',(btStatus)=>{
+        this.btStatus = btStatus;
+      });
   }
 
   /**

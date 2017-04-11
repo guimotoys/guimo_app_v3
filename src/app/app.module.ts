@@ -1,3 +1,4 @@
+import { HomeMenuComponent } from './../components/home-menu/home-menu';
 import { SQLite } from '@ionic-native/sqlite';
 import { GuimoDb } from './../providers/guimo-db';
 import { LocalNotifications } from '@ionic-native/local-notifications';
@@ -23,7 +24,8 @@ import { FooterBarComponent } from './../components/footer-bar/footer-bar';
     HomePage,
     ConfigPage,
     FooterBarComponent,
-    HomeTipsComponent
+    HomeTipsComponent,
+    HomeMenuComponent,
   ],
   imports: [
     IonicModule.forRoot(MyApp)

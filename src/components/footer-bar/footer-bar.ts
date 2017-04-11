@@ -19,14 +19,6 @@ export class FooterBarComponent {
   healthStatus: number = this.guimo.health;
   constructor(private guimo:Guimo, private events:Events) {
 
-    /*this.guimo.checkBtConnected().then((res)=>{
-      if(res){
-        this.guimo.checkEnergyStatus().subscribe( data => this.energyStatus = data );
-        this.guimo.checkFoodStatus().subscribe( data => this.foodStatus = data);
-        this.guimo.checkHealthStatus().subscribe( data => this.healthStatus = data);
-      }
-    });*/
-
     this.events.subscribe('bt:Connected', (res) => {
         if(res){
           this.guimo.checkEnergyStatus().subscribe( data => this.energyStatus = data );
