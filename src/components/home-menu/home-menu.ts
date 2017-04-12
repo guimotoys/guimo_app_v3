@@ -1,6 +1,6 @@
 import { Guimo } from './../../providers/guimo';
-import { App, NavController, Platform } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { App, NavController, Platform} from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
 
 import { ConfigPage } from './../../pages/config/config';
 import { VirtualControllerPage } from './../../pages/virtual-controller/virtual-controller';
@@ -14,7 +14,7 @@ import { VirtualControllerPage } from './../../pages/virtual-controller/virtual-
   selector: 'home-menu',
   templateUrl: 'home-menu.html'
 })
-export class HomeMenuComponent {
+export class HomeMenuComponent implements OnInit{
     private nav: NavController;
     btStatus: boolean = this.guimo.btStatus;
     btConnected: boolean;
@@ -26,7 +26,7 @@ export class HomeMenuComponent {
       this.nav = this.app.getActiveNav();
   }
 
-  ionViewWillEnter(){
+  ngOnInit(){
     this.btStatus = this.guimo.btStatus;
     this.btConnected = this.guimo.btConnected;
   }
