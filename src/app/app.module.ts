@@ -5,6 +5,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { BlocksPage } from './../pages/blocks/blocks';
 import { ConfigPage } from './../pages/config/config';
 import { HomePage } from '../pages/home/home';
+import { VirtualControllerPage } from './../pages/virtual-controller/virtual-controller';
 import { MyApp } from './app.component';
 
 import { BackgroundMode } from '@ionic-native/background-mode';
@@ -27,6 +28,7 @@ import { HomeMenuComponent } from './../components/home-menu/home-menu';
     MyApp,
     HomePage,
     ConfigPage,
+    VirtualControllerPage,
     FooterBarComponent,
     HomeTipsComponent,
     HomeMenuComponent,
@@ -39,7 +41,8 @@ import { HomeMenuComponent } from './../components/home-menu/home-menu';
     BlocksPage,
     MyApp,
     HomePage,
-    ConfigPage
+    ConfigPage,
+    VirtualControllerPage
   ],
   providers: [
     BluetoothSerial,

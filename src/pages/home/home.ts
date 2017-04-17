@@ -39,7 +39,6 @@ export class HomePage {
       });
       this.backMode.enable();
       
-
   }
 
   /**
@@ -51,20 +50,26 @@ export class HomePage {
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then( () =>{
         console.log('Screen Orientation '+this.screenOrientation.ORIENTATIONS.PORTRAIT);
       });
-      
+
+
+      this.events.subscribe('bt:status',(btStatus)=>{
+          this.btStatus = btStatus;
+      });
+
+      this.backMode.enable();
+
       this.guimo.checkBtEnabled();
       this.isAndroid = this.plt.isAndroid();
 
       if(this.isAndroid){
         this.guimoDb.getDeviceSelectedAndroid().then(result =>{
           this.guimo.deviceAndroid = result.rows.item(0);
-          console.log('devwillLoad->',this.guimo.deviceAndroid);
+          //console.log('devwillLoad->',this.guimo.deviceAndroid);
         }).catch(err =>{
           console.log(err);
         });
       }
 
-      
       this.localNotifications.hasPermission().then( res =>{
         console.log('LocalNotif HasPermission: ',res);
         if(!res){

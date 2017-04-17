@@ -13,7 +13,7 @@ import {SQLite, SQLiteObject } from '@ionic-native/sqlite';
 export class GuimoDb {
 
   constructor(public http: Http, private sqlLite: SQLite) {
-    console.log('construtor guimodb');
+    //console.log('construtor guimodb');
       this.sqlLite.create({
         name: 'guimo.db',
         location: 'default'
