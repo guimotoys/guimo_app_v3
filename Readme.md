@@ -9,7 +9,7 @@
 
 
 ## What is the [Guimo&trade;] App V3?    
-[Guimo&trade;] This is the new version of Guimo Soul App. Its in version 0.0.2, **so its in Development**. If you want to contribuite, fork this repository and made your changes, and dont forget to do pull requests in the main repository
+[Guimo&trade;] This is the new version of Guimo Soul App. Its in version 0.0.5, **so its in Development**. If you want to contribuite, fork this repository and made your changes, and dont forget to do pull requests in the main repository
 
 The app is developed with the **[Ionic Framework V2]**,  with some plugins that will be listed below:
 
