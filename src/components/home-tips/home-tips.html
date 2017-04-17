@@ -19,13 +19,13 @@
           <hr>
           <p>
             Para usar o Guimo, você precisa estar com o seu Bluetooth Ligado. Para Ligar, 
-            utilize o botão &nbsp;<ion-icon name="arrow-dropdown"></ion-icon>&nbsp; e acesse a opção &nbsp;<ion-icon name="cog"></ion-icon>&nbsp;
+            utilize o botão &nbsp;<ion-icon name="arrow-dropdown"></ion-icon>&nbsp; e acesse a opção &nbsp;<i class="fa fa-cog fa-lg"></i> &nbsp;
           </p>
         </ion-col>
       </ion-row>
   </ion-grid>
 
-  <ion-grid *ngIf="btStatus && !btConnected">
+  <ion-grid *ngIf="!btStatus">
     <ion-row>
       <ion-col col-12>
         <h4>Conecte ao Guimo</h4>

@@ -9,6 +9,7 @@ import { PlatformCheck } from './../../providers/platform-check';
 //*,import { MainButtonComponent } from './../../components/main-button/main-button';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @Component({
   selector: 'page-home',
@@ -30,22 +31,32 @@ export class HomePage {
     private alertCtrl: AlertController,
     private localNotifications: LocalNotifications,
     private backMode: BackgroundMode,
-    private guimoDb: GuimoDb) {
+    private guimoDb: GuimoDb,
+    private screenOrientation: ScreenOrientation) {
 
       this.events.subscribe('bt:status',(btStatus)=>{
           this.btStatus = btStatus;
       });
       this.backMode.enable();
       
-
   }
 
   /**
    * Executes When View was loaded
    */
   ionViewDidLoad(){
-      
+    
     this.plt.ready().then( res =>{
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then( () =>{
+        console.log('Screen Orientation '+this.screenOrientation.ORIENTATIONS.PORTRAIT);
+      });
+
+
+      this.events.subscribe('bt:status',(btStatus)=>{
+          this.btStatus = btStatus;
+      });
+
+      this.backMode.enable();
 
       this.guimo.checkBtEnabled();
       this.isAndroid = this.plt.isAndroid();
@@ -53,13 +64,12 @@ export class HomePage {
       if(this.isAndroid){
         this.guimoDb.getDeviceSelectedAndroid().then(result =>{
           this.guimo.deviceAndroid = result.rows.item(0);
-          console.log('devwillLoad->',this.guimo.deviceAndroid);
+          //console.log('devwillLoad->',this.guimo.deviceAndroid);
         }).catch(err =>{
           console.log(err);
         });
       }
 
-      
       this.localNotifications.hasPermission().then( res =>{
         console.log('LocalNotif HasPermission: ',res);
         if(!res){

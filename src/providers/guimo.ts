@@ -162,12 +162,16 @@ export class Guimo {
    */
   public checkFoodStatus():Observable<number>{
     return Observable.create( obs => {
-       setInterval( () =>{
-         if(this.food > 0){
+      
+       setInterval(() =>{
+         this.checkBtConnected();
+         if(this.btConnected){
+           if(this.food > 0){
             this.food -= 1;
-         }else{
-           this.food = 0;
-         }
+            }else{
+              this.food = 0;
+            }
+          }
          console.log('foodNotif ',this.foodNotif);
          if( (this.food <= 20 && this.food % 5 == 0 && !this.foodNotif && this.food > 0) ){
            
@@ -181,8 +185,8 @@ export class Guimo {
             });
             this.foodNotif = true;
          }
-        obs.next(this.food);
-      }, 15000);
+        return obs.next(this.food);
+      }, 15000) ;
       
     });
   }
@@ -194,11 +198,14 @@ export class Guimo {
   public checkEnergyStatus(): Observable<number>{
     return Observable.create( obs =>{
       setInterval( () =>{
-        if(this.energy > 0){
-          this.energy -= 1;
-        }else{
-          this.energy = 0;
-        }
+        this.checkBtConnected();
+         if(this.btConnected){
+           if(this.energy > 0){
+            this.energy -= 1;
+            }else{
+              this.energy = 0;
+            }
+          }
 
         if( (this.energy <= 20 && this.energy % 5 == 0 && !this.energyNotif && this.energy > 0) ){
            
@@ -212,7 +219,7 @@ export class Guimo {
             });
             this.energyNotif = true;
          }
-        obs.next(this.energy);
+        return obs.next(this.energy);
       }, 20000);
     });
   }
@@ -224,11 +231,14 @@ export class Guimo {
   public checkHealthStatus(): Observable<number>{
     return Observable.create( obs =>{
       setInterval( () =>{
-        if(this.health > 0 ){
-          this.health -= 1;
-        }else{
-          this.health = 0;
-        }
+        this.checkBtConnected();
+         if(this.btConnected){
+           if(this.health > 0){
+            this.health -= 1;
+            }else{
+              this.health = 0;
+            }
+          }
 
         if((this.health <= 20 && this.health % 5 == 0 && !this.healthNotif && this.health > 0)){
             this.localNotifications.schedule({
@@ -241,7 +251,7 @@ export class Guimo {
             });
             this.healthNotif = true;
          }
-        obs.next(this.health);
+        return obs.next(this.health);
       }, 25000);
     });
   }

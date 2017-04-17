@@ -1,0 +1,36 @@
+<!--
+  Generated template for the Blocks page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Guimo Blocks</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding-top>
+  <ion-grid>
+    <ion-row>
+      <div id="blockly" style="height:480px; width: 550px;" >
+        <xml id="toolbox" style="display:none">
+          <category name="Guimo" colour="240">
+            <block type="movement_front"></block>
+            <block type="movement_back"></block>
+            <block type="movement_right"></block>
+            <block type="movement_left"></block>
+            <block type="guimo_repeat"></block>
+          </category>
+        </xml>
+      </div>
+    </ion-row>
+    <ion-row>
+      <button ion-button full large icon-only color="ygold" (click)="runCode()"><ion-icon name="play"></ion-icon></button>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
