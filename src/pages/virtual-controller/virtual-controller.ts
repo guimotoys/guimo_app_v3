@@ -18,7 +18,11 @@ export class VirtualControllerPage {
   angle: any = 0;
   direction: any = "";
   public virtualCtrl: any
-  constructor(public navCtrl: NavController, public navParams: NavParams, public plt:Platform,private scr:ScreenOrientation) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public plt:Platform,
+    private scr:ScreenOrientation) {
     
   }
 
@@ -48,14 +52,22 @@ export class VirtualControllerPage {
       this.virtualCtrl.on('move',(evt, nipple)=>{
         setTimeout( () =>{
           //this.force = nipple.force.toFixed(2);
-          this.force = Math.round(this.map_range(nipple.force.toFixed(2),0,1,100,255));
+          var instantForce = Math.round(this.map_range(nipple.force.toFixed(2),0,0.9,100,255));
           this.angle = Math.round(nipple.angle.degree);
           this.direction = nipple.direction.angle;
-          console.log(nipple);
+          //console.log(nipple);
+          if(instantForce > 255){
+            this.force = 255;
+          }else if(instantForce < 100){
+            this.force = 100;
+          }else{
+            this.force = instantForce;
+          }
 
         },350);
         
       });
+
     })
 
     /*this.virtualCtrl.on('added', (evt, nipple)=>{
