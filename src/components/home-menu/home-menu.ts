@@ -38,13 +38,14 @@ export class HomeMenuComponent implements OnInit{
          this.nav.push(ConfigPage); 
       }
 
-<<<<<<< HEAD
+
       if(p === "blocks"){
         this.nav.push(BlocksPage);
-=======
+      }
+
       if(p === "virtual-controller"){
         this.nav.push(VirtualControllerPage);
->>>>>>> VirtualController
+
       }
   }
 }
