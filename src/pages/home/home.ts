@@ -46,11 +46,11 @@ export class HomePage {
    * Executes When View was loaded
    */
   ionViewDidLoad(){
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then( () =>{
-      console.log('Screen Orientation '+this.screenOrientation.ORIENTATIONS.PORTRAIT);
-    });
     
     this.plt.ready().then( res =>{
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then( () =>{
+        console.log('Screen Orientation '+this.screenOrientation.ORIENTATIONS.PORTRAIT);
+      });
       
       this.guimo.checkBtEnabled();
       this.isAndroid = this.plt.isAndroid();

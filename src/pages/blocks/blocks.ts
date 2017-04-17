@@ -54,6 +54,7 @@ export class BlocksPage {
         var codesLength = codes.length - 1;
         var code;
         var arrayCodes: Array<any> = [];
+        var arrayCodeRun: Array<any> = [];
         while(i < codesLength){
           code = codes[i].split("  ");
           for(var j = 0; j < code.length; j++){
@@ -63,18 +64,31 @@ export class BlocksPage {
           }
           i++;
         }
-        console.log(arrayCodes);
-        for(var k = 1; k < repeatQtd; k++){
-            setTimeout(()=>{
-              console.log(arrayCodes[0]);
-              
-            },k*1050);
-          
+        
+        for(var k = 0; k < repeatQtd; k++){
+          for(var m = 0; m < arrayCodes.length; m++){
+              arrayCodeRun.push(arrayCodes[m]);
           }
-
         }
         
 
+        for(var n = 0; n < arrayCodeRun.length; n++){
+          this.runCodeSleepLoop(n,arrayCodeRun[n],500);
+        };
+      }
+
+      if(isNaN(repeatQtd)){
+        for(var n = 0; n < codes.length; n++){
+          this.runCodeSleepLoop(n, codes[n],500);
+        }
+      }
+  }
+
+  private runCodeSleepLoop(i:number, code:any,time:number){
+    setTimeout(()=>{
+      console.log(code);
+      //SEND BLUETOOTH CODE HERE
+    },(i+1)*time);
   }
 
 }
