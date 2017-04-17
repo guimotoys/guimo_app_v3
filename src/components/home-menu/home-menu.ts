@@ -1,6 +1,7 @@
 import { App, NavController } from 'ionic-angular';
 import { Component } from '@angular/core';
 
+import { BlocksPage } from './../../pages/blocks/blocks';
 import { ConfigPage } from './../../pages/config/config';
 /*
   Generated class for the HomeMenu component.
@@ -25,6 +26,10 @@ export class HomeMenuComponent {
       this.nav = this.app.getActiveNav();
       if(p === "config"){
          this.nav.push(ConfigPage); 
+      }
+
+      if(p === "blocks"){
+        this.nav.push(BlocksPage);
       }
   }
 }

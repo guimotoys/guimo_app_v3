@@ -1,4 +1,4 @@
-<div class="card-background-page" *ngIf="btStatus && btConnected">
+<div class="card-background-page" *ngIf="!btConnected">
     <ion-grid>
       <ion-row no-padding no-margin>
       
@@ -19,7 +19,7 @@
 
       <ion-row no-padding no-margin>
         <ion-col col-12 no-margin no-padding>
-          <ion-card class="default-height">
+          <ion-card class="default-height" (click)="openPage('blocks')">
             <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
             <div class="card-subtitle"><i class="fa fa-code fa-3x" color="light"></i></div>
           </ion-card>

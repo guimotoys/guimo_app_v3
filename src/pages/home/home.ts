@@ -9,6 +9,7 @@ import { PlatformCheck } from './../../providers/platform-check';
 //*,import { MainButtonComponent } from './../../components/main-button/main-button';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @Component({
   selector: 'page-home',
@@ -30,7 +31,8 @@ export class HomePage {
     private alertCtrl: AlertController,
     private localNotifications: LocalNotifications,
     private backMode: BackgroundMode,
-    private guimoDb: GuimoDb) {
+    private guimoDb: GuimoDb,
+    private screenOrientation: ScreenOrientation) {
 
       this.events.subscribe('bt:status',(btStatus)=>{
           this.btStatus = btStatus;
@@ -44,9 +46,12 @@ export class HomePage {
    * Executes When View was loaded
    */
   ionViewDidLoad(){
-      
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then( () =>{
+      console.log('Screen Orientation '+this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    });
+    
     this.plt.ready().then( res =>{
-
+      
       this.guimo.checkBtEnabled();
       this.isAndroid = this.plt.isAndroid();
 
