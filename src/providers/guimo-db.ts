@@ -1,3 +1,4 @@
+import { PlatformCheck } from './platform-check';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -12,29 +13,47 @@ import {SQLite, SQLiteObject } from '@ionic-native/sqlite';
 @Injectable()
 export class GuimoDb {
 
-  constructor(public http: Http, private sqlLite: SQLite) {
+  constructor(public http: Http, private sqlLite: SQLite,private plt:PlatformCheck) {
     //console.log('construtor guimodb');
+    this.plt.ready().then(()=>{
+      
       this.sqlLite.create({
         name: 'guimo.db',
         location: 'default'
       }).then((db: SQLiteObject) =>{
         db.executeSql('CREATE TABLE IF NOT EXISTS deviceSelected(id VARCHAR(32) PRIMARY KEY, name VARCHAR(32), address VARCHAR(32), uuid VARCHAR(32), selected INTEGER DEFAULT 0)', {})
-        .then(()=> console.log('Table Created or Opened'))
-        .catch( err => {console.log(err)});
+          .then(()=> console.log('Table DeviceSelected Created or Opened'))
+          .catch( err => {console.log(err)});
+
+        db.executeSql('CREATE TABLE IF NOT EXISTS foods (id INTEGER PRIMARY KEY, name VARCHAR(32), status INTEGER DEFAULT 0, sync INTEGER DEFAULT 0)',{})
+          .then(()=>{
+            console.log('Table Foods Created or Opened');
+            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[1,'batata']).then(()=>{ console.log('batata inserido')}).catch((err)=>{console.log('batata already inserted')});
+            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[2,'hotdog']).then(()=>{ console.log('hotdog inserido')}).catch((err)=>{console.log('hotdog already inserted')});
+            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[3,'lanche']).then(()=>{ console.log('lanche inserido')}).catch((err)=>{console.log('lanche already inserted')});
+            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[4,'maca']).then(()=>{ console.log('maca inserido')}).catch((err)=>{console.log('maca already inserted')});
+            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[5,'soda']).then(()=>{ console.log('soda inserido')}).catch((err)=>{console.log('soda already inserted')});
+            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[6,'sorvete']).then(()=>{ console.log('sorvete inserido')}).catch((err)=>{console.log('sorvete already inserted')});
+            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[7,'suco']).then(()=>{ console.log('suco inserido')}).catch((err)=>{console.log('suco already inserted')});
+          })
+          .catch( err => { console.log(err)});
 
         /*db.executeSql('DROP TABLE IF EXISTS deviceSelected',{}).then(()=>{
           console.log('deletado');
         }).catch( err =>{
           console.log(err);
         })*/
-      })
+      });
+
+    });
+      
   }
 
   /**
    * Open or Create Database
    * @param db:{name:string, location:string} 
    */
-  openDb(db): Promise<SQLiteObject>{
+  openDb(db:{name:string, location:string}): Promise<SQLiteObject>{  
     return this.sqlLite.create(db);
   }
 
@@ -73,5 +92,18 @@ export class GuimoDb {
         .then((db:SQLiteObject) => {
           return db.executeSql("SELECT * FROM deviceSelected WHERE selected = ?",[1]);
         });
+  }
+
+  getFoods():Promise<any>{
+    return this.openDb({name:'guimo.db',location:'default'})
+           .then((db:SQLiteObject) =>{
+             return db.executeSql("SELECT * FROM foods",{});
+           });
+  }
+
+  updateFoodStatus(id:number, status:number):Promise<any>{
+    return this.openDb({name:'guimo.db',location:'default'}).then((db:SQLiteObject)=>{
+      return db.executeSql("UPDATE foods SET status = ? WHERE id = ?",[status,id]);
+    });
   }
 }

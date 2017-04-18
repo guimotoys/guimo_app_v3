@@ -172,7 +172,7 @@ export class Guimo {
               this.food = 0;
             }
           }
-         console.log('foodNotif ',this.foodNotif);
+          
          if( (this.food <= 20 && this.food % 5 == 0 && !this.foodNotif && this.food > 0) ){
            
             this.localNotifications.schedule({

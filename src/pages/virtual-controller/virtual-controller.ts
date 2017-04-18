@@ -1,8 +1,8 @@
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
-declare var nipplejs: any;
-
+declare var VirtualJoystick: any;
 /*
   Generated class for the VirtualController page.
 
@@ -17,12 +17,12 @@ export class VirtualControllerPage {
   force:any = 0;
   angle: any = 0;
   direction: any = "";
-  public virtualCtrl: any
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
     public plt:Platform,
-    private scr:ScreenOrientation) {
+    private scr:ScreenOrientation,
+    private blt:BluetoothSerial) {
     
   }
 
@@ -41,44 +41,32 @@ export class VirtualControllerPage {
     console.log('ionViewDidLoad VirtualControllerPage');
     
     this.plt.ready().then(() =>{
-        this.virtualCtrl = nipplejs;
-        this.virtualCtrl = nipplejs.create({
-        zone: document.getElementById('dynamic'),
-        mode: 'static',
-        position:{top:'50%',left:'35%'},
-        color:'white'
+      var joystick = new VirtualJoystick({
+         container: document.getElementById('dynamic'),
+         stationaryBase	: true,
+         baseX		: 200,
+         baseY		: 200
       });
 
-      this.virtualCtrl.on('move',(evt, nipple)=>{
-        setTimeout( () =>{
-          //this.force = nipple.force.toFixed(2);
-          var instantForce = Math.round(this.map_range(nipple.force.toFixed(2),0,0.9,100,255));
-          this.angle = Math.round(nipple.angle.degree);
-          this.direction = nipple.direction.angle;
-          //console.log(nipple);
-          if(instantForce > 255){
-            this.force = 255;
-          }else if(instantForce < 100){
-            this.force = 100;
-          }else{
-            this.force = instantForce;
-          }
+      setInterval(()=>{
+        if(joystick.right()){
+          this.blt.write('r\n');
+        }
 
-        },350);
-        
-      });
+        if(joystick.left()){
+          this.blt.write('l\n');
+        }
 
-    })
+        if(joystick.up()){
+          this.blt.write('f\n');
+        }
 
-    /*this.virtualCtrl.on('added', (evt, nipple)=>{
-        nipple.on('start',(evt)=>{
-          console.log('joystick pressed', evt);
-        });
+        if(joystick.down()){
+          this.blt.write('b\n');
+        }
 
-        nipple.on('plain:up', (evt) => {
-          console.log('event', evt);
-        })
-    })*/
+      },260);
+    });
 
   }
 
@@ -94,4 +82,7 @@ export class VirtualControllerPage {
     return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
   }
 
+  sleepSendBt():Promise<any>{
+    return new Promise((resolve)=>setTimeout(resolve,360));    
+  }
 }

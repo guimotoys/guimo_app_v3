@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { BlocksPage } from './../../pages/blocks/blocks';
 import { ConfigPage } from './../../pages/config/config';
+import { FoodsPage } from './../../pages/foods/foods';
 import { VirtualControllerPage } from './../../pages/virtual-controller/virtual-controller';
 /*
   Generated class for the HomeMenu component.
@@ -34,6 +35,10 @@ export class HomeMenuComponent implements OnInit{
 
   openPage(p: string){
       this.nav = this.app.getActiveNav();
+      if(p === "foods"){
+        this.nav.push(FoodsPage);
+      }
+
       if(p === "config"){
          this.nav.push(ConfigPage); 
       }

@@ -3,6 +3,7 @@ import { NgModule, ErrorHandler, NO_ERRORS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
 import { BlocksPage } from './../pages/blocks/blocks';
+import { FoodsPage } from './../pages/foods/foods';
 import { ConfigPage } from './../pages/config/config';
 import { HomePage } from '../pages/home/home';
 import { VirtualControllerPage } from './../pages/virtual-controller/virtual-controller';
@@ -25,6 +26,7 @@ import { HomeMenuComponent } from './../components/home-menu/home-menu';
 @NgModule({
   declarations: [
     BlocksPage,
+    FoodsPage,
     MyApp,
     HomePage,
     ConfigPage,
@@ -39,6 +41,7 @@ import { HomeMenuComponent } from './../components/home-menu/home-menu';
   bootstrap: [IonicApp],
   entryComponents: [
     BlocksPage,
+    FoodsPage,
     MyApp,
     HomePage,
     ConfigPage,

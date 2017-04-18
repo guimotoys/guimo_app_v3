@@ -2,10 +2,10 @@ page-virtual-controller {
     #dynamic{
         width: 100%;
         height: 100%;
-        position: absolute;
+        overflow: visible;
     }
 
     #controller{
-        height: 200px;
+        height: 300px;
     }
 }

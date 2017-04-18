@@ -40,7 +40,7 @@ export class PlatformCheck {
     return false;
   }
 
-  public ready(){
-    return this.platform.ready()
+  public ready(): Promise<string>{
+    return this.platform.ready();
   }
 }

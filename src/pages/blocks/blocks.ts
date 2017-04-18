@@ -1,3 +1,5 @@
+import { Guimo } from './../../providers/guimo';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
@@ -17,7 +19,9 @@ export class BlocksPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    private screenOrientation: ScreenOrientation) {}
+    private screenOrientation: ScreenOrientation,
+    private blt: BluetoothSerial,
+    private guimo: Guimo) {}
 
   ionViewDidLoad(){
     this.workspace = Blockly.inject('blockly',{
@@ -86,8 +90,12 @@ export class BlocksPage {
 
   private runCodeSleepLoop(i:number, code:any,time:number){
     setTimeout(()=>{
-      console.log(code);
+      //console.log(code);
       //SEND BLUETOOTH CODE HERE
+      console.log('blockly', this.guimo.btConnected);
+      this.blt.write(code).then(()=>{
+        console.log('Código '+code+ ' enviado');
+      });
     },(i+1)*time);
   }
 
