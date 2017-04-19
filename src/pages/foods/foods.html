@@ -13,13 +13,13 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content padding>
     <ion-grid>
       <ion-row *ngFor="let food of foods; let i = index;">
         <ion-col>
-            <ion-card>
+            <ion-card class="transparent">
               <ion-item color="light">
-                <h2 text-capitalize>{{food.name}}</h2>
+                <h2 text-capitalize text-center>{{food.name}}</h2>
               </ion-item>
 
               <img src="assets/imgs/{{food.name}}.png" alt="{{food.name}}">
