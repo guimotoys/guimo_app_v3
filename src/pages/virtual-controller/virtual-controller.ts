@@ -17,6 +17,7 @@ export class VirtualControllerPage {
   force:any = 0;
   angle: any = 0;
   direction: any = "";
+  interval:any = null;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
@@ -29,26 +30,19 @@ export class VirtualControllerPage {
   ionViewWillLoad(){
     this.plt.ready().then(()=>{
       this.scr.lock(this.scr.ORIENTATIONS.LANDSCAPE);
-    })
-  }
 
-  ionViewWillLeave(){
-    this.scr.lock(this.scr.ORIENTATIONS.PORTRAIT);
-  }
-
-  ionViewDidLoad() {
-
-    console.log('ionViewDidLoad VirtualControllerPage');
-    
-    this.plt.ready().then(() =>{
       var joystick = new VirtualJoystick({
-         container: document.getElementById('dynamic'),
-         stationaryBase	: true,
-         baseX		: 200,
-         baseY		: 200
+        container:document.getElementById('space'),
+        baseX: 100,
+        baseY: 100,
+        stationaryBase:true,
+        limitStickTravel:true,
+        stickRadius: 50,
+        strokeStyle:'white',
+        mouseSupport: true
       });
 
-      setInterval(()=>{
+      this.interval = setInterval(()=>{
         if(joystick.right()){
           this.blt.write('r\n');
         }
@@ -66,7 +60,18 @@ export class VirtualControllerPage {
         }
 
       },260);
-    });
+    })
+  }
+
+  ionViewWillLeave(){
+    this.scr.lock(this.scr.ORIENTATIONS.PORTRAIT);
+    //clearInterval(this.interval);
+  }
+
+  ionViewDidLoad() {
+
+    console.log('ionViewDidLoad VirtualControllerPage');
+
 
   }
 
@@ -82,7 +87,4 @@ export class VirtualControllerPage {
     return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
   }
 
-  sleepSendBt():Promise<any>{
-    return new Promise((resolve)=>setTimeout(resolve,360));    
-  }
 }
