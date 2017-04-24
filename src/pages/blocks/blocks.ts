@@ -25,8 +25,17 @@ export class BlocksPage {
 
   ionViewDidLoad(){
     this.workspace = Blockly.inject('blockly',{
-      toolbox: document.getElementById('toolbox')
+      toolbox: document.getElementById('toolbox'),
+      zoom: {
+        controls: false,
+        wheel: false,
+        startScale: 0.7,
+        maxScale: 3,
+        minScale: 0.3
+      },
+     trashcan: false
     });
+
   };
 
   ionViewWillLoad(){
@@ -97,6 +106,11 @@ export class BlocksPage {
         console.log('Código '+code+ ' enviado');
       });
     },(i+1)*time);
+  }
+
+  backToMenu(){
+    console.log('entrou backToMenu');
+    this.navCtrl.pop();
   }
 
 }

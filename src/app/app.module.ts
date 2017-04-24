@@ -1,3 +1,4 @@
+import { ConversationPage } from './../pages/conversation/conversation';
 import { HomeTipsComponent } from './../components/home-tips/home-tips';
 import { NgModule, ErrorHandler, NO_ERRORS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -26,6 +27,7 @@ import { HomeMenuComponent } from './../components/home-menu/home-menu';
 @NgModule({
   declarations: [
     BlocksPage,
+    ConversationPage,
     FoodsPage,
     MyApp,
     HomePage,
@@ -41,6 +43,7 @@ import { HomeMenuComponent } from './../components/home-menu/home-menu';
   bootstrap: [IonicApp],
   entryComponents: [
     BlocksPage,
+    ConversationPage,
     FoodsPage,
     MyApp,
     HomePage,

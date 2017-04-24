@@ -33,7 +33,7 @@ export class VirtualControllerPage {
 
       var joystick = new VirtualJoystick({
         container:document.getElementById('space'),
-        baseX: 100,
+        baseX: 110,
         baseY: 100,
         stationaryBase:true,
         limitStickTravel:true,
@@ -69,10 +69,7 @@ export class VirtualControllerPage {
   }
 
   ionViewDidLoad() {
-
     console.log('ionViewDidLoad VirtualControllerPage');
-
-
   }
 
   /**

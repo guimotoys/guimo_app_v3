@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { GuimoDb } from './../../providers/guimo-db';
@@ -21,12 +22,14 @@ export class FoodsPage {
     public navParams: NavParams,
     private plt: PlatformCheck,
     private guimoDb: GuimoDb,
-    private toast:ToastController) {}
+    private toast:ToastController,
+    private scr:ScreenOrientation) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FoodsPage');
 
     this.plt.ready().then(()=>{
+      this.scr.lock(this.scr.ORIENTATIONS.LANDSCAPE);
         this.guimoDb.getFoods().then((result)=>{
           for(var i = 0; i < result.rows.length; i++){
             this.foods.push(result.rows.item(i));
@@ -35,12 +38,18 @@ export class FoodsPage {
     })
   }
 
+  ionViewWillLeave(){
+    this.scr.lock(this.scr.ORIENTATIONS.PORTRAIT);
+  }
+
   like(id:number, index:number){
    this.foods[index].status = 1;
    this.guimoDb.updateFoodStatus(id,this.foods[index].status).then(()=>{
      let toastMsg = this.toast.create({
       message: "Curtido ;)",
-      duration: 3000
+      duration: 3000,
+      position:'middle',
+      cssClass:'foodsToastLike'
      });
      toastMsg.present();
    });
@@ -51,7 +60,8 @@ export class FoodsPage {
     this.guimoDb.updateFoodStatus(id,this.foods[index].status).then(()=>{
      let toastMsg = this.toast.create({
       message: ":(",
-      duration: 3000
+      duration: 3000,
+      position:'middle',
      });
      toastMsg.present();
    });

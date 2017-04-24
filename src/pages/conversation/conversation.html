@@ -1,0 +1,42 @@
+<!--
+  Generated template for the Conversation page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Conversar</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col>
+          <ion-list>
+            <button ion-item (click)="talk(1,1)" [disabled]="awsering">
+              Como você está
+              <ion-icon name="help" item-right></ion-icon>
+            </button>
+            <button ion-item (click)="talk(2,3)" [disabled]="awsering">
+              De onde você veio
+              <ion-icon name="help" item-right></ion-icon>
+            </button>
+            <button ion-item (click)="talk(4,5)" [disabled]="awsering">
+              Quer fazer algo
+              <ion-icon name="help" item-right></ion-icon>
+            </button>
+          </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row margin-top *ngIf="awsering">
+      <ion-col text-center>
+        <ion-spinner name="dots" color="teal"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

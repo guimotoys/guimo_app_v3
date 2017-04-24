@@ -7,47 +7,45 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>Foods</ion-title>
+    <ion-title>Cozinha do Guimo</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-    <ion-grid>
-      <ion-row *ngFor="let food of foods; let i = index;">
-        <ion-col>
-            <ion-card class="transparent">
-              <ion-item color="light">
-                <h2 text-capitalize text-center>{{food.name}}</h2>
-              </ion-item>
+<ion-content no-padding>
+    <ion-scroll scrollX="true">
+      <ion-card class="transparent" no-padding *ngFor="let food of foods; let i = index;">
+        <ion-item color="light">
+          <h2 text-capitalize text-center>{{food.name}}</h2>
+        </ion-item>
 
-              <img src="assets/imgs/{{food.name}}.png" alt="{{food.name}}">
-              <ion-row>
-                <ion-col col-4>
-                  <button ion-button icon-left outline block round color="secondary" *ngIf="(food.status == 0 || food.status == -1)" (click)="like(food.id,i)">
-                    <ion-icon name="thumbs-up"></ion-icon>
-                  </button>
-                  <button ion-button icon-left block round color="secondary" *ngIf="(food.status == 1)" (click)="resetStatus(food.id,i)">
-                    <ion-icon name="thumbs-up"></ion-icon>  
-                  </button>
-                </ion-col>
-                <ion-col col-4>
-                  <button ion-button icon-left outline round block color="teal">
-                    <ion-icon name="restaurant"></ion-icon>
-                  </button>
-                </ion-col>
-                <ion-col col-4>
-                  <button ion-button icon-left outline block round color="danger" *ngIf="(food.status == 0 || food.status == 1)" (click)="unlike(food.id,i)">
-                    <ion-icon name="thumbs-down"></ion-icon>
-                  </button>
-                  <button ion-button icon-left block round color="danger" *ngIf="(food.status == -1)" (click)="resetStatus(food.id,i)">
-                    <ion-icon name="thumbs-down"></ion-icon>  
-                  </button>
-                </ion-col>
-              </ion-row>
-            </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+        <img src="assets/imgs/{{food.name}}.png" alt="{{food.name}}">
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-left full color="teal">
+              <ion-icon name="restaurant"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6>
+            <button ion-button icon-left outline full color="secondary" *ngIf="(food.status == 0 || food.status == -1)" (click)="like(food.id,i)">
+              <ion-icon name="thumbs-up"></ion-icon>
+            </button>
+            <button ion-button icon-left full color="secondary" *ngIf="(food.status == 1)" (click)="resetStatus(food.id,i)">
+              <ion-icon name="thumbs-up"></ion-icon>  
+            </button>
+          </ion-col>
+          <ion-col col-6>
+            <button ion-button icon-left outline full color="danger" *ngIf="(food.status == 0 || food.status == 1)" (click)="unlike(food.id,i)">
+              <ion-icon name="thumbs-down"></ion-icon>
+            </button>
+            <button ion-button icon-left full color="danger" *ngIf="(food.status == -1)" (click)="resetStatus(food.id,i)">
+              <ion-icon name="thumbs-down"></ion-icon>  
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+    </ion-scroll>
 </ion-content>

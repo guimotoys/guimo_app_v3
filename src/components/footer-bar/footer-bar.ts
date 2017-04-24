@@ -25,15 +25,15 @@ export class FooterBarComponent  implements OnInit{
   ngOnInit(){
     this.plt.ready().then( () => {
       this.guimo.checkEnergyStatus().subscribe((edata) => {
-        console.log('energy Footerbar', edata);
+        //console.log('energy Footerbar', edata);
         this.energyStatus = edata; 
       });
       this.guimo.checkFoodStatus().subscribe( (fdata) => {
-        console.log('food FooterBar', fdata);  
+        //console.log('food FooterBar', fdata);  
         this.foodStatus = fdata;
       });
       this.guimo.checkHealthStatus().subscribe((hdata) => {
-        console.log('health FooterBar', hdata);
+        //console.log('health FooterBar', hdata);
         this.healthStatus = hdata;
       });
     });

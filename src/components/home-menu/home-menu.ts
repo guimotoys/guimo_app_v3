@@ -2,6 +2,7 @@ import { Guimo } from './../../providers/guimo';
 import { App, NavController, Platform} from 'ionic-angular';
 import { Component, OnInit } from '@angular/core';
 
+import { ConversationPage } from './../../pages/conversation/conversation';
 import { BlocksPage } from './../../pages/blocks/blocks';
 import { ConfigPage } from './../../pages/config/config';
 import { FoodsPage } from './../../pages/foods/foods';
@@ -51,6 +52,10 @@ export class HomeMenuComponent implements OnInit{
       if(p === "virtual-controller"){
         this.nav.push(VirtualControllerPage);
 
+      }
+
+      if(p === "conversation"){
+        this.nav.push(ConversationPage);
       }
   }
 }

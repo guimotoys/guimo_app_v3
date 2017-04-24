@@ -17,6 +17,21 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 */
 @Injectable()
 export class Guimo {
+  public static readonly SCREEN_DEFAULT = "padrão\n";
+  public static readonly SCREEN_HUNGRY = "fome\n";
+  public static readonly SCREEN_SICK = "doente\n";
+  public static readonly SCREEN_ROBOT = "robo\n";
+  public static readonly SCREEN_BURGER = "lanche\n";
+  public static readonly SCREEN_APPLE = "maca\n";
+  public static readonly SCREEN_SODA = "refri\n";
+  public static readonly SCREEN_JUICE = "suco\n";
+  public static readonly SCREEN_GIRL = "menina\n";
+  public static readonly SCREEN_MSTCH = "bigode\n";
+  public static readonly SCREEN_GLSS = "oculos\n";
+  public static readonly SCREEN_INVRS = "inverso\n";
+  public static readonly SCREEN_TONGUE = "lingua\n";
+  public static readonly SCREEN_CURE = "remedio\n";
+  public static readonly SCREEN_CARE = "carinho\n";
 
   private _btStatus: boolean;
   private _btConnected: boolean;
@@ -24,6 +39,7 @@ export class Guimo {
   private _health: number = 100;
   private _energy: number = 100;
   private _food: number = 100;
+  private _activeScreen: string = Guimo.SCREEN_DEFAULT;
   public foodNotif:boolean = false;
   public energyNotif: boolean = false;
   public healthNotif: boolean = false;
@@ -67,6 +83,15 @@ export class Guimo {
         });
       });
 
+  }
+
+
+  set activeScreen(screen: string){
+    this._activeScreen = screen;
+  }
+
+  get activeScreen():string {
+    return this._activeScreen;
   }
 
   /**
@@ -174,7 +199,9 @@ export class Guimo {
           }
           
          if( (this.food <= 20 && this.food % 5 == 0 && !this.foodNotif && this.food > 0) ){
-           
+           if(this.activeScreen != "fome\n" && this.health > 20){
+             this.activeScreen = Guimo.SCREEN_HUNGRY;
+           }
             this.localNotifications.schedule({
               id: 1,
               title:'Guimo',
@@ -186,7 +213,7 @@ export class Guimo {
             this.foodNotif = true;
          }
         return obs.next(this.food);
-      }, 15000) ;
+      }, 2000) ;
       
     });
   }
@@ -241,6 +268,9 @@ export class Guimo {
           }
 
         if((this.health <= 20 && this.health % 5 == 0 && !this.healthNotif && this.health > 0)){
+          if(this.activeScreen != "doente\n"){
+            this.activeScreen = "doente\n";
+          }
             this.localNotifications.schedule({
               id: 3,
               title:'Guimo',

@@ -1,5 +1,6 @@
 page-foods {
     ion-card img{
+        height: 110px;
         max-height: 200px;
     }
 
@@ -12,8 +13,30 @@ page-foods {
         min-width: 100%;
         min-height: 100%;
     }
+   
+    ion-scroll{
+        min-height: 275px; 
+        height: auto;
+        .scroll-content {
+            padding: 0px !important;
+        }    
+    }
+
+    .scroll-zoom-wrapper {
+        white-space: nowrap;
+    }
+
+    ion-card{
+        display: inline-block;
+        width: 250px !important;
+    }
 
     .transparent{
         opacity: 0.85;
+    }
+
+    .foodsToastLike{
+        background: green;
+        text-align: center;
     }
 }
