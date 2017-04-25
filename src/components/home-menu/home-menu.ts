@@ -1,3 +1,4 @@
+import { ScreenChangePage } from './../../pages/screen-change/screen-change';
 import { Guimo } from './../../providers/guimo';
 import { App, NavController, Platform} from 'ionic-angular';
 import { Component, OnInit } from '@angular/core';
@@ -56,6 +57,10 @@ export class HomeMenuComponent implements OnInit{
 
       if(p === "conversation"){
         this.nav.push(ConversationPage);
+      }
+
+      if(p == "screens"){
+        this.nav.push(ScreenChangePage);
       }
   }
 }

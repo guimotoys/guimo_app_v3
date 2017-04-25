@@ -21,17 +21,20 @@ export class Guimo {
   public static readonly SCREEN_HUNGRY = "fome\n";
   public static readonly SCREEN_SICK = "doente\n";
   public static readonly SCREEN_ROBOT = "robo\n";
+  public static readonly SCREEN_GIRL = "menina\n";
+  public static readonly SCREEN_MUSTACHE = "bigode\n";
+  public static readonly SCREEN_GLASSES = "oculos\n";
+  public static readonly SCREEN_INVERSE = "inverso\n";
+  public static readonly SCREEN_TONGUE = "lingua\n";
+  public static readonly SCREEN_CURE = "remedio\n";
+  public static readonly SCREEN_CARE = "carinho\n";
   public static readonly SCREEN_BURGER = "lanche\n";
   public static readonly SCREEN_APPLE = "maca\n";
   public static readonly SCREEN_SODA = "refri\n";
   public static readonly SCREEN_JUICE = "suco\n";
-  public static readonly SCREEN_GIRL = "menina\n";
-  public static readonly SCREEN_MSTCH = "bigode\n";
-  public static readonly SCREEN_GLSS = "oculos\n";
-  public static readonly SCREEN_INVRS = "inverso\n";
-  public static readonly SCREEN_TONGUE = "lingua\n";
-  public static readonly SCREEN_CURE = "remedio\n";
-  public static readonly SCREEN_CARE = "carinho\n";
+  public static readonly SCREEN_FRIES = "batata\n";
+  public static readonly SCREEN_ICECREAM = "sorvete\n";
+  public static readonly SCREEN_HOTDOG = "hotdog\n";
 
   private _btStatus: boolean;
   private _btConnected: boolean;

@@ -1,12 +1,13 @@
-import { ConversationPage } from './../pages/conversation/conversation';
-import { HomeTipsComponent } from './../components/home-tips/home-tips';
 import { NgModule, ErrorHandler, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
 import { BlocksPage } from './../pages/blocks/blocks';
-import { FoodsPage } from './../pages/foods/foods';
+import { ConversationPage } from './../pages/conversation/conversation';
 import { ConfigPage } from './../pages/config/config';
+import { FoodsPage } from './../pages/foods/foods';
 import { HomePage } from '../pages/home/home';
+import { ScreenChangePage } from './../pages/screen-change/screen-change';
 import { VirtualControllerPage } from './../pages/virtual-controller/virtual-controller';
 import { MyApp } from './app.component';
 
@@ -23,31 +24,41 @@ import { GuimoDb } from './../providers/guimo-db';
 import { PlatformCheck } from './../providers/platform-check';
 import { FooterBarComponent } from './../components/footer-bar/footer-bar';
 import { HomeMenuComponent } from './../components/home-menu/home-menu';
+import { HomeTipsComponent } from './../components/home-tips/home-tips';
+
+const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': '9f7e507c'
+  }
+};
 
 @NgModule({
   declarations: [
     BlocksPage,
+    ConfigPage,
     ConversationPage,
     FoodsPage,
     MyApp,
     HomePage,
-    ConfigPage,
+    ScreenChangePage,
     VirtualControllerPage,
     FooterBarComponent,
     HomeTipsComponent,
     HomeMenuComponent,
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    CloudModule.forRoot(cloudSettings)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     BlocksPage,
     ConversationPage,
+    ConfigPage,
     FoodsPage,
     MyApp,
     HomePage,
-    ConfigPage,
+    ScreenChangePage,
     VirtualControllerPage
   ],
   providers: [

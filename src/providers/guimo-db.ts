@@ -25,20 +25,28 @@ export class GuimoDb {
           .then(()=> console.log('Table DeviceSelected Created or Opened'))
           .catch( err => {console.log(err)});
 
-        db.executeSql('CREATE TABLE IF NOT EXISTS foods (id INTEGER PRIMARY KEY, name VARCHAR(32), status INTEGER DEFAULT 0, sync INTEGER DEFAULT 0)',{})
+        db.executeSql('CREATE TABLE IF NOT EXISTS foods (id INTEGER PRIMARY KEY, name VARCHAR(32), img VARCHAR(32), status INTEGER DEFAULT 0, sync INTEGER DEFAULT 0)',{})
           .then(()=>{
             console.log('Table Foods Created or Opened');
-            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[1,'batata']).then(()=>{ console.log('batata inserido')}).catch((err)=>{console.log('batata already inserted')});
-            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[2,'hotdog']).then(()=>{ console.log('hotdog inserido')}).catch((err)=>{console.log('hotdog already inserted')});
-            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[3,'lanche']).then(()=>{ console.log('lanche inserido')}).catch((err)=>{console.log('lanche already inserted')});
-            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[4,'maca']).then(()=>{ console.log('maca inserido')}).catch((err)=>{console.log('maca already inserted')});
-            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[5,'soda']).then(()=>{ console.log('soda inserido')}).catch((err)=>{console.log('soda already inserted')});
-            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[6,'sorvete']).then(()=>{ console.log('sorvete inserido')}).catch((err)=>{console.log('sorvete already inserted')});
-            db.executeSql("INSERT INTO foods (id, name) VALUES (?,?)",[7,'suco']).then(()=>{ console.log('suco inserido')}).catch((err)=>{console.log('suco already inserted')});
+            db.executeSql("INSERT INTO foods (id, name, img) VALUES (?,?,?)",[1,'Batata Intergalática', 'batata.png']).then(()=>{ console.log('batata inserido')}).catch((err)=>{console.log('batata already inserted')});
+            db.executeSql("INSERT INTO foods (id, name, img) VALUES (?,?,?)",[2,'Hotdog do Espaço', 'hotdog.png']).then(()=>{ console.log('hotdog inserido')}).catch((err)=>{console.log('hotdog already inserted')});
+            db.executeSql("INSERT INTO foods (id, name, img) VALUES (?,?,?)",[3,'Lanche maluco', 'lanche.png']).then(()=>{ console.log('lanche inserido')}).catch((err)=>{console.log('lanche already inserted')});
+            db.executeSql("INSERT INTO foods (id, name, img) VALUES (?,?,?)",[4,'Maçã terreste', 'maca.png']).then(()=>{ console.log('maca inserido')}).catch((err)=>{console.log('maca already inserted')});
+            db.executeSql("INSERT INTO foods (id, name, img) VALUES (?,?,?)",[5,'Refri e gás', 'soda.png']).then(()=>{ console.log('soda inserido')}).catch((err)=>{console.log('soda already inserted')});
+            db.executeSql("INSERT INTO foods (id, name, img) VALUES (?,?,?)",[6,'Sorvete Gelado','sorvete.png']).then(()=>{ console.log('sorvete inserido')}).catch((err)=>{console.log('sorvete already inserted')});
+            db.executeSql("INSERT INTO foods (id, name, img) VALUES (?,?,?)",[7,'SucoOo', 'suco.png']).then(()=>{ console.log('suco inserido')}).catch((err)=>{console.log('suco already inserted')});
           })
           .catch( err => { console.log(err)});
 
-        /*db.executeSql('DROP TABLE IF EXISTS deviceSelected',{}).then(()=>{
+          db.executeSql("CREATE TABLE IF NOT EXISTS screens(id INTEGER PRIMARY KEY, name VARCHAR(32), img VARCHAR(32), status INTEGER DEFAULT 0, sync INTEGER DEFAULT 0 )",{})
+          .then(()=>{
+            console.log('Table Screens Created or Opened');
+            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[1,'Padrão','guimoPadrao_piscando.gif']);
+            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[2,'Óculos','guimoOculos_piscando.gif']);
+            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[3,'Menina','guimoMenina_piscando.gif']);
+            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[4,'Bigode','guimoBigode_piscando.gif']);
+          }).catch( err => { console.log(err)});
+        /*db.executeSql('DROP TABLE IF EXISTS foods',{}).then(()=>{
           console.log('deletado');
         }).catch( err =>{
           console.log(err);
@@ -103,7 +111,20 @@ export class GuimoDb {
 
   updateFoodStatus(id:number, status:number):Promise<any>{
     return this.openDb({name:'guimo.db',location:'default'}).then((db:SQLiteObject)=>{
-      return db.executeSql("UPDATE foods SET status = ? WHERE id = ?",[status,id]);
+      return db.executeSql("UPDATE foods SET status = ?, sync = 0 WHERE id = ?",[status,id]);
+    });
+  }
+
+  getScreens(): Promise<any>{
+    return this.openDb({name: 'guimo.db', location:'default'})
+           .then( (db:SQLiteObject) =>{
+              return db.executeSql('SELECT * FROM screens',{});
+           });
+  }
+
+  updateScreenStatus(id:number, status:number): Promise<any>{
+    return this.openDb({name:'guimo.db',location:'default'}).then((db:SQLiteObject)=>{
+      return db.executeSql("UPDATE screens SET status = ?, sync = 0 WHERE id = ?",[status,id]);
     });
   }
 }

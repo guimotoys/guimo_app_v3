@@ -44,31 +44,17 @@ export class FoodsPage {
 
   like(id:number, index:number){
    this.foods[index].status = 1;
-   this.guimoDb.updateFoodStatus(id,this.foods[index].status).then(()=>{
-     let toastMsg = this.toast.create({
-      message: "Curtido ;)",
-      duration: 3000,
-      position:'middle',
-      cssClass:'foodsToastLike'
-     });
-     toastMsg.present();
-   });
+   this.guimoDb.updateFoodStatus(id,this.foods[index].status);
   }
 
   unlike(id:number, index: number){
     this.foods[index].status = -1;
-    this.guimoDb.updateFoodStatus(id,this.foods[index].status).then(()=>{
-     let toastMsg = this.toast.create({
-      message: ":(",
-      duration: 3000,
-      position:'middle',
-     });
-     toastMsg.present();
-   });
+    this.guimoDb.updateFoodStatus(id,this.foods[index].status);
   }
 
   resetStatus(id:number, index:number){
     this.foods[index].status = 0;
+    this.guimoDb.updateFoodStatus(id,this.foods[index].status);
   }
 
 }
