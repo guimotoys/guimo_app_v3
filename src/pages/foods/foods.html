@@ -8,6 +8,11 @@
 
   <ion-navbar color="primary">
     <ion-title>Cozinha do Guimo</ion-title>
+    <ion-buttons end>
+      <button ion-button color="light">
+        <i class="fa fa-cutlery fa-lg"></i> &nbsp; {{foodStatus}}%
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -23,7 +28,7 @@
         <img src="assets/imgs/{{food.img}}" alt="{{food.name}}">
         <ion-row>
           <ion-col>
-            <button ion-button icon-left full color="teal">
+            <button ion-button icon-left full color="teal" (click)="giveFood(food.id)">
               <ion-icon name="restaurant"></ion-icon>
             </button>
           </ion-col>

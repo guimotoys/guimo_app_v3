@@ -188,37 +188,21 @@ export class Guimo {
    * Check Food Status of Guimo
    * return Observable<number>
    */
-  public checkFoodStatus():Observable<number>{
-    return Observable.create( obs => {
-      
-       setInterval(() =>{
-         this.checkBtConnected();
-         if(this.btConnected){
-           if(this.food > 0){
-            this.food -= 1;
-            }else{
-              this.food = 0;
-            }
+  public checkFoodStatus(){
+      var foodInteraval = setInterval(()=>{
+          this.food--;
+          this.events.publish('guimo:food',this.food);
+          if(this.food == 0){
+            clearInterval(foodInteraval);
+            /*var secondInterval = setInterval(()=>{
+              this.food--;
+              this.events.publish('guimo:food',this.food);
+              if(this.food == 50){
+                clearInterval(secondInterval);
+              }
+            },2000);*/
           }
-          
-         if( (this.food <= 20 && this.food % 5 == 0 && !this.foodNotif && this.food > 0) ){
-           if(this.activeScreen != "fome\n" && this.health > 20){
-             this.activeScreen = Guimo.SCREEN_HUNGRY;
-           }
-            this.localNotifications.schedule({
-              id: 1,
-              title:'Guimo',
-              text: 'Guimo está com fome',
-              icon: 'res://icon_stat_logo_guimo_alternativa',
-              smallIcon: 'res://ic_stat_logo_guimo_alternativa',
-              led: '0000FF'
-            });
-            this.foodNotif = true;
-         }
-        return obs.next(this.food);
-      }, 2000) ;
-      
-    });
+        }, 2000);  
   }
 
  /**
@@ -262,13 +246,13 @@ export class Guimo {
     return Observable.create( obs =>{
       setInterval( () =>{
         this.checkBtConnected();
-         if(this.btConnected){
+         //if(this.btConnected){
            if(this.health > 0){
             this.health -= 1;
             }else{
               this.health = 0;
             }
-          }
+         // }
 
         if((this.health <= 20 && this.health % 5 == 0 && !this.healthNotif && this.health > 0)){
           if(this.activeScreen != "doente\n"){
@@ -352,6 +336,14 @@ export class Guimo {
     this.bluetoothSerial.connect(uuidAddress).map(res => res.json()).subscribe(data =>{
       console.log(data);
     })
+  }
+
+  public addFood(qtd){
+    this.food += qtd;
+    if(this.food > 100){
+      this.food = 100;
+    }
+    this.events.publish('guimo:food',this.food);
   }
 
 }

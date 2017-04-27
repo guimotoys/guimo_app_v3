@@ -18,24 +18,17 @@ export class FooterBarComponent  implements OnInit{
   energyStatus: number = this.guimo.energy;
   healthStatus: number = this.guimo.health;
 
-  constructor(private guimo:Guimo, private events:Events,private plt:Platform) {
+  constructor(public guimo:Guimo, private events:Events,private plt:Platform) {
       
   }
 
   ngOnInit(){
+
     this.plt.ready().then( () => {
-      this.guimo.checkEnergyStatus().subscribe((edata) => {
-        //console.log('energy Footerbar', edata);
-        this.energyStatus = edata; 
-      });
-      this.guimo.checkFoodStatus().subscribe( (fdata) => {
-        //console.log('food FooterBar', fdata);  
-        this.foodStatus = fdata;
-      });
-      this.guimo.checkHealthStatus().subscribe((hdata) => {
-        //console.log('health FooterBar', hdata);
-        this.healthStatus = hdata;
-      });
+      this.guimo.checkFoodStatus();
+        this.events.subscribe('guimo:food',(food)=>{
+          this.foodStatus = food;
+        });      
     });
     
   }
