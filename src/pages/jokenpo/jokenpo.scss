@@ -1,0 +1,21 @@
+page-jokenpo {
+    ion-card-content.card{
+        background: url('./../assets/imgs/card_background.jpg') no-repeat center center fixed;
+        -webkit-background-size: contain;
+        -moz-background-size: contain;
+        -o-background-size: contain;
+        background-size: 100% 100%;
+    }
+
+    .left{
+        float:left;
+    }
+
+    .right{
+        float:right;
+    }
+    .bottom{
+        bottom: 15px;
+        position: fixed;
+    }
+}

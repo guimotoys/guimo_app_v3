@@ -1,3 +1,4 @@
+import { JokenpoPage } from './../pages/jokenpo/jokenpo';
 import { NgModule, ErrorHandler, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -40,6 +41,7 @@ const cloudSettings: CloudSettings = {
     FoodsPage,
     MyApp,
     HomePage,
+    JokenpoPage,
     ScreenChangePage,
     VirtualControllerPage,
     FooterBarComponent,
@@ -58,6 +60,7 @@ const cloudSettings: CloudSettings = {
     FoodsPage,
     MyApp,
     HomePage,
+    JokenpoPage,
     ScreenChangePage,
     VirtualControllerPage
   ],

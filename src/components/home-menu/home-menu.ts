@@ -1,3 +1,4 @@
+import { JokenpoPage } from './../../pages/jokenpo/jokenpo';
 import { ScreenChangePage } from './../../pages/screen-change/screen-change';
 import { Guimo } from './../../providers/guimo';
 import { App, NavController, Platform} from 'ionic-angular';
@@ -61,6 +62,10 @@ export class HomeMenuComponent implements OnInit{
 
       if(p == "screens"){
         this.nav.push(ScreenChangePage);
+      }
+
+      if(p == "jokenpo"){
+        this.nav.push(JokenpoPage);
       }
   }
 }

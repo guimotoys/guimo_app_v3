@@ -41,10 +41,10 @@ export class GuimoDb {
           db.executeSql("CREATE TABLE IF NOT EXISTS screens(id INTEGER PRIMARY KEY, name VARCHAR(32), img VARCHAR(32), status INTEGER DEFAULT 0, sync INTEGER DEFAULT 0 )",{})
           .then(()=>{
             console.log('Table Screens Created or Opened');
-            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[1,'Padrão','guimoPadrao_piscando.gif']);
-            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[2,'Óculos','guimoOculos_piscando.gif']);
-            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[3,'Menina','guimoMenina_piscando.gif']);
-            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[4,'Bigode','guimoBigode_piscando.gif']);
+            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[1,'Padrão','guimoPadrao_piscando.gif']).catch((err)=>{console.log('IMG Padrão already inserted')});
+            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[2,'Óculos','guimoOculos_piscando.gif']).catch((err)=>{console.log('IMG Óculos already inserted')});
+            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[3,'Menina','guimoMenina_piscando.gif']).catch((err)=>{console.log('IMG Menina already inserted')});
+            db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[4,'Bigode','guimoBigode_piscando.gif']).catch((err)=>{console.log('IMG Bigode already inserted')});
           }).catch( err => { console.log(err)});
         /*db.executeSql('DROP TABLE IF EXISTS foods',{}).then(()=>{
           console.log('deletado');
