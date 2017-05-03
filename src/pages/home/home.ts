@@ -120,12 +120,17 @@ export class HomePage {
           this.guimo.connectAndroidWp(this.guimo.deviceAndroid.address).subscribe(data =>{
             load.dismiss();
             this.btConnected = this.guimo.btConnected = true;
+            this.guimo.btStatus = true;
+            this.guimo.defaultConnection();
+            this.events.publish('bt:Connected',this.btConnected);
             //this.guimo.checkEnergyStatus();
           }, err =>{
             console.log(err);
             load.dismiss();
             this.btConnectErr = true;
             this.btConnectErrMsg = err;
+            this.btConnected = this.guimo.btConnected = false;
+            this.events.publish('bt:Connected',this.btConnected);
             setTimeout(()=>{
               let alert = this.alertCtrl.create({
                 title:'Algo deu Errado :(',
@@ -137,9 +142,11 @@ export class HomePage {
         });
       }
     }else{
+      this.btConnected = this.guimo.btConnected = false;
+      this.events.publish('bt:Connected',this.btConnected);
       let alert = this.alertCtrl.create({
             title:'Algo deu Errado :(',
-            message: 'Seu Bluetooth não está ligado, por favor, ligue antes de conectar ao Guimo!',
+            message: 'Seu Bluetooth não está ligado ou o Guimo foi desconectado :(',
             buttons:['OK']
           });
           alert.present();

@@ -17,7 +17,7 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 */
 @Injectable()
 export class Guimo {
-  public static readonly SCREEN_DEFAULT = "padrão\n";
+  public static readonly SCREEN_DEFAULT = "padrao\n";
   public static readonly SCREEN_HUNGRY = "fome\n";
   public static readonly SCREEN_SICK = "doente\n";
   public static readonly SCREEN_ROBOT = "robo\n";
@@ -190,8 +190,15 @@ export class Guimo {
    */
   public checkFoodStatus(){
       var foodInteraval = setInterval(()=>{
+        if(this.btConnected){
           this.food--;
+        }
           this.events.publish('guimo:food',this.food);
+
+          if( (this.food < 20 && this.health > 25 && this.activeScreen != Guimo.SCREEN_HUNGRY)){
+            this.activeScreen = Guimo.SCREEN_HUNGRY;
+            this.bluetoothSerial.write(this.activeScreen);
+          }
           if(this.food == 0){
             clearInterval(foodInteraval);
             /*var secondInterval = setInterval(()=>{
@@ -202,75 +209,54 @@ export class Guimo {
               }
             },2000);*/
           }
-        }, 2000);  
+        }, 500);  
   }
 
  /**
   * check Guimo Energy Status
   * return Observable<number>
   */
-  public checkEnergyStatus(): Observable<number>{
-    return Observable.create( obs =>{
-      setInterval( () =>{
-        this.checkBtConnected();
-         if(this.btConnected){
-           if(this.energy > 0){
-            this.energy -= 1;
-            }else{
-              this.energy = 0;
+  public checkEnergyStatus(){
+   var energyInterval = setInterval(()=>{
+      if(this.btConnected){
+        this.energy--;
+      }
+        this.events.publish('guimo:energy',this.energy);
+        if(this.energy == 0){
+          clearInterval(energyInterval);
+          /*var secondInterval = setInterval(()=>{
+            this.food--;
+            this.events.publish('guimo:food',this.food);
+            if(this.food == 50){
+              clearInterval(secondInterval);
             }
-          }
-
-        if( (this.energy <= 20 && this.energy % 5 == 0 && !this.energyNotif && this.energy > 0) ){
-           
-            this.localNotifications.schedule({
-              id: 2,
-              title:'Guimo',
-              text: 'Guimo está sem energia',
-              icon: 'res://icon_stat_logo_guimo_alternativa',
-              smallIcon: 'res://ic_stat_logo_guimo_alternativa',
-              led: '0000FF'
-            });
-            this.energyNotif = true;
-         }
-        return obs.next(this.energy);
-      }, 20000);
-    });
+          },2000);*/
+        }
+      }, 5000);  
   }
 
   /**
    * check Guimo Health Status
    * return Observable<number>
    */
-  public checkHealthStatus(): Observable<number>{
-    return Observable.create( obs =>{
-      setInterval( () =>{
-        this.checkBtConnected();
-         //if(this.btConnected){
-           if(this.health > 0){
-            this.health -= 1;
-            }else{
-              this.health = 0;
+  public checkHealthStatus(){
+    var healthInterval = setInterval(()=>{
+      if(this.btConnected){
+        this.health--;
+      }
+        this.events.publish('guimo:health',this.health);
+        if(this.health == 0){
+          clearInterval(healthInterval);
+          console.log('cancelou intervalo saude')
+          /*var secondInterval = setInterval(()=>{
+            this.food--;
+            this.events.publish('guimo:food',this.food);
+            if(this.food == 50){
+              clearInterval(secondInterval);
             }
-         // }
-
-        if((this.health <= 20 && this.health % 5 == 0 && !this.healthNotif && this.health > 0)){
-          if(this.activeScreen != "doente\n"){
-            this.activeScreen = "doente\n";
-          }
-            this.localNotifications.schedule({
-              id: 3,
-              title:'Guimo',
-              text: 'Guimo não está se sentindo bem!',
-              icon: 'res://icon_stat_logo_guimo_alternativa',
-              smallIcon: 'res://ic_stat_logo_guimo_alternativa',
-              led: '0000FF'
-            });
-            this.healthNotif = true;
-         }
-        return obs.next(this.health);
-      }, 25000);
-    });
+          },2000);*/
+        }
+      }, 210000);  
   }
 
   /**
@@ -328,6 +314,21 @@ export class Guimo {
     return this.bluetoothSerial.connect(macAddres)
   }
 
+  public defaultConnection(){
+    if(this.food < 20 && this.health >= 25){
+      this.activeScreen = Guimo.SCREEN_HUNGRY;
+    }
+
+    if(this.food < 20 && this.health < 25){
+      this.activeScreen = Guimo.SCREEN_SICK;
+    }
+
+    if(this.food > 20 && this. health >= 25){
+      this.activeScreen = Guimo.SCREEN_DEFAULT;
+    }
+    this.bluetoothSerial.write(this.activeScreen);
+  }
+
   /**
    * connect to Device in iOS;
    * @param uuidAddress the UUIDAddress of Device
@@ -344,6 +345,19 @@ export class Guimo {
       this.food = 100;
     }
     this.events.publish('guimo:food',this.food);
+  }
+
+  public addHealth(qtd){
+    this.health += qtd;
+    console.log(this.health);
+    if(this.health > 100){
+      this.health = 100;
+    }
+
+    if(this.health <= 0){
+      this.health = 0;
+    };
+    this.events.publish('guimo:health',this.health);
   }
 
 }

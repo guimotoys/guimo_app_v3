@@ -28,7 +28,17 @@ export class FooterBarComponent  implements OnInit{
       this.guimo.checkFoodStatus();
         this.events.subscribe('guimo:food',(food)=>{
           this.foodStatus = food;
-        });      
+        });  
+
+      this.guimo.checkEnergyStatus();
+      this.events.subscribe('guimo:energy',(energy)=>{
+        this.energyStatus = energy;
+      }); 
+
+      this.guimo.checkHealthStatus();
+      this.events.subscribe('guimo:health',(health)=>{
+        this.healthStatus = health;
+        });     
     });
     
   }

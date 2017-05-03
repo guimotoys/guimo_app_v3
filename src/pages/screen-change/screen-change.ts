@@ -69,26 +69,31 @@ export class ScreenChangePage {
     switch(id){
       case 1:
         this.blt.write(Guimo.SCREEN_DEFAULT).then(() =>{
+          this.guimo.activeScreen = Guimo.SCREEN_DEFAULT;
           console.log(id +"=> "+Guimo.SCREEN_DEFAULT);
         });
         break;
       case 2:
         this.blt.write(Guimo.SCREEN_GLASSES).then(()=>{
+          this.guimo.activeScreen = Guimo.SCREEN_GLASSES;
           console.log(id +"=> "+Guimo.SCREEN_GLASSES);
         });
         break;
       case 3:
         this.blt.write(Guimo.SCREEN_GIRL).then(()=>{
+          this.guimo.activeScreen = Guimo.SCREEN_GIRL;
           console.log(id +"=> "+Guimo.SCREEN_GIRL);
         });
         break;
       case 4:
         this.blt.write(Guimo.SCREEN_MUSTACHE).then(()=>{
+          this.guimo.activeScreen = Guimo.SCREEN_MUSTACHE;
           console.log(id +"=> "+Guimo.SCREEN_MUSTACHE);
         });
         break;
       default:
         this.blt.write(Guimo.SCREEN_DEFAULT).then(() =>{
+          this.guimo.activeScreen = Guimo.SCREEN_DEFAULT;
           console.log(id +"=> "+Guimo.SCREEN_DEFAULT);
         });
 

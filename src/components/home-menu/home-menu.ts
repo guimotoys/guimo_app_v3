@@ -1,7 +1,7 @@
 import { JokenpoPage } from './../../pages/jokenpo/jokenpo';
 import { ScreenChangePage } from './../../pages/screen-change/screen-change';
 import { Guimo } from './../../providers/guimo';
-import { App, NavController, Platform} from 'ionic-angular';
+import { App, NavController, Platform, Events } from 'ionic-angular';
 import { Component, OnInit } from '@angular/core';
 
 import { ConversationPage } from './../../pages/conversation/conversation';
@@ -27,13 +27,20 @@ export class HomeMenuComponent implements OnInit{
   constructor(
     public app: App, 
     public plt: Platform,
-    public guimo: Guimo) {
+    public guimo: Guimo,
+    private evts:Events) {
       this.nav = this.app.getActiveNav();
   }
 
   ngOnInit(){
     this.btStatus = this.guimo.btStatus;
     this.btConnected = this.guimo.btConnected;
+    this.evts.subscribe('bt:Connected',(cnt)=>{
+      this.btConnected = cnt;
+    });
+    this.evts.subscribe('bt:status',(sts)=>{
+      this.btStatus = sts;
+    })
   }
 
   openPage(p: string){

@@ -1,3 +1,4 @@
+import { MediaObject, MediaPlugin } from '@ionic-native/media';
 import { JokenpoPage } from './../pages/jokenpo/jokenpo';
 import { NgModule, ErrorHandler, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
@@ -66,11 +67,13 @@ const cloudSettings: CloudSettings = {
   ],
   providers: [
     BluetoothSerial,
-    StatusBar,
     ScreenOrientation,
     SplashScreen,
     Guimo,
     GuimoDb,
+    MediaObject,
+    MediaPlugin,
+    StatusBar,
     PlatformCheck,
     LocalNotifications,
     BackgroundMode,

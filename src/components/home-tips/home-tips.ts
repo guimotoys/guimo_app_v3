@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Events } from 'ionic-angular';
 
 import { Guimo } from './../../providers/guimo';
@@ -13,7 +13,7 @@ import { Guimo } from './../../providers/guimo';
   selector: 'home-tips',
   templateUrl: 'home-tips.html'
 })
-export class HomeTipsComponent {
+export class HomeTipsComponent implements OnInit{
 
    btStatus: boolean = this.guimo.btStatus;
    btConnected: boolean;
@@ -28,9 +28,14 @@ export class HomeTipsComponent {
   /**
    * Executes when view will be Loaded
    */
-  ionViewWillEnter(){
+  ngOnInit(){
     this.events.subscribe('bt:Connected',(res)=>{
       this.btConnected =  res;
+      console.log(this.btConnected);
+    });
+
+    this.events.subscribe('bt:status',(res)=>{
+      this.btStatus =  res;
     });
   }
 
