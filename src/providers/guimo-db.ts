@@ -24,6 +24,18 @@ export class GuimoDb {
         db.executeSql('CREATE TABLE IF NOT EXISTS deviceSelected(id VARCHAR(32) PRIMARY KEY, name VARCHAR(32), address VARCHAR(32), uuid VARCHAR(32), selected INTEGER DEFAULT 0)', {})
           .then(()=> console.log('Table DeviceSelected Created or Opened'))
           .catch( err => {console.log(err)});
+        
+        db.executeSql("CREATE TABLE IF NOT EXISTS missions (id INTEGER PRIMARY KEY, name VARCHAR(32), img VARCHAR(24), status INTEGER DEFAULT 0 )",{})
+          .then(()=>{
+            db.executeSql("INSERT INTO missions(id,name,img,status) VALUES(?,?,?,?)",[1,'Salvando o Guimo','Missao1.jpg',1]).then(()=>console.log('missao 01 inserida')).catch((err)=>console.log('missao 01 already inserted'));
+            db.executeSql("INSERT INTO missions(id,name,img) VALUES(?,?,?)",[2,'Curando o Guimo','Missao2.jpg']).then(()=>console.log('missao 02 inserida')).catch((err)=>console.log('missao 02 already inserted'));
+          }).catch(err=>console.log(err));
+
+        db.executeSql("CREATE TABLE IF NOT EXISTS medals(id INTEGER PRIMARY KEY, name VARCHAR(32), img VARCHAR(24), status INTEGER DEFAULT 0 )",{})
+          .then(()=>{
+              db.executeSql("INSERT INTO medals(id,name,img) VALUES(?,?,?)",[1,'Médico das Galáxias','medalha_hq.jpg']).then(()=>console.log('medalha 01 inserida')).catch((err)=>console.log('medalha 01 already inserted'));
+              db.executeSql("INSERT INTO medals(id,name,img) VALUES(?,?,?)",[2,'Curandeiro das Galáxias','medalha2_hq.jpg']).then(()=>console.log('medalha 02 inserida')).catch((err)=>console.log('medalha 02 already inserted'));
+        }).catch(err=>console.log(err));
 
         db.executeSql('CREATE TABLE IF NOT EXISTS foods (id INTEGER PRIMARY KEY, name VARCHAR(32), img VARCHAR(32), status INTEGER DEFAULT 0, sync INTEGER DEFAULT 0)',{})
           .then(()=>{
@@ -125,6 +137,31 @@ export class GuimoDb {
   updateScreenStatus(id:number, status:number): Promise<any>{
     return this.openDb({name:'guimo.db',location:'default'}).then((db:SQLiteObject)=>{
       return db.executeSql("UPDATE screens SET status = ?, sync = 0 WHERE id = ?",[status,id]);
+    });
+  }
+
+  getMissions():Promise<any>{
+    return this.openDb({name: 'guimo.db',location:'default'})
+      .then((db:SQLiteObject)=>{
+          return db.executeSql("SELECT * FROM missions",{});
+      });
+  }
+
+  resetMissions(){
+    return this.openDb({name:'guimo.db',location:'default'}).then((db:SQLiteObject)=>{
+        return db.executeSql('UPDATE missions SET status = 0 WHERE id > 1',{});
+    });
+  }
+
+  updateMissions(mission_id, status){
+    return this.openDb({name:'guimo.db',location:'default'}).then((db:SQLiteObject)=>{
+      return db.executeSql("UPDATE missions SET status = ? WHERE id = ?",[status,mission_id]);
+    });
+  }
+
+  resetMedals(){
+    return this.openDb({name:'guimo.db',location:'default'}).then((db:SQLiteObject)=>{
+        return db.executeSql('UPDATE medals SET status = 0 WHERE id = 1',{});
     });
   }
 }

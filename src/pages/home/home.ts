@@ -51,6 +51,9 @@ export class HomePage {
         console.log('Screen Orientation '+this.screenOrientation.ORIENTATIONS.PORTRAIT);
       });
 
+      this.guimoDb.resetMissions().then(()=>{
+        console.log('missoes resetadas');
+      });
 
       this.events.subscribe('bt:status',(btStatus)=>{
           this.btStatus = btStatus;
@@ -121,8 +124,9 @@ export class HomePage {
             load.dismiss();
             this.btConnected = this.guimo.btConnected = true;
             this.guimo.btStatus = true;
-            this.guimo.defaultConnection();
+            //this.guimo.defaultConnection();
             this.events.publish('bt:Connected',this.btConnected);
+            
             //this.guimo.checkEnergyStatus();
           }, err =>{
             console.log(err);

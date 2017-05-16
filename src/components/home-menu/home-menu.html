@@ -1,7 +1,16 @@
-<div class="card-background-page" *ngIf="(btStatus && btConnected)">
+<ion-content class="card-background-page" *ngIf="(btStatus && btConnected)">
   <!--*ngIf="(btStatus && btConnected)"-->
     <ion-grid>
-      <ion-row no-padding no-margin>
+      <ion-row no-margin no-padding>   
+        <ion-col col-12 no-margin no-padding>
+          <ion-card class="mission-height" (click)="openPage('missions')">
+          <img src="assets/imgs/iconeMissoes.jpg">
+          <div class="card-subtitle">  <i class="fa fa-rocket fa-4x" color="danger"></i> </div>
+        </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <!--<ion-row no-padding no-margin>
       
       <ion-col col-8 no-margin no-padding>
         <ion-card class="default-height" (click)="openPage('foods')">
@@ -41,14 +50,16 @@
             <div class="card-subtitle"><ion-icon name="ios-shirt" class="fa-3x" color="pink"></ion-icon></div>
           </ion-card>
         </ion-col>
+      </ion-row>
 
+      <ion-row margin-bottom>
         <ion-col col-12 no-margin no-padding>
           <ion-card class="default-height" (click)="openPage('jokenpo')">
             <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
             <div class="card-subtitle"><i class="fa fa-hand-rock-o fa-3x" color="dark"></i> <i class="fa fa-hand-paper-o fa-3x"></i> <i class="fa fa-hand-scissors-o fa-3x" color="ygold"></i></div>
           </ion-card>
         </ion-col>
-      </ion-row>
-
+      </ion-row>-->
     </ion-grid>
-  </div>
+
+  </ion-content>

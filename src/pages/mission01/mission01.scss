@@ -1,0 +1,33 @@
+page-mission01 {
+    $text-color: #000;
+
+    ion-grid{
+        min-height: 220px;
+        height: 100%;
+    }
+    .blocks{
+        min-height:320px; 
+        height:100vh !important; 
+        min-width: 550px; 
+        width:100%;
+        margin:0;
+        padding:0;
+    }
+
+    .count-blocks{
+        width:30px;
+        height: 30px;
+        background: url('./../assets/imgs/qc.png');
+        /*background-size: 350px 250px;*/
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        padding: 4px;
+        bottom:10px;
+        left: 50%;
+        position: absolute;
+        z-index: 999;
+        color:#000;
+        font-size: 1.5em;
+    }
+}

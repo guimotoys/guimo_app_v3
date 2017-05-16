@@ -101,7 +101,6 @@ export class BlocksPage {
     setTimeout(()=>{
       //console.log(code);
       //SEND BLUETOOTH CODE HERE
-      console.log('blockly', this.guimo.btConnected);
       this.blt.write(code).then(()=>{
         console.log('Código '+code+ ' enviado');
       });

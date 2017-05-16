@@ -9,6 +9,12 @@ import { ConversationPage } from './../pages/conversation/conversation';
 import { ConfigPage } from './../pages/config/config';
 import { FoodsPage } from './../pages/foods/foods';
 import { HomePage } from '../pages/home/home';
+import { HqHomePage } from './../pages/hq-home/hq-home';
+import { MissionsPage } from './../pages/missions/missions';
+import { Mission01Page } from './../pages/mission01/mission01';
+import { Mission01HqPage } from './../pages/mission01-hq/mission01-hq';
+import { Mission02Page } from './../pages/mission02/mission02';
+import { Mission02HqPage } from './../pages/mission02-hq/mission02-hq';
 import { ScreenChangePage } from './../pages/screen-change/screen-change';
 import { VirtualControllerPage } from './../pages/virtual-controller/virtual-controller';
 import { MyApp } from './app.component';
@@ -41,7 +47,13 @@ const cloudSettings: CloudSettings = {
     ConversationPage,
     FoodsPage,
     MyApp,
+    MissionsPage,
+    Mission01Page,
+    Mission01HqPage,
+    Mission02Page,
+    Mission02HqPage,
     HomePage,
+    HqHomePage,
     JokenpoPage,
     ScreenChangePage,
     VirtualControllerPage,
@@ -60,7 +72,13 @@ const cloudSettings: CloudSettings = {
     ConfigPage,
     FoodsPage,
     MyApp,
+    HqHomePage,
     HomePage,
+    MissionsPage,
+    Mission01Page,
+    Mission01HqPage,
+    Mission02Page,
+    Mission02HqPage,
     JokenpoPage,
     ScreenChangePage,
     VirtualControllerPage

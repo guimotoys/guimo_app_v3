@@ -1,5 +1,3 @@
-import { JokenpoPage } from './../../pages/jokenpo/jokenpo';
-import { ScreenChangePage } from './../../pages/screen-change/screen-change';
 import { Guimo } from './../../providers/guimo';
 import { App, NavController, Platform, Events } from 'ionic-angular';
 import { Component, OnInit } from '@angular/core';
@@ -8,6 +6,9 @@ import { ConversationPage } from './../../pages/conversation/conversation';
 import { BlocksPage } from './../../pages/blocks/blocks';
 import { ConfigPage } from './../../pages/config/config';
 import { FoodsPage } from './../../pages/foods/foods';
+import { JokenpoPage } from './../../pages/jokenpo/jokenpo';
+import { MissionsPage } from './../../pages/missions/missions';
+import { ScreenChangePage } from './../../pages/screen-change/screen-change';
 import { VirtualControllerPage } from './../../pages/virtual-controller/virtual-controller';
 /*
   Generated class for the HomeMenu component.
@@ -73,6 +74,10 @@ export class HomeMenuComponent implements OnInit{
 
       if(p == "jokenpo"){
         this.nav.push(JokenpoPage);
+      }
+
+      if(p == "missions"){
+        this.nav.push(MissionsPage);
       }
   }
 }

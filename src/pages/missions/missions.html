@@ -1,0 +1,42 @@
+<!--
+  Generated template for the Missions page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title> <i class="fa fa-rocket fa-lg" color="danger"></i> Missões Guimo</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+  <ion-grid>
+    <ion-row>
+        <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let mission of missions">
+          <ion-card no-padding>
+            <ion-item color="light">
+              <h1 text-capitalize text-center *ngIf="mission.status == 1">{{mission.name}}</h1>
+              <h1 text-capitalize text-center *ngIf="mission.status == 0"> <u> <i class="fa fa-close fa-lg" color="danger"></i> {{mission.name}}</u> </h1>
+            </ion-item>
+
+            <img src="assets/imgs/{{mission.img}}" alt="{{mission.name}}">
+            <ion-row>
+              <ion-col>
+                <button ion-button icon-left large full color="teal" *ngIf="mission.status == 1" (click)="loadMissions(mission.id)">
+                  <ion-icon name="play"></ion-icon> Jogar
+                </button>
+                <button ion-button icon-left large full color="teal" *ngIf="mission.status == 0" disabled>
+                  <ion-icon name="play"></ion-icon> <u>Jogar</u>
+                </button>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>
