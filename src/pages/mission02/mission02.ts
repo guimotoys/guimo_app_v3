@@ -19,12 +19,7 @@ export class Mission02Page {
   workspace: any;
   remaining: any = 2;
   toolbox: any;
-  msgs: any = {
-  success:[
-    "Parece que o seu código está correto, que legal <i class='fa fa-smile-o' color='secondary' aria-hidden='true'></i>!",
-    "Hmmm... vamos ver... <br> Parece que está funcionando!!!Agora tente outra combinação..."
-    ]
-  };
+  
   constructor(public navCtrl: NavController, public navParams: NavParams,private blt: BluetoothSerial,
     private screenOrientation: ScreenOrientation,
     private alertCtrl: AlertController,
@@ -98,7 +93,7 @@ export class Mission02Page {
         /********************************************
          * * * RUNS THE SECOND 'gole de pocao' CODE * * *
          ***********************************************/
-        
+
         if(codes.length == 2){
           this.blt.write('pocao2\n').then(()=>{console.log('enviado coracao2')});
           let alert = this.alertCtrl.create({
