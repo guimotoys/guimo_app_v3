@@ -95,6 +95,10 @@ export class Mission02Page {
           },750);
         }
 
+        /********************************************
+         * * * RUNS THE SECOND 'gole de pocao' CODE * * *
+         ***********************************************/
+        
         if(codes.length == 2){
           this.blt.write('pocao2\n').then(()=>{console.log('enviado coracao2')});
           let alert = this.alertCtrl.create({
