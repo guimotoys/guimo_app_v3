@@ -121,7 +121,7 @@ export class HomePage {
     fab.close();
     this.guimo.checkBtEnabled();
     if(this.guimo.checkBtEnabled){
-        if(this.guimo.deviceAndroid.address == null){
+        if(this.guimo.deviceAndroid == undefined){
           this.btConnectErr = true;
           this.btConnectErrMsg = "Você não selecionou um dispotivo para se conectar no Menu de configurações. Acesse ele através do botão superior"
           let alert = this.alertCtrl.create({

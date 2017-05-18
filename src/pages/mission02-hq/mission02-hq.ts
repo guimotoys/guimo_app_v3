@@ -1,6 +1,6 @@
-import { Mission02Page } from './../mission02/mission02';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Mission02Page } from './../mission02/mission02';
 
 /*
   Generated class for the Mission02Hq page.
@@ -18,6 +18,10 @@ export class Mission02HqPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Mission02HqPage');
+  }
+
+  goToMission(){
+    this.navCtrl.push(Mission02Page);
   }
 
 }

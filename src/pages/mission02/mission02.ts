@@ -27,4 +27,10 @@ export class Mission02Page {
     });
   }
 
+  ionViewWillLeave(){
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then( () =>{
+      console.log('Screen Orientation '+this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    });
+  }
+
 }
