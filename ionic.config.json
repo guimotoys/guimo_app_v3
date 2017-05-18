@@ -1,6 +1,5 @@
 {
   "name": "Guimo Soul",
   "app_id": "9f7e507c",
-  "v2": true,
-  "typescript": true
+  "type": "ionic-angular"
 }

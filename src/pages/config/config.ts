@@ -105,8 +105,9 @@ export class ConfigPage {
    * @param evt 
    */
   toggleChange(evt){
-    if(evt._checked && !this.btStatus){
-        this.guimo.enableBt();
+    if(!this.btStatus){
+        this.bluetoothSerial.enable();
+        this.events.publish('bt:status',true);
     }
   }
 

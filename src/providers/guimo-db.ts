@@ -21,6 +21,13 @@ export class GuimoDb {
         name: 'guimo.db',
         location: 'default'
       }).then((db: SQLiteObject) =>{
+        
+        /*db.executeSql('DROP TABLE IF EXISTS missions',{}).then(()=>{
+          console.log('deletado');
+        }).catch( err =>{
+          console.log(err);
+        });*/
+
         db.executeSql('CREATE TABLE IF NOT EXISTS deviceSelected(id VARCHAR(32) PRIMARY KEY, name VARCHAR(32), address VARCHAR(32), uuid VARCHAR(32), selected INTEGER DEFAULT 0)', {})
           .then(()=> console.log('Table DeviceSelected Created or Opened'))
           .catch( err => {console.log(err)});
@@ -28,7 +35,8 @@ export class GuimoDb {
         db.executeSql("CREATE TABLE IF NOT EXISTS missions (id INTEGER PRIMARY KEY, name VARCHAR(32), img VARCHAR(24), status INTEGER DEFAULT 0 )",{})
           .then(()=>{
             db.executeSql("INSERT INTO missions(id,name,img,status) VALUES(?,?,?,?)",[1,'Salvando o Guimo','Missao1.jpg',1]).then(()=>console.log('missao 01 inserida')).catch((err)=>console.log('missao 01 already inserted'));
-            db.executeSql("INSERT INTO missions(id,name,img) VALUES(?,?,?)",[2,'Curando o Guimo','Missao2.jpg']).then(()=>console.log('missao 02 inserida')).catch((err)=>console.log('missao 02 already inserted'));
+            db.executeSql("INSERT INTO missions(id,name,img) VALUES(?,?,?)",[2,'Resgatando a Nave','Missao2.jpg']).then(()=>console.log('missao 02 inserida')).catch((err)=>console.log('missao 02 already inserted'));
+            db.executeSql("INSERT INTO missions(id,name,img) VALUES(?,?,?)",[3,'Curando o Guimo','Missao3.jpg']).then(()=>console.log('missao 03 inserida')).catch((err)=>console.log('missao 03 already inserted'));
           }).catch(err=>console.log(err));
 
         db.executeSql("CREATE TABLE IF NOT EXISTS medals(id INTEGER PRIMARY KEY, name VARCHAR(32), img VARCHAR(24), status INTEGER DEFAULT 0 )",{})
@@ -58,11 +66,7 @@ export class GuimoDb {
             db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[3,'Menina','guimoMenina_piscando.gif']).catch((err)=>{console.log('IMG Menina already inserted')});
             db.executeSql("INSERT INTO screens(id,name,img) VALUES (?,?,?)",[4,'Bigode','guimoBigode_piscando.gif']).catch((err)=>{console.log('IMG Bigode already inserted')});
           }).catch( err => { console.log(err)});
-        /*db.executeSql('DROP TABLE IF EXISTS foods',{}).then(()=>{
-          console.log('deletado');
-        }).catch( err =>{
-          console.log(err);
-        })*/
+
       });
 
     });
@@ -150,6 +154,12 @@ export class GuimoDb {
   resetMissions(){
     return this.openDb({name:'guimo.db',location:'default'}).then((db:SQLiteObject)=>{
         return db.executeSql('UPDATE missions SET status = 0 WHERE id > 1',{});
+    });
+  }
+
+  openMissions(){
+    return this.openDb({name:'guimo.db',location:'default'}).then((db:SQLiteObject)=>{
+        return db.executeSql('UPDATE missions SET status = 1 WHERE id > 1',{});
     });
   }
 

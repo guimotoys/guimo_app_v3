@@ -1,15 +1,17 @@
-import { ConfigPage } from './../config/config';
 import { Component } from '@angular/core';
 
 import { NavController, Events, LoadingController, FabContainer, AlertController } from 'ionic-angular';
-//import { trigger, state, style,animate,transition } from '@angular/animations';
+
 import { Guimo } from './../../providers/guimo';
 import { GuimoDb } from './../../providers/guimo-db';
 import { PlatformCheck } from './../../providers/platform-check';
-//*,import { MainButtonComponent } from './../../components/main-button/main-button';
+
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+
+import { SecretPage } from './../secret/secret';
+import { ConfigPage } from './../config/config';
 
 @Component({
   selector: 'page-home',
@@ -21,6 +23,7 @@ export class HomePage {
   btConnected: boolean;
   btConnectErr: boolean = false;
   btConnectErrMsg: string = "";
+  private secretCount: number = 0;
   
   constructor(
     public navCtrl: NavController, 
@@ -94,6 +97,19 @@ export class HomePage {
     if(p === 'config'){
       fab.close();
       this.navCtrl.push(ConfigPage);
+    }
+
+    if(p === 'easteregg'){
+      this.navCtrl.push(SecretPage);
+    }
+  }
+
+  easterEgg(){
+    this.secretCount++
+    if(this.secretCount >= 5){
+      console.log(this.secretCount);
+      this.secretCount = 0;
+      this.openPage('easteregg');
     }
   }
 

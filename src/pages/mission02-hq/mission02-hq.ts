@@ -20,8 +20,4 @@ export class Mission02HqPage {
     console.log('ionViewDidLoad Mission02HqPage');
   }
 
-  goToMission(){
-    this.navCtrl.push(Mission02Page);
-  }
-
 }

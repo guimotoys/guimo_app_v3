@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title> <i class="fa fa-rocket fa-lg" color="danger"></i> Missões Guimo</ion-title>
+    <ion-title (click)="easterEgg()"> <i class="fa fa-rocket fa-lg" color="danger"></i> Missões Guimo</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -29,7 +29,7 @@
                 <button ion-button icon-left large full color="teal" *ngIf="mission.status == 1" (click)="loadMissions(mission.id)">
                   <ion-icon name="play"></ion-icon> Jogar
                 </button>
-                <button ion-button icon-left large full color="teal" *ngIf="mission.status == 0" disabled>
+                <button ion-button icon-left large outline full color="teal" *ngIf="mission.status == 0" disabled>
                   <ion-icon name="play"></ion-icon> <u>Jogar</u>
                 </button>
               </ion-col>
