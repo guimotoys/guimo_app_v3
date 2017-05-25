@@ -314,6 +314,10 @@ export class Guimo {
     return this.bluetoothSerial.connect(macAddres)
   }
 
+  public subscribe(delimiter:string): Observable<any>{
+    return this.bluetoothSerial.subscribe(delimiter);
+  }
+
   public defaultConnection(){
     if(this.food < 20 && this.health >= 25){
       this.activeScreen = Guimo.SCREEN_HUNGRY;

@@ -115,7 +115,7 @@ workspace: any;
       let alert = this.alertCtrl.create({
         title:"Parabéns!!",
         subTitle: "Você concluiu a segunda missão!!",
-        message: "<img src='assets/imgs/medalha2_hq.jpg' alt='medalha'></img>",
+        message: "<img src='assets/imgs/medalha3_hq.jpg' alt='medalha'></img>",
         buttons: [{
           text:"Ok",
           handler: data =>{

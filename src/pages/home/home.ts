@@ -142,7 +142,15 @@ export class HomePage {
             this.guimo.btStatus = true;
             //this.guimo.defaultConnection();
             this.events.publish('bt:Connected',this.btConnected);
-            
+            this.guimo.subscribe("\n").subscribe((bdata)=>{
+              console.log(JSON.stringify(bdata));
+              if(bdata == "desmontado\r\n"){
+                this.events.publish("guimo:nave",true);
+              }
+              if(bdata == "nave\r\n"){
+                this.events.publish("guimo:nave",false);
+              }
+            });
             //this.guimo.checkEnergyStatus();
           }, err =>{
             console.log(err);

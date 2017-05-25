@@ -5,7 +5,31 @@
   Ionic pages and navigation.
 -->
 <ion-content no-padding>
-  <ion-slides pager>
+  <ion-slides pager (ionSlideDidChange)="countSlides()">
+
+  <ion-slide no-padding no-margin>
+    <img src="assets/imgs/HQnavequebradareal.jpg" alt="img1">
+  </ion-slide>
+
+  <ion-slide no-padding no-margin>
+    <img src="assets/imgs/HQnavequebrada1passo.jpg" alt="img2">
+  </ion-slide>
+
+  <ion-slide no-padding no-margin>
+    <img src="assets/imgs/HQnavequebrada2passo.jpg" alt="img3">
+  </ion-slide>
+
+  <ion-slide no-padding no-margin>
+    <img src="assets/imgs/HQnavequebrada3passo.jpg" alt="img4">
+  </ion-slide>
+
+  <ion-slide no-padding no-margin>
+    <img src="assets/imgs/HQnavequebrada4passo.jpg" alt="img4">
+  </ion-slide>
+
+  <ion-slide no-padding no-margin>
+    <img src="assets/imgs/HQnavequebrada.jpg" alt="img1">
+  </ion-slide>
 
   <ion-slide no-padding no-margin>
     <img src="assets/imgs/HQCabineNave.jpg" alt="img1">
