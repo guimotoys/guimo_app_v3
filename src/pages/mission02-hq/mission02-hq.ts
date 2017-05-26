@@ -34,8 +34,7 @@ export class Mission02HqPage {
     
     this.evt.subscribe("guimo:nave",(data)=>{
       this.slideToNext = data;
-      console.log('guimoNave->',data);
-      if(!data){
+      if(data == false){
         let alt = this.alert.create({
           title: 'Legal!!',
           message: 'Agora que você montou a nave, pode continuar a história!!',
@@ -61,17 +60,23 @@ export class Mission02HqPage {
   countSlides(){
     console.log(this.slides.getActiveIndex());
     let currentIndex = this.slides.getActiveIndex();
-    if(currentIndex == 4 ){
+    if(currentIndex == 5 ){
       this.slides.lockSwipeToNext(true);
       let alt = this.alert.create({
         title:" Monte a nave",
-        message: " Agora você já pode montar a nave!",
+        message: " Agora você deve montar a nave para continuar!",
         buttons: ["Ok"]
       });
 
-      setTimeout(()=>{alt.present();},1500)
+      setTimeout(()=>{
+        if(this.slideToNext == true){
+          alt.present();
+        }
+      },1000)
       
 
+    }else{
+      this.slides.lockSwipeToNext(false);
     }
   }
 

@@ -27,6 +27,13 @@ export class SecretPage {
 
   }
 
+  btSet(param){
+    this.guimo.btStatus = param;
+    this.guimo.btConnected = param;
+    this.feedback = "Bluetooth liberado";
+
+  }
+
   setFood(param){
       this.events.publish('guimo:food',param);
       this.feedback = 'Comida setada para '+param;
