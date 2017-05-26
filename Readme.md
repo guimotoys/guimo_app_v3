@@ -11,7 +11,7 @@
 ## What is the [Guimo&trade;] App V3?    
 [Guimo&trade;] This is the new version of Guimo Soul App. Its in version 0.0.5, **so its in Development**. If you want to contribuite, fork this repository and made your changes, and dont forget to do pull requests in the main repository
 
-The app is developed with the **[Ionic Framework V2]**,  with some plugins that will be listed below:
+The app is developed with the **[Ionic Framework V3]**,  with some plugins that will be listed below:
 
 * [Ionic Native] - Ionic Native is a TypeScript wrapper for Cordova/PhoneGap plugins that make adding any native functionality you need to your Ionic 2 mobile app easy.
 * [Bluetooth-Serial] - This plugin enables serial communication over Bluetooth. It was written for communicating between Android or iOS and an Arduino. 
@@ -43,6 +43,6 @@ You should have received a copy of the GNU General Public License along with thi
 [Bluetooth-Serial]: <https://github.com/don/BluetoothSerial>
 [Guimo&trade;]: <https://guimo.toys>
 [Ionic Native]: <https://ionicframework.com/docs/v2/native/>
-[Ionic Framework V2]: <http://ionicframework.com/docs/v2/>
+[Ionic Framework V3]: <http://ionicframework.com/docs/>
 [Typescript]: <https://www.typescriptlang.org/>
 [NPM and NodeJS]: <https://nodejs.org>
