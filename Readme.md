@@ -22,7 +22,7 @@ The app is developed with the **[Ionic Framework V3]**,  with some plugins that 
 This app is in **development**, so dont install this. If you want to play with guimo, use the app v2 (that its in playstore and here on guimotoys github)
 
 You will need this to develop this app:
-* [Ionic Framework V2]
+* [Ionic Framework V3]
 * [Typescript]
 * [NPM and NodeJS]
 
