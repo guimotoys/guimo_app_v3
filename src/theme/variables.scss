@@ -64,6 +64,13 @@ $item-wp-sliding-content-background: #fff;
 // then be future customized. This import comes last
 // so that the above variables are used and Ionic's
 // default are overridden.
+ion-slide button.overlayBtn{
+    position: absolute;
+    bottom:25px;
+    right: 10px;
+    z-index: 999;
+    box-shadow: 5px 5px 2px #444;
+  }
 
 @import "ionic.theme.default";
 

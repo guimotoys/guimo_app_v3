@@ -39,8 +39,16 @@ export class HomePage {
 
       this.events.subscribe('bt:status',(btStatus)=>{
           this.btStatus = btStatus;
+          console.log(this.btStatus);
       });
+      
       this.backMode.enable();
+      this.backMode.configure({
+        silent: true
+      });
+      this.backMode.setDefaults({
+        silent:true
+      });
       
   }
 
@@ -58,23 +66,27 @@ export class HomePage {
         console.log('missoes resetadas');
       });
 
-      this.events.subscribe('bt:status',(btStatus)=>{
-          this.btStatus = btStatus;
+      this.guimo.checkBtEnabled().then((data)=>{
+        this.connectBtAndroid();
+      }).catch((err)=>{
+        this.guimo.enableBt().then((data)=>{
+           this.connectBtAndroid(); 
+        }).catch((err)=>{
+          console.log('BtEnableErr',err);
+        });
+        
       });
 
-      this.backMode.enable();
-
-      this.guimo.checkBtEnabled();
       this.isAndroid = this.plt.isAndroid();
 
-      if(this.isAndroid){
+      /*if(this.isAndroid){
         this.guimoDb.getDeviceSelectedAndroid().then(result =>{
           this.guimo.deviceAndroid = result.rows.item(0);
           //console.log('devwillLoad->',this.guimo.deviceAndroid);
         }).catch(err =>{
           console.log(err);
         });
-      }
+      }*/
 
       this.localNotifications.hasPermission().then( res =>{
         console.log('LocalNotif HasPermission: ',res);
@@ -113,11 +125,35 @@ export class HomePage {
     }
   }
 
+  connectBtAndroid(){
+    
+    this.guimo.listUnpaired().then((devices)=>{
+      if(devices.length > 0){
+        console.log(devices);
+        for(var i = 0; i < devices.length; i++){
+          if(devices[i].name != undefined && this.guimo.checkRegex(devices[i].name)){
+            console.log(this.guimo.checkRegex(devices[i].name));
+          }else{
+            console.log("Device not match the regex");
+            setTimeout(()=>{
+              console.log('Starting search again');
+              this.connectBtAndroid();
+            },1200)
+          }
+        }
+      }
+      
+    }).catch((err)=>{
+      console.log(err);
+    });
+  }
+
+
   /**
    * Conect on Bt Device in Android
    * @param fab fab button to close
    */
-  connectBtAndroid(fab?:FabContainer){
+  /*connectBtAndroid(fab?:FabContainer){
     fab.close();
     this.guimo.checkBtEnabled();
     if(this.guimo.checkBtEnabled){
@@ -180,5 +216,5 @@ export class HomePage {
           alert.present();
     }
   }
-
+*/
 }

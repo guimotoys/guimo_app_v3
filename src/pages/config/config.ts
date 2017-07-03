@@ -42,6 +42,7 @@ export class ConfigPage {
    */
   ionViewDidLoad() {
     this.guimo.checkBtEnabled();
+
     this.guimoDb.getDeviceSelectedAndroid().then((result)=>{
       //this.btDevice = result.rows.item(0);
       if(result.rows.item(0) != undefined){
@@ -59,9 +60,11 @@ export class ConfigPage {
         this.btConnected = res;       
       });
 
-      this.events.subscribe('bt:status',(btStatus)=>{
-        this.btStatus = btStatus;
-      });
+      this.guimo.checkBtEnabled().then((data)=>{
+        this.btStatus = true;
+      }).catch((err)=>{
+        this.btStatus = false;
+      })
   }
 
   /**

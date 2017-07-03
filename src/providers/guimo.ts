@@ -262,14 +262,8 @@ export class Guimo {
   /**
    * Check if Bt is enabled
    */
-  public checkBtEnabled(): void{
-    
-    this.bluetoothSerial.isEnabled().then((res)=>{
-      this.btStatus = true;
-    }).catch((err)=>{
-      this.btStatus = false;
-    });
-    
+  public checkBtEnabled(): Promise<any>{
+    return this.bluetoothSerial.isEnabled();
   }
 
   /**
@@ -286,14 +280,8 @@ export class Guimo {
   /**
    * Enable Bt
    */
-  public enableBt() {
-    this.bluetoothSerial.enable().then(()=>{
-      this.btStatus = true;
-      this.events.publish('bt:status',this.btStatus);
-    }).catch(()=>{
-      this.btStatus = false;
-      this.events.publish('bt:status',this.btStatus);
-    });
+  public enableBt():Promise<any> {
+    return this.bluetoothSerial.enable();
   }
 
   /**
@@ -318,6 +306,14 @@ export class Guimo {
     return this.bluetoothSerial.subscribe(delimiter);
   }
 
+  public listUnpaired():Promise<any>{
+    return this.bluetoothSerial.discoverUnpaired();
+  }
+
+  public checkRegex(s:string):boolean{
+    let regEx = new RegExp("/(guimo)[0-9a-zA-Z]+/g");
+    return regEx.test(s);
+  }
   public defaultConnection(){
     if(this.food < 20 && this.health >= 25){
       this.activeScreen = Guimo.SCREEN_HUNGRY;
