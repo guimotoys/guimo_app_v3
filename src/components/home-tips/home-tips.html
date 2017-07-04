@@ -9,6 +9,9 @@
       <h3 text-center>
         <ion-spinner name="dots" color="light"></ion-spinner> <br> Conectando ao guimo...
       </h3>
+      <p text-center *ngIf="attempts > 1 ">
+        Estamos com dificuldades em encontrar o Guimo. Por favor, veja se ele está ligado ou nas proximidades.
+      </p>
 </ion-grid>
 
 <!--<ion-grid *ngIf="!btStatus" text-center>

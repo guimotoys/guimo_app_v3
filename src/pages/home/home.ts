@@ -19,8 +19,9 @@ import { ConfigPage } from './../config/config';
 })
 export class HomePage {
   isAndroid: boolean = this.plt.isAndroid();
+  connectAttempts:number = 0;
   btStatus: boolean = this.guimo.btStatus;
-  btConnected: boolean;
+  btConnected: boolean = this.guimo.btConnected;
   btConnectErr: boolean = false;
   btConnectErrMsg: string = "";
   private secretCount: number = 0;
@@ -39,7 +40,6 @@ export class HomePage {
 
       this.events.subscribe('bt:status',(btStatus)=>{
           this.btStatus = btStatus;
-          console.log(this.btStatus);
       });
       
       this.backMode.enable();
@@ -63,9 +63,11 @@ export class HomePage {
       });
 
       this.guimoDb.resetMissions().then(()=>{
-        console.log('missoes resetadas');
+        //console.log('missoes resetadas');
       });
 
+
+      this.guimo.checkBtConnected();
       this.guimo.checkBtEnabled().then((data)=>{
         this.connectBtAndroid();
       }).catch((err)=>{
@@ -73,20 +75,18 @@ export class HomePage {
            this.connectBtAndroid(); 
         }).catch((err)=>{
           console.log('BtEnableErr',err);
-        });
-        
+        });  
       });
 
       this.isAndroid = this.plt.isAndroid();
-
-      /*if(this.isAndroid){
+      if(this.isAndroid){
         this.guimoDb.getDeviceSelectedAndroid().then(result =>{
-          this.guimo.deviceAndroid = result.rows.item(0);
-          //console.log('devwillLoad->',this.guimo.deviceAndroid);
+          this.guimo.deviceAndroid = result.rows.item(0); 
         }).catch(err =>{
+          this.guimo.deviceAndroid = {address:null,class:null, id:null, name:null};
           console.log(err);
         });
-      }*/
+      }
 
       this.localNotifications.hasPermission().then( res =>{
         console.log('LocalNotif HasPermission: ',res);
@@ -96,7 +96,6 @@ export class HomePage {
           });
         }
       });
-      
     });
   }
 
@@ -125,27 +124,95 @@ export class HomePage {
     }
   }
 
-  connectBtAndroid(){
-    
+  private tryConnectUnpaired(){
     this.guimo.listUnpaired().then((devices)=>{
-      if(devices.length > 0){
-        console.log(devices);
-        for(var i = 0; i < devices.length; i++){
-          if(devices[i].name != undefined && this.guimo.checkRegex(devices[i].name)){
-            console.log(this.guimo.checkRegex(devices[i].name));
-          }else{
-            console.log("Device not match the regex");
-            setTimeout(()=>{
-              console.log('Starting search again');
-              this.connectBtAndroid();
-            },1200)
-          }
-        }
+      if(devices.length <= 0){
+        this.connectAttempts++;
+      }else{       
+        this.connectRoutine(devices);
       }
-      
     }).catch((err)=>{
-      console.log(err);
+      console.log('paired error',err);
     });
+  }
+
+  private tryConnectPaired(){
+    this.guimo.listDevices().then((devices)=>{
+      if(devices.length <= 0){
+        this.connectAttempts++;
+      }else{       
+        this.connectRoutine(devices);
+      }
+    }).catch((err)=>{
+      console.log('unpaired error',err);
+    });
+  }
+
+  connectBtAndroid(){
+    if(this.guimo.btConnected){
+      let alert = this.alertCtrl.create({
+            title:'Algo deu Errado :(',
+            message: "Você já está conectado a outro dispositivo",
+            buttons:['OK']
+          });
+          alert.present();
+    }else{
+    
+      this.guimo.listDevices().then((devices)=>{
+        this.connectRoutine(devices);
+      }).catch((err)=>{
+        console.log(err);
+      });
+    }
+  }
+  
+  private connectRoutine(devices: any){
+    if(devices.length <= 0){
+      this.connectAttempts++;
+      this.tryConnectUnpaired();
+    }else{
+      devices.forEach(device => {
+        console.log('device->',device);
+        if(this.guimo.checkRegex(device.name) === false){
+          this.connectAttempts++;
+          this.tryConnectUnpaired();
+        }else{
+          console.log("encontrou guimo \o/");
+          this.guimo.deviceAndroid = device;
+          this.guimo.connectAndroidWp(this.guimo.deviceAndroid.address).subscribe(data =>{
+              
+            this.btConnected = this.guimo.btConnected = true;
+            this.guimo.btStatus = true;
+            //this.guimo.defaultConnection();
+            this.events.publish('bt:Connected',this.btConnected);
+            this.guimo.subscribe("\n").subscribe((bdata)=>{
+              console.log(JSON.stringify(bdata));
+              if(bdata == "desmontado\r\n"){
+                this.events.publish("guimo:nave",true);
+              }
+              if(bdata == "nave\r\n"){
+                this.events.publish("guimo:nave",false);
+              }
+            });
+            //this.guimo.checkEnergyStatus();
+          }, err =>{
+            console.log(err);
+            this.btConnectErr = true;
+            this.btConnectErrMsg = err;
+            this.btConnected = this.guimo.btConnected = false;
+            this.events.publish('bt:Connected',this.btConnected);
+            setTimeout(()=>{
+              let alert = this.alertCtrl.create({
+                title:'Algo deu Errado :(',
+                message: 'Não foi possivel conectar ao dispositivo '+this.guimo.deviceAndroid.name,
+                buttons:['OK']
+              });
+              alert.present();
+            }, 500);
+          });
+        }
+      });
+    }
   }
 
 

@@ -287,11 +287,8 @@ export class Guimo {
   /**
    * List Paired devices
    */
-  public listDevices(){
-    this.bluetoothSerial.list().then(res=>{
-      this.devices = res;
-      this.events.publish('bt:listDevices',this.devices);
-    });
+  public listDevices():Promise<any>{
+    return this.bluetoothSerial.list();
   }
 
   /**
@@ -311,7 +308,7 @@ export class Guimo {
   }
 
   public checkRegex(s:string):boolean{
-    let regEx = new RegExp("/(guimo)[0-9a-zA-Z]+/g");
+    let regEx = new RegExp("/(guimo)[0-9a-zA-Z]*/g");
     return regEx.test(s);
   }
   public defaultConnection(){

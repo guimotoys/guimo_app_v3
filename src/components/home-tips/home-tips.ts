@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Events } from 'ionic-angular';
 
 import { Guimo } from './../../providers/guimo';
@@ -15,6 +15,7 @@ import { Guimo } from './../../providers/guimo';
 })
 export class HomeTipsComponent implements OnInit{
 
+   @Input() attempts:number;
    btStatus: boolean = this.guimo.btStatus;
    btConnected: boolean;
  
