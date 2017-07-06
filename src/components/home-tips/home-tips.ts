@@ -21,23 +21,22 @@ export class HomeTipsComponent implements OnInit{
  
 
   constructor(private guimo:Guimo, private events:Events) {
-    this.events.subscribe('bt:status',(btStatus)=>{
-          this.btStatus = btStatus;
-      });
+    this.events.subscribe('bt:Connected',(res)=>{
+      this.btConnected =  res;
+      console.log('home-tips btcon',this.btConnected);
+    });
+
+    this.events.subscribe('bt:status',(res)=>{
+      this.btStatus =  res;
+      console.log('home-tips btsstats',this.btConnected);
+    });
   }
 
   /**
    * Executes when view will be Loaded
    */
   ngOnInit(){
-    this.events.subscribe('bt:Connected',(res)=>{
-      this.btConnected =  res;
-      console.log(this.btConnected);
-    });
-
-    this.events.subscribe('bt:status',(res)=>{
-      this.btStatus =  res;
-    });
+    
   }
 
 }

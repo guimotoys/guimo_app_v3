@@ -23,7 +23,8 @@ import { VirtualControllerPage } from './../../pages/virtual-controller/virtual-
 export class HomeMenuComponent implements OnInit{
     private nav: NavController;
     btStatus: boolean = this.guimo.btStatus;
-    btConnected: boolean;
+    btConnected: boolean = this.guimo.btConnected;
+    menuOptions = this.guimo.menuOptions;
 
   constructor(
     public app: App, 
@@ -38,10 +39,17 @@ export class HomeMenuComponent implements OnInit{
     this.btConnected = this.guimo.btConnected;
     this.evts.subscribe('bt:Connected',(cnt)=>{
       this.btConnected = cnt;
+      console.log('home-menu btcon',this.btConnected);
     });
     this.evts.subscribe('bt:status',(sts)=>{
       this.btStatus = sts;
-    })
+      console.log('home-menu btstatus',this.btConnected);
+    });
+
+    this.evts.subscribe('menu:Options',(sts)=>{
+      console.log('menuOptions', sts);
+      this.menuOptions = sts;
+    });
   }
 
   openPage(p: string){

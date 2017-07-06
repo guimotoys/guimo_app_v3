@@ -1,4 +1,4 @@
-import { HomePage } from './../home/home';
+import { BtConnectPage } from './../bt-connect/bt-connect';
 import { PlatformCheck } from './../../providers/platform-check';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
@@ -32,7 +32,7 @@ export class HqHomePage {
   }
 
   goToHome(){
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.setRoot(BtConnectPage);
 
   }
 

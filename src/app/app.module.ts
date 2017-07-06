@@ -1,3 +1,4 @@
+import { BtConnectPageModule } from './../pages/bt-connect/bt-connect.module';
 import { MediaPlugin } from '@ionic-native/media';
 import { SecretPage } from './../pages/secret/secret';
 import { JokenpoPage } from './../pages/jokenpo/jokenpo';
@@ -72,6 +73,7 @@ const cloudSettings: CloudSettings = {
     HttpModule,
     Mission03HqPageModule,
     Mission03PageModule,
+    BtConnectPageModule,
     IonicModule.forRoot(MyApp),
     CloudModule.forRoot(cloudSettings)
   ],

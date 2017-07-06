@@ -58,4 +58,12 @@ export class SecretPage {
       }).catch(err =>{console.log(err)});
   }
 
+  openAllMenu(){
+    this.guimo.menuOptions = true;
+  }
+
+  closeAllMenu(){
+    this.guimo.menuOptions = false;
+  }
+
 }

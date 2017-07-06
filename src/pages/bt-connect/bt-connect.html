@@ -1,0 +1,16 @@
+<!--
+  Generated template for the BtConnectPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content padding>
+  <ion-grid *ngIf="!btConnected">
+    <h3 text-center>
+      <ion-spinner name="dots" color="light"></ion-spinner> <br> Conectando ao guimo...
+    </h3>
+    <p text-center *ngIf="attempts > 1 ">
+      Estamos com dificuldades em encontrar o Guimo. Por favor, veja se ele está ligado ou nas proximidades.
+    </p>
+</ion-grid>
+</ion-content>

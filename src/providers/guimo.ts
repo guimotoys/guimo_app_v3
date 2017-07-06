@@ -43,6 +43,7 @@ export class Guimo {
   private _energy: number = 100;
   private _food: number = 100;
   private _activeScreen: string = Guimo.SCREEN_DEFAULT;
+  private _menuOptions:boolean = false;
   public foodNotif:boolean = false;
   public energyNotif: boolean = false;
   public healthNotif: boolean = false;
@@ -97,6 +98,16 @@ export class Guimo {
     return this._activeScreen;
   }
 
+  set menuOptions(opt){
+    this.events.publish('menu:Options',opt);
+    this._menuOptions = opt; 
+  }
+
+  get menuOptions():boolean{
+    return this._menuOptions;
+  }
+
+
   /**
    * return enable/disabled btStatus
    */
@@ -109,7 +120,6 @@ export class Guimo {
    */
   set btStatus(status: boolean){
     this.events.publish('bt:status',status);
-    console.log('btStatus->',status);
     this._btStatus = status;
   }
 
@@ -137,9 +147,9 @@ export class Guimo {
   /**
    * set btConnected status
    */
-  set btConnected(btConnected){
-    this.events.publish('bt:Connected',btConnected);
+  set btConnected(btConnected: boolean){
     this._btConnected = btConnected;
+    this.events.publish('bt:Connected',btConnected);
   }
 
   /**
@@ -308,7 +318,7 @@ export class Guimo {
   }
 
   public checkRegex(s:string):boolean{
-    let regEx = new RegExp("/(guimo)[0-9a-zA-Z]*/g");
+    let regEx = new RegExp("(guimo)[0-9a-zA-Z]*");
     return regEx.test(s);
   }
   public defaultConnection(){
