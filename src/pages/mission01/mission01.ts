@@ -76,7 +76,7 @@ msgs: any = {
         if(this.remaining == 1 && this.firstRun){
           let alert = this.alertCtrl.create({
             title:"Dicas",
-            message: "<img src='assets/imgs/tutorial1_2.jpg' alt='dica2'></img>",
+            message: "<img src='assets/imgs/tutorial1_2.gif' alt='dica2'></img>",
             buttons: ["Ok"]
           });
           setTimeout(()=>{
