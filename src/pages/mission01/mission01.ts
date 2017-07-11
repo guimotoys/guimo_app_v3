@@ -16,44 +16,54 @@ declare var Blockly: any;
   templateUrl: 'mission01.html'
 })
 export class Mission01Page {
-workspace: any;
-remaining: any = 2;
-coracao:any;
-toolbox: any;
-firstRun: boolean = true;
-secndRun: boolean = false;
-msgs: any = {
-  success:[
-    "Parece que o seu código está correto, que legal <i class='fa fa-smile-o' color='secondary' aria-hidden='true'></i>!",
-    "Hmmm... vamos ver... <br> Parece que está funcionando!!!Agora tente outra combinação..."
+  workspace: any;
+  remaining: any = 2;
+  coracao: any;
+  toolbox: any;
+  firstRun: boolean = true;
+  secndRun: boolean = false;
+  hidePage:boolean = true;
+  overlayMsg: string = "";
+  overlayTitle: string = "";
+  overlayImg: String = "";
+  final: boolean = false;
+  steps: boolean = true;
+  interval: any = null;
+  dicas: string = "Faça o coração bater 1 vez.";
+  msgs: any = {
+    success: [
+      "Parece que o seu código está correto, que legal <i class='fa fa-smile-o' color='secondary' aria-hidden='true'></i>!",
+      "Hmmm... vamos ver... <br> Parece que está funcionando!!!Agora tente outra combinação..."
     ],
-  tips:[
-    "Que tal se você tentar bater o coração do guimo mais vezes <i class='fa fa-question' aria-hidden='true'></i>, com tipo, um loop!",
-    "Acho que agora você pode fazer isso de maneira mais facil!! Vou liberar o laço de repetição pra você",
-  ],
-  error:[
-  "Que tal você tentar algum código antes de enviar para o Guimo!!",
-  "Ei, não há nada para enviar do seu código <i class='fa fa-frown-o' color='danger' aria-hidden='true'></i>."
-]};
+    tips: [
+      "Que tal se você tentar bater o coração do guimo mais vezes <i class='fa fa-question' aria-hidden='true'></i>, com tipo, um loop!",
+      "Acho que agora você pode fazer isso de maneira mais facil!! Vou liberar o laço de repetição pra você",
+    ],
+    error: [
+      "Que tal você tentar algum código antes de enviar para o Guimo!!",
+      "Ei, não há nada para enviar do seu código <i class='fa fa-frown-o' color='danger' aria-hidden='true'></i>."
+    ]
+  };
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private blt: BluetoothSerial,
     private screenOrientation: ScreenOrientation,
     private alertCtrl: AlertController,
-    private guimoDb: GuimoDb) {}
+    private guimoDb: GuimoDb) { }
 
   ionViewDidLoad() {
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE).then(()=>{
-      console.log('Orientation Locked in '+this.screenOrientation.ORIENTATIONS.LANDSCAPE);
-    }).catch( err =>{
+
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE).then(() => {
+      console.log('Orientation Locked in ' + this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+    }).catch(err => {
       console.log(err);
     });
 
     this.coracao = document.getElementById('baterCoracao');
     this.toolbox = document.getElementById('toolbox');
-    this.workspace = Blockly.inject('blockly',{
+    this.workspace = Blockly.inject('blockly', {
       maxBlocks: 2,
       toolbox: this.toolbox,
       zoom: {
@@ -63,103 +73,143 @@ msgs: any = {
         maxScale: 3,
         minScale: 0.3
       },
-     trashcan: true
+      trashcan: true
     });
 
-
-    this.workspace.addChangeListener((evt)=>{
+    this.interval = setInterval(() => {
       this.remaining = this.workspace.remainingCapacity();
-      if(evt.type == Blockly.Events.DELETE){
-        this.remaining = this.workspace.remainingCapacity();
-      }
-      if(evt.type == Blockly.Events.CREATE){
-        if(this.remaining == 1 && this.firstRun){
-          let alert = this.alertCtrl.create({
+    }, 250);
+
+    this.workspace.addChangeListener((evt) => {
+
+      if (evt.type == Blockly.Events.CREATE) {
+
+        if ( this.firstRun) {
+          console.log('teste tutorial 2')
+          /*let alert = this.alertCtrl.create({
             title:"Dicas",
             message: "<img src='assets/imgs/tutorial1_2.gif' alt='dica2'></img>",
             buttons: ["Ok"]
-          });
-          setTimeout(()=>{
-            alert.present();
-          },600)
+          });*/
+          //setTimeout(()=>{
+          //alert.present();
+          //},1500)
+          this.overlayMsg = "";
+          this.overlayTitle = "Dica";
+          this.overlayImg = "assets/imgs/tutorial1_2.gif"
+
+          setTimeout(() => {
+            this.hidePage = false;
+            this.dicas = "Agora é só apertar o play!! "
+          }, 800);
         }
       }
     });
 
   }
 
-  ionViewWillLoad(){
-    let alert = this.alertCtrl.create({
+  ionViewWillLoad() {
+    /*let alert = this.alertCtrl.create({
       title:"Dicas",
       message: "<img src='assets/imgs/tutorial1_1.jpg' alt='dica1'></img>",
       buttons: ["Ok"]
     });
     setTimeout(()=>{
       alert.present();
-    },1000);
-    
+    },2000);*/
+    this.overlayMsg = "";
+    this.overlayTitle = "Dica";
+    this.overlayImg = "assets/imgs/tutorial1_1.jpg"
+    setTimeout(() => {
+      this.hidePage = false;
+    }, 1200);
   }
 
-  ionViewWillLeave(){
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then( () =>{
-      console.log('Screen Orientation '+this.screenOrientation.ORIENTATIONS.PORTRAIT);
+  ionViewWillLeave() {
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then(() => {
+      console.log('Screen Orientation ' + this.screenOrientation.ORIENTATIONS.PORTRAIT);
     });
   }
 
-  runCode(){
+  continueMission() {
+    this.hidePage = true;
+  }
+
+  finishMission() {
+    clearInterval(this.interval);
+    this.navCtrl.popTo(this.navCtrl.getByIndex(1))
+  }
+
+  runCode() {
 
     Blockly.JavaScript.addReservedWords('code');
     var code = Blockly.JavaScript.workspaceToCode(this.workspace);
     let codes = code.split(',');
-    codes.splice(-1,1);
-  
-    let tam = codes.length -1;
+    codes.splice(-1, 1);
+
+    let tam = codes.length - 1;
     let repeatQtd = parseInt(codes[tam]);
-    if(isNaN(repeatQtd)){
+    if (isNaN(repeatQtd)) {
       /*********************************************
        * * * RUNS THE FIRST 'bater coracao' CODE * * *
        *********************************************/
 
-        if(codes.length == 1 && this.firstRun){
-          this.firstRun = false;
-          this.blt.write('coracao1\n').then(()=>{console.log('enviado coracao1')});
-          let alert = this.alertCtrl.create({
-            title:"Dicas",
-            message: "<img src='assets/imgs/tutorial1_3.jpg' alt='dica3'></img>",
-            buttons: ["Ok"]
-          });
-          setTimeout(()=>{
-            alert.present();
-          },600);
-        }
+      if (codes.length == 1 && this.firstRun) {
+        this.firstRun = false;
+        this.blt.write('coracao1\n').then(() => { console.log('enviado coracao1') });
+        /*let alert = this.alertCtrl.create({
+          title: "Dicas",
+          message: "<img src='assets/imgs/tutorial1_3.jpg' alt='dica3'></img>",
+          buttons: ["Ok"]
+        });
+        setTimeout(() => {
+          alert.present();
+        }, 600);*/
+        this.overlayMsg = "";
+        this.overlayTitle = "Dica";
+        this.overlayImg = "assets/imgs/tutorial1_3.jpg"
+        setTimeout(() => {
+          this.hidePage = false;
+          this.dicas = "Agora o coração do Guimo precisa bater 2 vezes"
+          
+        }, 1000);
+      }
 
-        if(codes.length == 2 && !this.secndRun){
-          this.secndRun = true;
-          this.blt.write('coracao2\n').then(()=>{console.log('enviado coracao2')});
-          let alert = this.alertCtrl.create({
-            title:"Dicas",
-            message: "<img src='assets/imgs/tutorial1_4.jpg' alt='dica3'></img>",
-            buttons: ["Ok"]
-          });
-          this.toolbox.innerHTML += '<block type="guimo_repeat_m1" colour="210"></block>';
-          this.workspace.updateToolbox(this.toolbox);
-          setTimeout(()=>{
-            alert.present();
-          },600);
-        }
+      if (codes.length == 2 && !this.secndRun) {
+        this.secndRun = true;
+        this.firstRun = false;
+        this.blt.write('coracao2\n').then(() => { console.log('enviado coracao2') });
+        /*let alert = this.alertCtrl.create({
+          title: "Dicas",
+          message: "<img src='assets/imgs/tutorial1_4.jpg' alt='dica3'></img>",
+          buttons: ["Ok"]
+        });*/
+        this.toolbox.innerHTML += '<block type="guimo_repeat_m1" colour="210"></block>';
+        this.workspace.updateToolbox(this.toolbox);
+        /*setTimeout(() => {
+          alert.present();
+        }, 600);*/
+        this.overlayMsg = "";
+        this.overlayTitle = "Dica";
+        this.overlayImg = "assets/imgs/tutorial1_4.jpg"
+        setTimeout(() => {
+          this.dicas = "Agora faça o coração bater 3 vezes!!!"
+          this.hidePage = false;
+        }, 700);
+      }
 
     }
 
-    if(!isNaN(repeatQtd)){
-      this.blt.write('coracao3\n').then(()=>{console.log('enviando coracao3')});
-      let alert = this.alertCtrl.create({
+    if (!isNaN(repeatQtd)) {
+      this.blt.write('coracao3\n').then(() => { console.log('enviando coracao3') });
+      /*let alert = this.alertCtrl.create({
         title:"Parabéns!!",
         subTitle: "Você concluiu a primeira missão!!",
         message: "<img src='assets/imgs/medalha_hq.jpg' alt='medalha'></img>",
         buttons: [{
           text:"Ok",
           handler: data =>{
-            this.guimoDb.updateMissions(2,1).then(()=>{
+            this.guimoDb.updateMissions(2,2).then(()=>{
               console.log('Updated mission 01');
               this.navCtrl.popTo(this.navCtrl.getByIndex(1));
             });
@@ -168,12 +218,23 @@ msgs: any = {
       });
       setTimeout(()=>{
         alert.present();
-      },1000);
-    }
+      },1000);*/
+      this.guimoDb.updateMissions(2, 2).then(() => {
+        console.log('Updated mission 01');
+        this.overlayMsg = "Você concluiu a primeira missão";
+        this.overlayTitle = "Parabéns";
+        this.overlayImg = "assets/imgs/medalha_hq.jpg"
+        setTimeout(() => {
+          this.final = true;
+          this.steps = false
+          this.hidePage = false;
+        }, 1200);
+      });
 
+    }
   }
 
-  back(){
+  back() {
     console.log('entrou backToMenu');
     this.navCtrl.pop();
   }

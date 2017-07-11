@@ -38,72 +38,72 @@ export class Guimo {
 
   private _btStatus: boolean;
   private _btConnected: boolean;
-  private _deviceAndroid: any = {address:null,class:null, id:null, name:null};
+  private _deviceAndroid: any = { address: null, class: null, id: null, name: null };
   private _health: number = 100;
   private _energy: number = 100;
   private _food: number = 100;
   private _activeScreen: string = Guimo.SCREEN_DEFAULT;
-  private _menuOptions:boolean = false;
-  public foodNotif:boolean = false;
+  private _menuOptions: boolean = false;
+  public foodNotif: boolean = false;
   public energyNotif: boolean = false;
   public healthNotif: boolean = false;
   public devices: Array<any> = [];
   constructor(
-    public http: Http, 
-    public bluetoothSerial: BluetoothSerial, 
+    public http: Http,
+    public bluetoothSerial: BluetoothSerial,
     public events: Events,
-    private platform:Platform,
+    private platform: Platform,
     private localNotifications: LocalNotifications) {
-      this.platform.ready().then(()=>{
+    this.platform.ready().then(() => {
 
-        this.localNotifications.on('click', ()=>{
-          this.localNotifications.isScheduled(1).then( res => {
-            this.localNotifications.cancel(1);
-            this.foodNotif = false;
-          });
-          this.localNotifications.isScheduled(2).then( res => {
-            this.localNotifications.cancel(2);
-            this.foodNotif = false;
-          });
-          this.localNotifications.isScheduled(3).then( res => {
-            this.localNotifications.cancel(3);
-            this.foodNotif = false;
-          });
+      this.localNotifications.on('click', () => {
+        this.localNotifications.isScheduled(1).then(res => {
+          this.localNotifications.cancel(1);
+          this.foodNotif = false;
         });
-
-        this.localNotifications.on('clear', ()=>{
-          this.localNotifications.isScheduled(1).then( res => {
-            this.localNotifications.cancel(1);
-            this.foodNotif = false;
-          });
-          this.localNotifications.isScheduled(2).then( res => {
-            this.localNotifications.cancel(2);
-            this.foodNotif = false;
-          });
-          this.localNotifications.isScheduled(3).then( res => {
-            this.localNotifications.cancel(3);
-            this.foodNotif = false;
-          });
+        this.localNotifications.isScheduled(2).then(res => {
+          this.localNotifications.cancel(2);
+          this.foodNotif = false;
+        });
+        this.localNotifications.isScheduled(3).then(res => {
+          this.localNotifications.cancel(3);
+          this.foodNotif = false;
         });
       });
 
+      this.localNotifications.on('clear', () => {
+        this.localNotifications.isScheduled(1).then(res => {
+          this.localNotifications.cancel(1);
+          this.foodNotif = false;
+        });
+        this.localNotifications.isScheduled(2).then(res => {
+          this.localNotifications.cancel(2);
+          this.foodNotif = false;
+        });
+        this.localNotifications.isScheduled(3).then(res => {
+          this.localNotifications.cancel(3);
+          this.foodNotif = false;
+        });
+      });
+    });
+
   }
 
 
-  set activeScreen(screen: string){
+  set activeScreen(screen: string) {
     this._activeScreen = screen;
   }
 
-  get activeScreen():string {
+  get activeScreen(): string {
     return this._activeScreen;
   }
 
-  set menuOptions(opt){
-    this.events.publish('menu:Options',opt);
-    this._menuOptions = opt; 
+  set menuOptions(opt) {
+    this.events.publish('menu:Options', opt);
+    this._menuOptions = opt;
   }
 
-  get menuOptions():boolean{
+  get menuOptions(): boolean {
     return this._menuOptions;
   }
 
@@ -111,168 +111,171 @@ export class Guimo {
   /**
    * return enable/disabled btStatus
    */
-  get btStatus():boolean {
+  get btStatus(): boolean {
     return this._btStatus;
   }
 
   /**
    * Set BtStatus
    */
-  set btStatus(status: boolean){
-    this.events.publish('bt:status',status);
+  set btStatus(status: boolean) {
+    this.events.publish('bt:status', status);
     this._btStatus = status;
   }
 
   /**
    * return deviceAndroid object
    */
-  get deviceAndroid(){
+  get deviceAndroid() {
     return this._deviceAndroid;
   }
 
   /**
    * Set deviceAndroid object
    */
-  set deviceAndroid(device){
+  set deviceAndroid(device) {
     this._deviceAndroid = device;
   }
 
   /**
    * return btConnected status
    */
-  get btConnected(): boolean{
+  get btConnected(): boolean {
     return this._btConnected;
   }
 
   /**
    * set btConnected status
    */
-  set btConnected(btConnected: boolean){
+  set btConnected(btConnected: boolean) {
     this._btConnected = btConnected;
-    this.events.publish('bt:Connected',btConnected);
+    this.events.publish('bt:Connected', btConnected);
   }
 
   /**
    * get Guimo Health
    */
-  get health(){
+  get health() {
     return this._health;
   }
 
   /**
    * set Guimo Health
    */
-  set health(h:number){
+  set health(h: number) {
     this._health = h;
   }
 
   /**
    * get Guimo Energy
    */
-  get energy(){
+  get energy() {
     return this._energy;
   }
 
   /**
    * set Guimo Energy
    */
-  set energy(e: number){
+  set energy(e: number) {
     this._energy = e;
   }
 
   /**
    * get Guimo Food
    */
-  get food(){
+  get food() {
     return this._food;
   }
 
   /**
    * set Guimo Food
    */
-  set food(f:number){
+  set food(f: number) {
     this._food = f;
   }
 
   /**
    * Check Food Status of Guimo
-   * return Observable<number>
    */
-  public checkFoodStatus(){
-      var foodInteraval = setInterval(()=>{
-        if(this.btConnected){
-          this.food--;
-        }
-          this.events.publish('guimo:food',this.food);
+  public checkFoodStatus() {
+    var foodInteraval = setInterval(() => {
+      console.log('food->', this.food);
+      if (this.btConnected) {
+        this.food--;
+      }
+      this.events.publish('guimo:food', this.food);
 
-          if( (this.food < 20 && this.health > 25 && this.activeScreen != Guimo.SCREEN_HUNGRY)){
-            this.activeScreen = Guimo.SCREEN_HUNGRY;
-            this.bluetoothSerial.write(this.activeScreen);
+      if ((this.food < 20 && this.health >= 25 && this.activeScreen != Guimo.SCREEN_HUNGRY)) {
+        this.activeScreen = Guimo.SCREEN_HUNGRY;
+        this.bluetoothSerial.write(this.activeScreen);
+      }
+      if (this.food == 0) {
+        clearInterval(foodInteraval);
+        /*var secondInterval = setInterval(()=>{
+          this.food--;
+          this.events.publish('guimo:food',this.food);
+          if(this.food == 50){
+            clearInterval(secondInterval);
           }
-          if(this.food == 0){
-            clearInterval(foodInteraval);
-            /*var secondInterval = setInterval(()=>{
-              this.food--;
-              this.events.publish('guimo:food',this.food);
-              if(this.food == 50){
-                clearInterval(secondInterval);
-              }
-            },2000);*/
-          }
-        }, 206000);  
+        },2000);*/
+      }
+    }, 206000);
   }
 
- /**
-  * check Guimo Energy Status
-  * return Observable<number>
-  */
-  public checkEnergyStatus(){
-   var energyInterval = setInterval(()=>{
-      if(this.btConnected){
+  /**
+   * check Guimo Energy Status
+   */
+  public checkEnergyStatus() {
+    var energyInterval = setInterval(() => {
+      if (this.btConnected) {
         this.energy--;
       }
-        this.events.publish('guimo:energy',this.energy);
-        if(this.energy == 0){
-          clearInterval(energyInterval);
-          /*var secondInterval = setInterval(()=>{
-            this.food--;
-            this.events.publish('guimo:food',this.food);
-            if(this.food == 50){
-              clearInterval(secondInterval);
-            }
-          },2000);*/
-        }
-      }, 207000);  
+      this.events.publish('guimo:energy', this.energy);
+      if (this.energy == 0) {
+        clearInterval(energyInterval);
+        /*var secondInterval = setInterval(()=>{
+          this.food--;
+          this.events.publish('guimo:food',this.food);
+          if(this.food == 50){
+            clearInterval(secondInterval);
+          }
+        },2000);*/
+      }
+    }, 207000);
   }
 
   /**
    * check Guimo Health Status
-   * return Observable<number>
+
    */
-  public checkHealthStatus(){
-    var healthInterval = setInterval(()=>{
-      if(this.btConnected){
+  public checkHealthStatus() {
+    var healthInterval = setInterval(() => {
+      if (this.btConnected) {
         this.health--;
       }
-        this.events.publish('guimo:health',this.health);
-        if(this.health == 0){
-          clearInterval(healthInterval);
-          console.log('cancelou intervalo saude')
-          /*var secondInterval = setInterval(()=>{
-            this.food--;
-            this.events.publish('guimo:food',this.food);
-            if(this.food == 50){
-              clearInterval(secondInterval);
-            }
-          },2000);*/
-        }
-      }, 210000);  
+      this.events.publish('guimo:health', this.health);
+      if ((this.food <= 20 && this.health < 25 && this.activeScreen != Guimo.SCREEN_SICK)) {
+        this.activeScreen = Guimo.SCREEN_HUNGRY;
+        this.bluetoothSerial.write(this.activeScreen);
+      }
+      if (this.health == 0) {
+        clearInterval(healthInterval);
+        console.log('cancelou intervalo saude')
+        /*var secondInterval = setInterval(()=>{
+          this.food--;
+          this.events.publish('guimo:food',this.food);
+          if(this.food == 50){
+            clearInterval(secondInterval);
+          }
+        },2000);*/
+      }
+    }, 210000);
   }
 
   /**
    * Check if Bt is enabled
    */
-  public checkBtEnabled(): Promise<any>{
+  public checkBtEnabled(): Promise<any> {
     return this.bluetoothSerial.isEnabled();
   }
 
@@ -280,9 +283,9 @@ export class Guimo {
    * check if Bt is Connected
    */
   public checkBtConnected(): void {
-    this.bluetoothSerial.isConnected().then(res =>{
+    this.bluetoothSerial.isConnected().then(res => {
       this.btConnected = true;
-    },(err)=>{
+    }, (err) => {
       this.btConnected = false;
     });
   }
@@ -290,14 +293,14 @@ export class Guimo {
   /**
    * Enable Bt
    */
-  public enableBt():Promise<any> {
+  public enableBt(): Promise<any> {
     return this.bluetoothSerial.enable();
   }
 
   /**
    * List Paired devices
    */
-  public listDevices():Promise<any>{
+  public listDevices(): Promise<any> {
     return this.bluetoothSerial.list();
   }
 
@@ -305,32 +308,32 @@ export class Guimo {
    * connect to Device in Android or Windows Phone
    * @param macAddres the MacAddress of device
    */
-  public connectAndroidWp(macAddres:string): Observable<any>{
+  public connectAndroidWp(macAddres: string): Observable<any> {
     return this.bluetoothSerial.connect(macAddres)
   }
 
-  public subscribe(delimiter:string): Observable<any>{
+  public subscribe(delimiter: string): Observable<any> {
     return this.bluetoothSerial.subscribe(delimiter);
   }
 
-  public listUnpaired():Promise<any>{
+  public listUnpaired(): Promise<any> {
     return this.bluetoothSerial.discoverUnpaired();
   }
 
-  public checkRegex(s:string):boolean{
+  public checkRegex(s: string): boolean {
     let regEx = new RegExp("(guimo)[0-9a-zA-Z]*");
     return regEx.test(s);
   }
-  public defaultConnection(){
-    if(this.food < 20 && this.health >= 25){
+  public defaultConnection() {
+    if (this.food < 20 && this.health >= 25) {
       this.activeScreen = Guimo.SCREEN_HUNGRY;
     }
 
-    if(this.food < 20 && this.health < 25){
+    if (this.food < 20 && this.health < 25) {
       this.activeScreen = Guimo.SCREEN_SICK;
     }
 
-    if(this.food > 20 && this. health >= 25){
+    if (this.food > 20 && this.health >= 25) {
       this.activeScreen = Guimo.SCREEN_DEFAULT;
     }
     this.bluetoothSerial.write(this.activeScreen);
@@ -340,31 +343,31 @@ export class Guimo {
    * connect to Device in iOS;
    * @param uuidAddress the UUIDAddress of Device
    */
-  public connectIos(uuidAddress:string){
-    this.bluetoothSerial.connect(uuidAddress).map(res => res.json()).subscribe(data =>{
+  public connectIos(uuidAddress: string) {
+    this.bluetoothSerial.connect(uuidAddress).map(res => res.json()).subscribe(data => {
       console.log(data);
     })
   }
 
-  public addFood(qtd){
+  public addFood(qtd) {
     this.food += qtd;
-    if(this.food > 100){
+    if (this.food > 100) {
       this.food = 100;
     }
-    this.events.publish('guimo:food',this.food);
+    this.events.publish('guimo:food', this.food);
   }
 
-  public addHealth(qtd){
+  public addHealth(qtd) {
     this.health += qtd;
     console.log(this.health);
-    if(this.health > 100){
+    if (this.health > 100) {
       this.health = 100;
     }
 
-    if(this.health <= 0){
+    if (this.health <= 0) {
       this.health = 0;
     };
-    this.events.publish('guimo:health',this.health);
+    this.events.publish('guimo:health', this.health);
   }
 
 }

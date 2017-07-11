@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { Guimo } from './../../providers/guimo';
 import { GuimoDb } from './../../providers/guimo-db';
 
@@ -14,55 +15,71 @@ import { GuimoDb } from './../../providers/guimo-db';
   templateUrl: 'secret.html'
 })
 export class SecretPage {
-  feedback:string = '';
+  feedback: string = '';
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private guimo: Guimo,
     private guimoDb: GuimoDb,
-    private events:Events) {}
+    private events: Events,
+    private blt: BluetoothSerial) { }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SecretPage');
 
   }
 
-  btSet(param){
+  btSet(param) {
     this.guimo.btStatus = param;
     this.guimo.btConnected = param;
     this.feedback = "Bluetooth liberado";
 
   }
 
-  setFood(param){
-      this.events.publish('guimo:food',param);
-      this.feedback = 'Comida setada para '+param;
+  setFood(param) {
+    if(param <= 10){
+      this.guimo.activeScreen = Guimo.SCREEN_HUNGRY;
+      this.blt.write(Guimo.SCREEN_HUNGRY);
+    }else{
+      this.guimo.activeScreen = Guimo.SCREEN_DEFAULT;
+      this.blt.write(Guimo.SCREEN_DEFAULT);
+    }
+    this.guimo.food = param;
+    this.events.publish('guimo:food', param);
+    this.feedback = 'Comida setada para ' + param;
   }
 
-  setHealth(param){
-    this.events.publish('guimo:health',param);
-    this.feedback = 'Saúde setada para '+param;
+  setHealth(param) {
+    if(param <= 10){
+      this.guimo.activeScreen = Guimo.SCREEN_SICK;
+      this.blt.write(Guimo.SCREEN_SICK);
+    }else{
+      this.guimo.activeScreen = Guimo.SCREEN_DEFAULT;
+      this.blt.write(Guimo.SCREEN_DEFAULT);
+    }
+    this.events.publish('guimo:health', param);
+    this.feedback = 'Saúde setada para ' + param;
   }
 
-  openMissions(){
-    this.guimoDb.openMissions().then(()=>{
+  openMissions() {
+    this.guimoDb.openMissions().then(() => {
       console.log('openMissions');
       this.feedback = 'Missões abertas';
-      }).catch(err =>{console.log(err)});
+    }).catch(err => { console.log(err) });
   }
 
-  closeMissions(){
-    this.guimoDb.resetMissions().then(()=>{
+  closeMissions() {
+    this.guimoDb.resetMissions().then(() => {
       console.log('closeMissions');
       this.feedback = 'Missões fechadas';
-      }).catch(err =>{console.log(err)});
+    }).catch(err => { console.log(err) });
   }
 
-  openAllMenu(){
+  openAllMenu() {
     this.guimo.menuOptions = true;
   }
 
-  closeAllMenu(){
+  closeAllMenu() {
     this.guimo.menuOptions = false;
   }
 

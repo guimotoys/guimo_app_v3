@@ -19,14 +19,14 @@
         <ion-col col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let mission of missions">
           <ion-card no-padding>
             <ion-item color="light">
-              <h1 text-capitalize text-center *ngIf="mission.status == 1">{{mission.name}}</h1>
+              <h1 text-capitalize text-center *ngIf="mission.status == 1">{{mission.name}} <ion-icon name="checkmark" *ngIf="mission.status == 2" color="secondary"></ion-icon> </h1>
               <h1 text-capitalize text-center *ngIf="mission.status == 0"> <u> <i class="fa fa-close fa-lg" color="danger"></i> {{mission.name}}</u> </h1>
             </ion-item>
 
             <img src="assets/imgs/{{mission.img}}" alt="{{mission.name}}">
             <ion-row>
               <ion-col>
-                <button ion-button icon-left large full color="teal" *ngIf="mission.status == 1" (click)="loadMissions(mission.id)">
+                <button ion-button icon-left large full color="teal" *ngIf="mission.status >= 1" (click)="loadMissions(mission.id)">
                   <ion-icon name="play"></ion-icon> Jogar
                 </button>
                 <button ion-button icon-left large outline full color="teal" *ngIf="mission.status == 0" disabled>

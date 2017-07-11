@@ -15,69 +15,79 @@ import { ViewChild } from '@angular/core';
   templateUrl: 'mission02-hq.html'
 })
 export class Mission02HqPage {
-   @ViewChild(Slides) slides: Slides;
-   slideToNext:boolean = true;
+  @ViewChild(Slides) slides: Slides;
+  //Variavel pra controlar se pode passar o slide. Se true, não pode, se false, pode
+  slideToNext: boolean;
+  interval: any;
   constructor(
-      public navCtrl: NavController, 
-      public navParams: NavParams,
-      public alert: AlertController,
-      private evt: Events,
-      private blt: BluetoothSerial) {}
-
-  ionViewDidLoad() {
-    let interval = setInterval(()=>{
-      this.blt.write("corpo\n").then(()=>{
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public alert: AlertController,
+    private evt: Events,
+    private blt: BluetoothSerial) {
+    this.interval = setInterval(() => {
+      this.blt.write("corpo\n").then(() => {
         console.log('enviou corpo');
-      }) 
-    },4000);
+      })
+    }, 2000);
 
-    
-    this.evt.subscribe("guimo:nave",(data)=>{
+
+    /**Inscreve no evento guimo:nave pra receber status do corpo */
+    this.evt.subscribe("guimo:nave", (data) => {
       this.slideToNext = data;
-      if(data == false){
+      if (data) {
         let alt = this.alert.create({
           title: 'Legal!!',
           message: 'Agora que você montou a nave, pode continuar a história!!',
-          buttons:['Ok']
+          buttons: ['Ok']
         });
-        clearInterval(interval);
-        setTimeout(()=>{
-          alt.present().then(()=>{
-            this.slideToNext = false;
+        clearInterval(this.interval);
+        setTimeout(() => {
+          alt.present().then(() => {
             this.slides.lockSwipeToNext(false);
           });
-        },1500)
-        
+        }, 1500);
       }
-          
+
     });
   }
 
-  goToMission(){
+  ionViewDidLoad() {
+  }
+
+  ionViewWillLeave() {
+    clearInterval(this.interval);
+  }
+
+  goToMission() {
+    clearInterval(this.interval);
     this.navCtrl.push(Mission02Page);
   }
 
-  countSlides(){
-    console.log(this.slides.getActiveIndex());
+  countSlides() {
     let currentIndex = this.slides.getActiveIndex();
-    if(currentIndex == 5 ){
-      this.slides.lockSwipeToNext(true);
-      let alt = this.alert.create({
-        title:" Monte a nave",
-        message: " Agora você deve montar a nave para continuar!",
-        buttons: ["Ok"]
-      });
+    console.log(this.slideToNext, currentIndex);
 
-      setTimeout(()=>{
-        if(this.slideToNext == true){
-          alt.present();
-        }
-      },1000)
-      
+    if (this.slideToNext == false) {
+      if (currentIndex == 5) {
+        this.slides.lockSwipeToNext(true);
+        let alt = this.alert.create({
+          title: " Monte a nave",
+          message: " Agora você precisa montar a nave para continuar!",
+          buttons: ["Ok"]
+        });
 
-    }else{
-      this.slides.lockSwipeToNext(false);
+        setTimeout(() => {
+          if (this.slideToNext == false) {
+            alt.present();
+          }
+        }, 800);
+
+      } else {
+        this.slides.lockSwipeToNext(false);
+      }
     }
+
   }
 
 }

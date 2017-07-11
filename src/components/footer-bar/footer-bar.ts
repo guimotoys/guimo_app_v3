@@ -12,35 +12,31 @@ import { Events, Platform } from 'ionic-angular';
   selector: 'footer-bar',
   templateUrl: 'footer-bar.html'
 })
-export class FooterBarComponent  implements OnInit{
+export class FooterBarComponent implements OnInit {
 
   foodStatus: number = this.guimo.food;
   energyStatus: number = this.guimo.energy;
   healthStatus: number = this.guimo.health;
 
-  constructor(public guimo:Guimo, private events:Events,private plt:Platform) {
-      
+  constructor(public guimo: Guimo, private events: Events, private plt: Platform) {
+    this.guimo.checkFoodStatus();
+    this.events.subscribe('guimo:food', (food) => {
+      this.foodStatus = food;
+    });
+
+    this.guimo.checkEnergyStatus();
+    this.events.subscribe('guimo:energy', (energy) => {
+      this.energyStatus = energy;
+    });
+
+    this.guimo.checkHealthStatus();
+    this.events.subscribe('guimo:health', (health) => {
+      this.healthStatus = health;
+    });
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
-    this.plt.ready().then( () => {
-      this.guimo.checkFoodStatus();
-        this.events.subscribe('guimo:food',(food)=>{
-          this.foodStatus = food;
-        });  
-
-      this.guimo.checkEnergyStatus();
-      this.events.subscribe('guimo:energy',(energy)=>{
-        this.energyStatus = energy;
-      }); 
-
-      this.guimo.checkHealthStatus();
-      this.events.subscribe('guimo:health',(health)=>{
-        this.healthStatus = health;
-        });     
-    });
-    
   }
 
 }

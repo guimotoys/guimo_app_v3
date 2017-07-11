@@ -144,10 +144,10 @@ export class BtConnectPage {
             this.guimo.subscribe("\n").subscribe((bdata) => {
               console.log(JSON.stringify(bdata));
               if (bdata == "desmontado\r\n") {
-                this.events.publish("guimo:nave", true);
+                this.events.publish("guimo:nave", false);
               }
               if (bdata == "nave\r\n") {
-                this.events.publish("guimo:nave", false);
+                this.events.publish("guimo:nave", true);
               }
             });
             setTimeout(()=>{
@@ -159,12 +159,8 @@ export class BtConnectPage {
             this.guimo.btConnected = this.btIsConnected;
             this.events.publish('bt:Connected', this.btIsConnected);
             setTimeout(() => {
-              let alert = this.alertCtrl.create({
-                title: 'Algo deu Errado :(',
-                message: 'Não foi possivel conectar ao dispositivo ' + this.guimo.deviceAndroid.name,
-                buttons: ['OK']
-              });
-              alert.present();
+              clearInterval
+              this.navCtrl.setRoot(BtConnectPage);
             }, 500);
           });
         }

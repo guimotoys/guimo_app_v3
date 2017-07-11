@@ -77,7 +77,7 @@ export class Mission02Page {
           let alert = this.alt.create({
             title:"Parabéns!!",
             subTitle: "Você concluiu a segunda missão missão!!",
-            message: "<img src='assets/imgs/medalha2_hq.jpg' alt='medalha'></img>",
+            message: "<img src='assets/imgs/medalha2_hq.png' alt='medalha'></img>",
             buttons: [{
               text:"Ok",
               handler: data =>{

@@ -67,11 +67,11 @@ Blockly.Blocks['gole_pocao'] = {
   init: function() {
     this.appendDummyInput()
         .setAlign(Blockly.ALIGN_CENTRE)
-        .appendField("Gole de poção");
+        .appendField("Gole de elixir");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(330);
-    this.setTooltip('Dar um gole da poção');
+    this.setTooltip('Dar um gole de elixir');
     this.setHelpUrl('');
   }
 };
@@ -99,12 +99,12 @@ Blockly.Blocks['guimo_repeat_m1'] = {
         .setCheck(null)
         .setAlign(Blockly.ALIGN_CENTRE)
         .appendField("Repita")
-        .appendField(new Blockly.FieldDropdown([["3","3"]]), "times_m1")
+        .appendField(new Blockly.FieldDropdown([["1","1"], ["2","2"],["3","3"]]), "times_m1")
         .appendField(" vez(es)");
     this.setInputsInline(false);
     this.setNextStatement(false, null);
     this.setColour(150);
-    this.setTooltip('Repetir de 1 a 5 vezes');
+    this.setTooltip('Repetir de 1 a 3 vezes');
     this.setHelpUrl('');
   }
 };
