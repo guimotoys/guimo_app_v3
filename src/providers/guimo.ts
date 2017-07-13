@@ -199,7 +199,6 @@ export class Guimo {
    */
   public checkFoodStatus() {
     var foodInteraval = setInterval(() => {
-      console.log('food->', this.food);
       if (this.btConnected) {
         this.food--;
       }

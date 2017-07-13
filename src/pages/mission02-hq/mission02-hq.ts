@@ -17,7 +17,7 @@ import { ViewChild } from '@angular/core';
 export class Mission02HqPage {
   @ViewChild(Slides) slides: Slides;
   //Variavel pra controlar se pode passar o slide. Se true, não pode, se false, pode
-  slideToNext: boolean;
+  slideToNext: boolean = true;
   interval: any;
   constructor(
     public navCtrl: NavController,

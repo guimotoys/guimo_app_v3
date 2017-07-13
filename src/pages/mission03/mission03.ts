@@ -138,7 +138,9 @@ export class Mission03Page {
         this.blt.write('pocao3\n').then(() => { console.log('enviando pocao3') });
         this.overlayMsg = "Você concluiu a terceira missão!";
         this.overlayTitle = "Parabéns";
-        this.overlayImg = "assets/imgs/medalha_hq.jpg"
+        this.overlayImg = "assets/imgs/medalha3_hq.jpg"
+        //this.guimoDb.updateMissions(2, 1);
+        this.guimoDb.updateMissions(3,2);
         setTimeout(() => {
           this.final = true;
           this.steps = false

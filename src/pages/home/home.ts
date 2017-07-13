@@ -23,6 +23,8 @@ export class HomePage {
   btConnectErr: boolean = false;
   btConnectErrMsg: string = "";
   private secretCount: number = 0;
+  hidePage = true;
+  tutorial = 1;
 
   constructor(
     public navCtrl: NavController,
@@ -47,6 +49,9 @@ export class HomePage {
     this.backMode.setDefaults({
       silent: true
     });
+    this.guimoDb.resetMissions().then(() => {
+      console.log('missoes resetadas');
+    });
 
   }
 
@@ -55,7 +60,19 @@ export class HomePage {
    */
   ionViewDidLoad() {
 
-    
+    setTimeout(() => {
+      this.hidePage = false;
+    }, 350);
+
+  }
+  hideOverlay(){
+    if(this.tutorial == 1){
+      this.tutorial++;
+    }
+
+    if(this.tutorial >= 2){
+      this.hidePage = true;
+    }
   }
 
   /**

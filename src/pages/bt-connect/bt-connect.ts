@@ -24,6 +24,8 @@ export class BtConnectPage {
   connectAttempts: number = 0;
   btStatus: boolean;
   btIsConnected: boolean = false;
+  private cheatCount = 0;
+  arrayBtHelper = 0;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -40,22 +42,20 @@ export class BtConnectPage {
   }
 
   ionViewDidLoad() {
+    this.cheatCount = 0;
     this.plt.ready().then(res => {
+
       this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT).then(() => {
         console.log('Screen Orientation ' + this.screenOrientation.ORIENTATIONS.PORTRAIT);
       });
 
-      this.guimoDb.resetMissions().then(() => {
-        //console.log('missoes resetadas');
-      });
-
       this.guimo.checkBtEnabled().then((data) => {
         this.btStatus = true;
-        this.connectBtAndroid();
+        this.searchConnectPaired();
       }).catch((err) => {
         this.guimo.enableBt().then((data) => {
           this.btStatus = true;
-          this.connectBtAndroid();
+          this.searchConnectPaired();
         }).catch((err) => {
           console.log('BtEnableErr', err);
         });
@@ -63,12 +63,12 @@ export class BtConnectPage {
 
       this.isAndroid = this.plt.isAndroid();
       if (this.isAndroid) {
-        this.guimoDb.getDeviceSelectedAndroid().then(result => {
-          this.guimo.deviceAndroid = result.rows.item(0);
-        }).catch(err => {
-          this.guimo.deviceAndroid = { address: null, class: null, id: null, name: null };
-          console.log(err);
-        });
+        /* this.guimoDb.getDeviceSelectedAndroid().then(result => {
+           this.guimo.deviceAndroid = result.rows.item(0);
+         }).catch(err => {
+           this.guimo.deviceAndroid = { address: null, class: null, id: null, name: null };
+           console.log(err);
+         });*/
       }
 
       this.localNotifications.hasPermission().then(res => {
@@ -82,31 +82,51 @@ export class BtConnectPage {
     });
   }
 
-   private tryConnectUnpaired() {
+  private searchConnectUnpaired() {
+    console.log('searchConnectUnpaired');
     this.guimo.listUnpaired().then((devices) => {
       if (devices.length <= 0) {
-        this.tryConnectUnpaired();
+        this.searchConnectPaired();
       } else {
-        this.connectRoutine(devices);
+        this.tryConnectUnpaired(devices);
+      }
+    }).catch((err) => {
+      console.log('unpaired error', err);
+    });
+
+  }
+
+  private tryConnectUnpaired(devices: any) {
+    if (this.arrayBtHelper < devices.length) {
+      this.connectRoutine(devices, 'unpaired');
+    } else {
+      this.arrayBtHelper = 0;
+      this.searchConnectPaired();
+    }
+  }
+
+  private searchConnectPaired() {
+    console.log('searchConnectPaired');
+    this.guimo.listDevices().then((devices) => {
+      if (devices.length <= 0) {
+        this.searchConnectUnpaired();
+      } else {
+        this.tryConnectPaired(devices);
       }
     }).catch((err) => {
       console.log('paired error', err);
     });
   }
 
-  private tryConnectPaired() {
-    this.guimo.listDevices().then((devices) => {
-      if (devices.length <= 0) {
-        setTimeout(() => {
-          this.tryConnectUnpaired();
-        }, 2000)
+  tryConnectPaired(devices: any) {
+    if (this.arrayBtHelper < devices.length) {
+      console.log('tryConnectIf', this.arrayBtHelper, devices.length)
+      this.connectRoutine(devices, "paired");
+    } else {
 
-      } else {
-        this.connectRoutine(devices);
-      }
-    }).catch((err) => {
-      console.log('unpaired error', err);
-    });
+      this.arrayBtHelper = 0;
+      this.searchConnectUnpaired();
+    }
   }
 
   connectBtAndroid() {
@@ -118,56 +138,78 @@ export class BtConnectPage {
       });
       alert.present();
     } else {
-
-      this.tryConnectPaired();
+      this.searchConnectPaired();
     }
   }
 
-  private connectRoutine(devices: any) {
+  private connectRoutine(devices: any, typeCon: string) {
     let findGuimo = false;
-    if (devices.length <= 0) {
-      this.connectAttempts++;
-      this.tryConnectUnpaired();
-    } else {
-      devices.forEach(device => {
-        if (!findGuimo && this.guimo.checkRegex(device.name)) {
-          console.log("Device name:" + device.name + " - regex_>" + this.guimo.checkRegex(device.name) + "\n");
-          findGuimo = true;
-          this.guimo.deviceAndroid = device;
-          this.guimo.connectAndroidWp(this.guimo.deviceAndroid.address).subscribe(data => {
-            console.log('Conectou em '+device.name);
-            this.btIsConnected = true;
-            this.btStatus = true;
-            this.guimo.btConnected = this.btIsConnected;
-            this.guimo.btStatus = this.btStatus;
-            //this.guimo.defaultConnection();
-            this.guimo.subscribe("\n").subscribe((bdata) => {
-              console.log(JSON.stringify(bdata));
-              if (bdata == "desmontado\r\n") {
-                this.events.publish("guimo:nave", false);
-              }
-              if (bdata == "nave\r\n") {
-                this.events.publish("guimo:nave", true);
-              }
-            });
-            setTimeout(()=>{
-              this.navCtrl.setRoot(HomePage);
-            },500);
-          }, err => {
-            console.log(err);
-            this.btIsConnected = false;
-            this.guimo.btConnected = this.btIsConnected;
-            this.events.publish('bt:Connected', this.btIsConnected);
-            setTimeout(() => {
-              clearInterval
-              this.navCtrl.setRoot(BtConnectPage);
-            }, 500);
-          });
+    this.connectAttempts++;
+    let device = devices[this.arrayBtHelper];
+    if (this.guimo.checkRegex(device.name) && device.name != undefined) {
+      this.guimo.connectAndroidWp(device.address).subscribe(data => {
+        findGuimo = true;
+        console.log('conectou em ', device.name);
+        this.btIsConnected = true;
+        this.btStatus = true;
+        this.guimo.btConnected = this.btIsConnected;
+        this.guimo.btStatus = this.btStatus;
+        this.guimo.subscribe("\n").subscribe((bdata) => {
+          console.log(JSON.stringify(bdata));
+          if (bdata == "desmontado\r\n") {
+            this.events.publish("guimo:nave", false);
+          }
+          if (bdata == "nave\r\n") {
+            this.events.publish("guimo:nave", true);
+          }
+        });
+        setTimeout(() => {
+          if (this.cheatCount < 5) {
+            this.navCtrl.setRoot(HomePage);
+          }
+        }, 1000);
+
+      }, err => {
+        this.arrayBtHelper++;
+        console.log('ErroBt->',err);
+        this.guimo.btConnected = false;
+        //Precisa de um tempo pra começar dnv
+        if (this.cheatCount < 5 && this.guimo.btConnected) {
+          this.navCtrl.setRoot(HomePage);
         }
+        setTimeout(() => {
+          if (typeCon == "paired" && this.guimo.btConnected != true) {
+            console.log('entrou paired');
+            this.tryConnectPaired(devices);
+          }
+          if (typeCon == "unpaired" && this.guimo.btConnected != true) {
+            console.log('entrou unpaired');
+            this.tryConnectUnpaired(devices);
+          }
+        }, 1000);
       });
-      if (!findGuimo) {
-        this.tryConnectUnpaired();
-      }
+    } else {
+      this.arrayBtHelper++;
+      setTimeout(() => {
+        if (typeCon == "paired") {
+          console.log('entrou paired');
+          this.tryConnectPaired(devices);
+        }
+        if (typeCon == "unpaired") {
+          console.log('entrou unpaired');
+          this.tryConnectUnpaired(devices);
+        }
+      }, 1500);
+    }
+  }
+
+  goToMenu() {
+    this.cheatCount++;
+    if (this.cheatCount >= 5) {
+      this.guimo.btConnected = true;
+      this.guimo.btStatus = true;
+      this.navCtrl.setRoot(HomePage);
+
     }
   }
 

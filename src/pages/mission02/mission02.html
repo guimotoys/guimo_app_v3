@@ -6,66 +6,79 @@
 -->
 <ion-content no-padding no-margin>
   <ion-fab middle left>
-    <button ion-fab (click)="resetBalde()" color="light"><ion-icon name="trash"></ion-icon></button>
+    <button ion-fab (click)="resetBalde()" [hidden]="!hidePage" color="light"><ion-icon name="trash"></ion-icon></button>
   </ion-fab>
 
-      <ion-grid>
-        <ion-row>
-            <ion-col col-4>
-              <ion-list no-margin>
-                <ion-list-header color="ygold" no-margin no-padding text-center>
-                  No Balde
-                </ion-list-header>
-                  <ion-item *ngFor="let ps of pocoesSelected; let i = index" no-padding>
-                    <span *ngIf="ps == 1">Elixir Amarela   </span>
-                    <span *ngIf="ps == 2">Elixir Azul  </span>
-                    <span *ngIf="ps == 4">Elixir Vermelha  </span>
-                  </ion-item>
-              </ion-list>
-            </ion-col>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        <ion-list no-margin>
+          <ion-list-header color="ygold" no-margin no-padding text-center>
+            No Balde
+          </ion-list-header>
+          <ion-item *ngFor="let ps of pocoesSelected; let i = index" no-padding>
+            <span *ngIf="ps == 1">Elixir Amarela   </span>
+            <span *ngIf="ps == 2">Elixir Azul  </span>
+            <span *ngIf="ps == 4">Elixir Vermelha  </span>
+          </ion-item>
+        </ion-list>
+      </ion-col>
 
-            <ion-col col-4>
-              <ion-card no-margin>
-                <ion-item color="light">
-                  <h2 text-capitalize text-center>Mistura</h2>
-                </ion-item>
+      <ion-col col-4>
+        <ion-card no-margin>
+          <ion-item color="light">
+            <h2 text-capitalize text-center>Mistura</h2>
+          </ion-item>
 
-                <img src="assets/imgs/{{imgPocao}}" id="pocaoResult" alt="pocao">  
-              </ion-card>
-            </ion-col>
+          <img src="assets/imgs/{{imgPocao}}" id="pocaoResult" alt="pocao">
+        </ion-card>
+      </ion-col>
 
-            <ion-col col-4>
-              <div *ngIf="pocoesSelected.length == 2" no-padding>
-                  <strong *ngIf="somaPocao == 3">Resultado: Elixir Verde</strong>
-                  <strong *ngIf="somaPocao == 5">Resultado: Elixir Laranja</strong>
-                  <strong *ngIf="somaPocao == 6">Resultado: Elixir Roxa</strong>
+      <ion-col col-4>
+        <div *ngIf="pocoesSelected.length == 2" no-padding>
+          <strong *ngIf="somaPocao == 3">Resultado: Elixir Verde</strong>
+          <strong *ngIf="somaPocao == 5">Resultado: Elixir Laranja</strong>
+          <strong *ngIf="somaPocao == 6">Resultado: Elixir Roxa</strong>
 
-              </div>
-            </ion-col>
-            
-        </ion-row>
-        <ion-row>
-          <ion-col col-4 *ngFor="let p of pocoes; let i = index;">
-            
-            <ion-card no-margin>
-              <ion-item color="light">
-                <h2 text-capitalize text-center>{{p.name}}</h2>
-              </ion-item>
+        </div>
+      </ion-col>
 
-              <img src="assets/imgs/{{p.img}}" alt="pocao_amarela">
-              <ion-row>
-                <ion-col col-12>
-                  <button ion-button icon-only outline full *ngIf="!p.selected" color="secondary" (click)="misturaPocao(p.value, i)">
+    </ion-row>
+    <ion-row>
+      <ion-col col-4 *ngFor="let p of pocoes; let i = index;">
+
+        <ion-card no-margin>
+          <ion-item color="light">
+            <h2 text-capitalize text-center>{{p.name}}</h2>
+          </ion-item>
+
+          <img src="assets/imgs/{{p.img}}" alt="pocao_amarela">
+          <ion-row>
+            <ion-col col-12>
+              <button ion-button icon-only outline full *ngIf="!p.selected" color="secondary" (click)="misturaPocao(p.value, i)">
                     <ion-icon name="add-circle"></ion-icon> 
                   </button>
-                  <button ion-button icon-only full *ngIf="p.selected" color="secondary" (click)="misturaPocao(p.value, i)" disabled>
+              <button ion-button icon-only full *ngIf="p.selected" color="secondary" (click)="misturaPocao(p.value, i)" disabled>
                     <ion-icon name="add-circle"></ion-icon> 
                   </button>
-                </ion-col>
-              </ion-row>
-            </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-card>
 
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="overlay-page" padding text-center [hidden]="hidePage">
+    <h2>{{overlayTitle}}</h2>
+    <img [src]='overlayImg' style="width:60%; height:70%;" /> <br>
+    <div>
+      <p *ngIf="overlayMsg != ''">
+        {{overlayMsg}}
+      </p>
+      <br>
+      <button ion-button color="pink" *ngIf="final" (click)="finishMission()">Sair</button>
+      
+    </div>
+  </div>
 </ion-content>

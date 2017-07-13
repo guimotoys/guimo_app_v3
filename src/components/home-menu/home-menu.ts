@@ -34,16 +34,19 @@ export class HomeMenuComponent implements OnInit{
       this.nav = this.app.getActiveNav();
   }
 
+  ionViewWillLeave(){
+    this.evts.unsubscribe('bt:Connected');
+    this.evts.unsubscribe('bt:status');
+  }
+
   ngOnInit(){
     this.btStatus = this.guimo.btStatus;
     this.btConnected = this.guimo.btConnected;
     this.evts.subscribe('bt:Connected',(cnt)=>{
       this.btConnected = cnt;
-      console.log('home-menu btcon',this.btConnected);
     });
     this.evts.subscribe('bt:status',(sts)=>{
       this.btStatus = sts;
-      console.log('home-menu btstatus',this.btConnected);
     });
 
     this.evts.subscribe('menu:Options',(sts)=>{

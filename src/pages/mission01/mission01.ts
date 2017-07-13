@@ -137,7 +137,7 @@ export class Mission01Page {
 
   finishMission() {
     clearInterval(this.interval);
-    this.navCtrl.popTo(this.navCtrl.getByIndex(1))
+    this.navCtrl.popTo(this.navCtrl.getByIndex(1));
   }
 
   runCode() {
@@ -157,14 +157,6 @@ export class Mission01Page {
       if (codes.length == 1 && this.firstRun) {
         this.firstRun = false;
         this.blt.write('coracao1\n').then(() => { console.log('enviado coracao1') });
-        /*let alert = this.alertCtrl.create({
-          title: "Dicas",
-          message: "<img src='assets/imgs/tutorial1_3.jpg' alt='dica3'></img>",
-          buttons: ["Ok"]
-        });
-        setTimeout(() => {
-          alert.present();
-        }, 600);*/
         this.overlayMsg = "";
         this.overlayTitle = "Dica";
         this.overlayImg = "assets/imgs/tutorial1_3.jpg"
@@ -179,16 +171,8 @@ export class Mission01Page {
         this.secndRun = true;
         this.firstRun = false;
         this.blt.write('coracao2\n').then(() => { console.log('enviado coracao2') });
-        /*let alert = this.alertCtrl.create({
-          title: "Dicas",
-          message: "<img src='assets/imgs/tutorial1_4.jpg' alt='dica3'></img>",
-          buttons: ["Ok"]
-        });*/
         this.toolbox.innerHTML += '<block type="guimo_repeat_m1" colour="210"></block>';
         this.workspace.updateToolbox(this.toolbox);
-        /*setTimeout(() => {
-          alert.present();
-        }, 600);*/
         this.overlayMsg = "";
         this.overlayTitle = "Dica";
         this.overlayImg = "assets/imgs/tutorial1_4.jpg"
@@ -202,31 +186,15 @@ export class Mission01Page {
 
     if (!isNaN(repeatQtd)) {
       this.blt.write('coracao3\n').then(() => { console.log('enviando coracao3') });
-      /*let alert = this.alertCtrl.create({
-        title:"Parabéns!!",
-        subTitle: "Você concluiu a primeira missão!!",
-        message: "<img src='assets/imgs/medalha_hq.jpg' alt='medalha'></img>",
-        buttons: [{
-          text:"Ok",
-          handler: data =>{
-            this.guimoDb.updateMissions(2,2).then(()=>{
-              console.log('Updated mission 01');
-              this.navCtrl.popTo(this.navCtrl.getByIndex(1));
-            });
-          }
-        }]
-      });
-      setTimeout(()=>{
-        alert.present();
-      },1000);*/
-      this.guimoDb.updateMissions(2, 2).then(() => {
+      this.guimoDb.updateMissions(2, 1).then(() => {
+        this.guimoDb.updateMissions(1,2);
         console.log('Updated mission 01');
         this.overlayMsg = "Você concluiu a primeira missão";
         this.overlayTitle = "Parabéns";
         this.overlayImg = "assets/imgs/medalha_hq.jpg"
         setTimeout(() => {
           this.final = true;
-          this.steps = false
+          this.steps = false;
           this.hidePage = false;
         }, 1200);
       });

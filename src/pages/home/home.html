@@ -10,11 +10,18 @@
 
   <home-menu></home-menu>
   
+   <div class="overlay-page" padding text-center *ngIf="!hidePage" (click)='hideOverlay()'>
+    <div id="tutorial1" *ngIf="tutorial == 1" class="animated bounceInUp">
+      <i class="fa fa-arrow-up fa-4x" color="teal"></i><br>
+      <h2>Oláaa <i class="fa fa-smile-o" color="secondary"></i> </h2> <br>
+      <h3>Esse é o menu para as missões do guimo!!</h3>
+    </div>
+  </div>
 
   <ion-fab right top edge #fab>
     <button ion-fab color="ygold" mini><ion-icon name="md-arrow-dropdown"></ion-icon></button>
     <ion-fab-list side="bottom">
-      <button ion-fab (click)="openPage('config',fab)" ><i class="fa fa-cog fa-2x"></i></button>
+      <button ion-fab (click)="openPage('config',fab)"><i class="fa fa-cog fa-2x"></i></button>
       <!--<button ion-fab *ngIf="(btStatus && !btConnected && isAndroid)" (click)="connectBtAndroid(fab)"><ion-icon name="bluetooth"></ion-icon></button>-->
     </ion-fab-list>
   </ion-fab>
@@ -22,4 +29,3 @@
 </ion-content>
 
 <footer-bar></footer-bar>
-

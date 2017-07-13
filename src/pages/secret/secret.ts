@@ -1,3 +1,4 @@
+import { BtConnectPage } from './../bt-connect/bt-connect';
 import { Component } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
@@ -27,6 +28,10 @@ export class SecretPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SecretPage');
 
+  }
+  connectAgain(){
+    this.guimo.btConnected = false;
+    this.navCtrl.setRoot(BtConnectPage);
   }
 
   btSet(param) {
