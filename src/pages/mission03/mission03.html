@@ -32,7 +32,7 @@
     {{remaining}}
   </div>
 
-  <div class="overlay-page" padding text-center [hidden]="hidePage">
+  <div class="overlay-page" padding text-center [hidden]="hidePage" (click)="finishMission()">
     <h2>{{overlayTitle}}</h2>
     <img [src]='overlayImg' style="width:60%; height:70%;" /> <br>
     <div>
@@ -40,8 +40,7 @@
         {{overlayMsg}}
       </p>
       <br>
-      <button ion-button color="pink" *ngIf="final" (click)="finishMission()">Sair</button>
-      <button ion-button color="ygold" *ngIf="steps" (click)="continueMission()">Continuar</button>
+      <button ion-button color="pink" *ngIf="final" class="animated pulse infinite" (click)="finishMission()">Sair</button>
     </div>
   </div>
  

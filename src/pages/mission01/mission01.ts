@@ -22,7 +22,7 @@ export class Mission01Page {
   toolbox: any;
   firstRun: boolean = true;
   secndRun: boolean = false;
-  hidePage:boolean = true;
+  hidePage: boolean = true;
   overlayMsg: string = "";
   overlayTitle: string = "";
   overlayImg: String = "";
@@ -84,7 +84,7 @@ export class Mission01Page {
 
       if (evt.type == Blockly.Events.CREATE) {
 
-        if ( this.firstRun) {
+        if (this.firstRun) {
           console.log('teste tutorial 2')
           /*let alert = this.alertCtrl.create({
             title:"Dicas",
@@ -101,7 +101,7 @@ export class Mission01Page {
           setTimeout(() => {
             this.hidePage = false;
             this.dicas = "Agora é só apertar o play!! "
-          }, 800);
+          }, 400);
         }
       }
     });
@@ -132,7 +132,11 @@ export class Mission01Page {
   }
 
   continueMission() {
-    this.hidePage = true;
+    if (this.final == false) {
+      this.hidePage = true;
+    } else {
+      this.navCtrl.popTo(this.navCtrl.getByIndex(1));
+    }
   }
 
   finishMission() {
@@ -163,7 +167,7 @@ export class Mission01Page {
         setTimeout(() => {
           this.hidePage = false;
           this.dicas = "Agora o coração do Guimo precisa bater 2 vezes"
-          
+
         }, 1000);
       }
 
@@ -185,19 +189,41 @@ export class Mission01Page {
     }
 
     if (!isNaN(repeatQtd)) {
-      this.blt.write('coracao3\n').then(() => { console.log('enviando coracao3') });
-      this.guimoDb.updateMissions(2, 1).then(() => {
-        this.guimoDb.updateMissions(1,2);
-        console.log('Updated mission 01');
-        this.overlayMsg = "Você concluiu a primeira missão";
-        this.overlayTitle = "Parabéns";
-        this.overlayImg = "assets/imgs/medalha_hq.jpg"
+      if (repeatQtd == 1) {
+        this.blt.write('coracao1\n').then(() => { console.log('enviando coracao3') });
+        this.overlayMsg = "<i class='fa fa-frown-o' color='danger'></i>  O Guimo precisa bater o coração 3 vezes";
+        this.overlayTitle = "Oops";
+        this.overlayImg = "";
         setTimeout(() => {
-          this.final = true;
-          this.steps = false;
           this.hidePage = false;
-        }, 1200);
-      });
+        }, 800);
+      }
+
+      if (repeatQtd == 2) {
+        this.blt.write('coracao2\n').then(() => { console.log('enviando coracao3') });
+        this.overlayMsg = "<i class='fa fa-frown-o' color='danger'></i> O Guimo precisa bater o coração 3 vezes";
+        this.overlayTitle = "Oops";
+        this.overlayImg = ""
+        setTimeout(() => {
+          this.hidePage = false;
+        }, 800);
+      }
+
+      if (repeatQtd > 2) {
+        this.blt.write('coracao3\n').then(() => { console.log('enviando coracao3') });
+        this.guimoDb.updateMissions(2, 1).then(() => {
+          this.guimoDb.updateMissions(1, 2);
+          console.log('Updated mission 01');
+          this.overlayMsg = "Você concluiu a primeira missão";
+          this.overlayTitle = "Parabéns";
+          this.overlayImg = "assets/imgs/medalha_hq.jpg"
+          setTimeout(() => {
+            this.final = true;
+            this.steps = false;
+            this.hidePage = false;
+          }, 1200);
+        });
+      }
 
     }
   }
