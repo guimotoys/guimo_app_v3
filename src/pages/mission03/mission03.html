@@ -34,7 +34,7 @@
 
   <div class="overlay-page" padding text-center [hidden]="hidePage" (click)="finishMission()">
     <h2>{{overlayTitle}}</h2>
-    <img [src]='overlayImg' style="width:60%; height:70%;" /> <br>
+    <img [src]='overlayImg' [ngStyle]="style" /> <br>
     <div>
       <p *ngIf="overlayMsg != ''">
         {{overlayMsg}}

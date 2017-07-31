@@ -11,8 +11,16 @@
     </ion-row>
 
     <div *ngIf="menuOptions == true">
-      <ion-row no-padding no-margin>
+      <ion-row no-margin no-padding>
+        <ion-col col-12 no-margin no-padding>
+          <ion-card class="mission-height" (click)="openPage('qr')">
+            <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">
+            <div class="card-title"> Qr </div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
 
+      <ion-row no-padding no-margin>
         <ion-col col-8 no-margin no-padding>
           <ion-card class="default-height" (click)="openPage('foods')">
             <img src="http://ionicframework.com/dist/preview-app/www/assets/img/card-saopaolo.png">

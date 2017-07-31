@@ -67,11 +67,11 @@ Blockly.Blocks['gole_pocao'] = {
   init: function() {
     this.appendDummyInput()
         .setAlign(Blockly.ALIGN_CENTRE)
-        .appendField("Gole de elixir");
+        .appendField("Gole de poção");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(330);
-    this.setTooltip('Dar um gole de elixir');
+    this.setTooltip('Dar um gole de poção');
     this.setHelpUrl('');
   }
 };
@@ -83,7 +83,7 @@ Blockly.Blocks['guimo_repeat'] = {
         .setCheck(null)
         .setAlign(Blockly.ALIGN_CENTRE)
         .appendField("Repita")
-        .appendField(new Blockly.FieldDropdown([["1","1"], ["2","2"], ["3","3"], ["4","4"], ["5","5"]]), "times")
+        .appendField(new Blockly.FieldDropdown([["1","1"], ["2","2"], ["3","3"], ["4","4"], ["5","5"], ["6","6"], ["7","7"], ["8","8"], ["9","9"], ["10","10"]]), "times")
         .appendField(" vez(es)");
     this.setInputsInline(false);
     this.setNextStatement(false, null);

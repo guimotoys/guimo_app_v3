@@ -17,9 +17,9 @@
             No Balde
           </ion-list-header>
           <ion-item *ngFor="let ps of pocoesSelected; let i = index" no-padding>
-            <span *ngIf="ps == 1">Elixir Amarela   </span>
-            <span *ngIf="ps == 2">Elixir Azul  </span>
-            <span *ngIf="ps == 4">Elixir Vermelha  </span>
+            <span *ngIf="ps == 1">Poção Amarela   </span>
+            <span *ngIf="ps == 2">Poção Azul  </span>
+            <span *ngIf="ps == 4">Poção Vermelha  </span>
           </ion-item>
         </ion-list>
       </ion-col>
@@ -36,9 +36,9 @@
 
       <ion-col col-4>
         <div *ngIf="pocoesSelected.length == 2" no-padding>
-          <strong *ngIf="somaPocao == 3">Resultado: Elixir Verde</strong>
-          <strong *ngIf="somaPocao == 5">Resultado: Elixir Laranja</strong>
-          <strong *ngIf="somaPocao == 6">Resultado: Elixir Roxa</strong>
+          <strong *ngIf="somaPocao == 3">Resultado: Poção Verde</strong>
+          <strong *ngIf="somaPocao == 5">Resultado: Poção Laranja</strong>
+          <strong *ngIf="somaPocao == 6">Resultado: Poção Roxa</strong>
 
         </div>
       </ion-col>
@@ -71,13 +71,13 @@
 
   <div class="overlay-page" padding text-center [hidden]="hidePage" (click)="finishMission()">
     <h2>{{overlayTitle}}</h2>
-    <img [src]='overlayImg' style="width:60%; height:70%;" /> <br>
+    <img [src]='overlayImg' [ngStyle]="style" /> <br>
     <div>
       <p *ngIf="overlayMsg != ''">
         {{overlayMsg}}
       </p>
       <br>
-      <button ion-button color="pink" *ngIf="final" class="animated pulse infinite" (click)="finishMission()">Sair</button>
+      <button ion-button color="pink" *ngIf="final" class="animated pulse infinite" (click)="finishMission()">Proxima Missão</button>
       
     </div>
   </div>

@@ -16,7 +16,8 @@ declare var Blockly: any;
   templateUrl: 'mission03.html',
 })
 export class Mission03Page {
-  dicas: string = "Faça o guimo beber 3 goles de elixir";
+  style:any = {width:'60%', height:'70%'};
+  dicas: string = "Faça o guimo beber 3 goles de poção";
   workspace: any;
   remaining: any = 2;
   toolbox: any;
@@ -97,7 +98,7 @@ export class Mission03Page {
         let alert = this.alertCtrl.create({
           title: "Oops!!",
           subTitle: "Parece que não está certo",
-          message: "Você deu apenas 1 gole do elixir para o Guimo e ele precisa de 3",
+          message: "Você deu apenas 1 gole do poção para o Guimo e ele precisa de 3",
           buttons: ["Ok"]
         });
 
@@ -115,7 +116,7 @@ export class Mission03Page {
         let alert = this.alertCtrl.create({
           title: "Oops!!",
           subTitle: "Parece que não está certo",
-          message: "Você deu 2 goles do elixir para o Guimo mas ele precisa de 3",
+          message: "Você deu 2 goles do poção para o Guimo mas ele precisa de 3",
           buttons: ["Ok"]
         });
 
@@ -136,6 +137,7 @@ export class Mission03Page {
       }
       if (repeatQtd >= 3) {
         this.blt.write('pocao3\n').then(() => { console.log('enviando pocao3') });
+        this.style = {width: '35%',height:'70%'};
         this.overlayMsg = "Você concluiu a terceira missão!";
         this.overlayTitle = "Parabéns";
         this.overlayImg = "assets/imgs/medalha3_hq.jpg"

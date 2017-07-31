@@ -29,6 +29,12 @@ export class SecretPage {
     console.log('ionViewDidLoad SecretPage');
 
   }
+
+  testarBLE(){
+    this.blt.write('c').then(result =>{
+      console.log('TesteBLE->', result );
+    });
+  }
   connectAgain(){
     this.guimo.btConnected = false;
     this.navCtrl.setRoot(BtConnectPage);

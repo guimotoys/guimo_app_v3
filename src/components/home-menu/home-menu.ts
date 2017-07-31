@@ -1,3 +1,4 @@
+import { QrTestPage } from './../../pages/qr-test/qr-test';
 import { Guimo } from './../../providers/guimo';
 import { App, NavController, Platform, Events } from 'ionic-angular';
 import { Component, OnInit } from '@angular/core';
@@ -65,6 +66,9 @@ export class HomeMenuComponent implements OnInit{
          this.nav.push(ConfigPage); 
       }
 
+      if(p == 'qr'){
+        this.nav.push(QrTestPage);
+      }
 
       if(p === "blocks"){
         this.nav.push(BlocksPage);

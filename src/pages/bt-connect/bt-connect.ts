@@ -85,6 +85,7 @@ export class BtConnectPage {
   private searchConnectUnpaired() {
     console.log('searchConnectUnpaired');
     this.guimo.listUnpaired().then((devices) => {
+      console.log('unpairedDev', devices);
       if (devices.length <= 0) {
         this.searchConnectPaired();
       } else {
@@ -108,6 +109,7 @@ export class BtConnectPage {
   private searchConnectPaired() {
     console.log('searchConnectPaired');
     this.guimo.listDevices().then((devices) => {
+      console.log('pairedDev', devices);
       if (devices.length <= 0) {
         this.searchConnectUnpaired();
       } else {
@@ -161,6 +163,9 @@ export class BtConnectPage {
           }
           if (bdata == "nave\r\n") {
             this.events.publish("guimo:nave", true);
+          }
+          if(bdata == "continue\r\n"){
+            this.events.publish("guimo:continue",true);
           }
         });
         setTimeout(() => {

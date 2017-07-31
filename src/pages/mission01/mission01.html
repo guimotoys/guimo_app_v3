@@ -20,11 +20,11 @@
   </ion-grid>
 
   <ion-fab right bottom>
-    <button ion-fab color="secondary" [hidden]="!hidePage" (click)="runCode()"><ion-icon name="play" ></ion-icon></button>
+    <button ion-fab color="secondary" [hidden]="(!hidePage || !spinHide)" (click)="runCode()"><ion-icon name="play" ></ion-icon></button>
   </ion-fab>
 
   <ion-fab left bottom>
-    <button ion-fab color="pink" mini [hidden]="!hidePage" (click)="back()"><ion-icon name="close" ></ion-icon></button>
+    <button ion-fab color="pink" mini [hidden]="(!hidePage || !spinHide)" (click)="back()"><ion-icon name="close" ></ion-icon></button>
   </ion-fab>
 
   <div class="count-blocks">
@@ -33,13 +33,20 @@
 
   <div class="overlay-page" padding text-center [hidden]="hidePage" (click)="continueMission()">
     <h2>{{overlayTitle}}</h2>
-    <img [src]='overlayImg' *ngIf="overlayImg != ''" style="width:60%; height:70%;" /> <br>
+    <img [src]='overlayImg' *ngIf="overlayImg != ''" [ngStyle]="style" /> <br>
     <div>
       <p *ngIf="overlayMsg != ''" [innerHTML]=" overlayMsg">
         
       </p>
       <br>
-      <button ion-button color="pink" class="animated pulse infinite" *ngIf="final" (click)="finishMission()">Sair</button>
+      <button ion-button color="pink" class="animated pulse infinite" *ngIf="final" (click)="finishMission()">Próxima Missão</button>
+    </div>
+  </div>
+
+  <div class="overlay-page" padding text-center [hidden]="spinHide" (click)="continueMission()">
+    <div class="spinpos">
+      <ion-spinner class="spinner"></ion-spinner><br> 
+      Você deveria estar olhando para o guimo!!!
     </div>
   </div>
 

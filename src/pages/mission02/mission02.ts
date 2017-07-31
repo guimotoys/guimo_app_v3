@@ -14,24 +14,24 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
   templateUrl: 'mission02.html'
 })
 export class Mission02Page {
-
+  style:any = {width:'60%', height:'70%'};
   pocoes = [
     {
       img: 'pocao1.png',
       value: 1,
-      name: 'Elixir Amarela',
+      name: 'Poção Amarela',
       selected: false,
     },
     {
       img: 'pocao2.png',
       value: 2,
-      name: 'Elixir Azul',
+      name: 'Poção Azul',
       selected: false,
     },
     {
       img: 'pocao4.png',
       value: 4,
-      name: 'Elixir Vermelha',
+      name: 'Poção Vermelha',
       selected: false,
     },
   ];
@@ -85,6 +85,7 @@ export class Mission02Page {
         this.guimoDb.updateMissions(3, 1).then(() => {
           this.guimoDb.updateMissions(2, 2);
           console.log('Updated mission 01');
+          this.style = {width: '35%',height:'70%'};
           this.overlayMsg = "Você concluiu a segunda missão";
           this.overlayTitle = "Parabéns";
           this.overlayImg = "assets/imgs/medalha2_hq.png"

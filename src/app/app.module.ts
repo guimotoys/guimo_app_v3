@@ -1,3 +1,4 @@
+import { QrTestPageModule } from './../pages/qr-test/qr-test.module';
 import { BtConnectPageModule } from './../pages/bt-connect/bt-connect.module';
 import { MediaPlugin } from '@ionic-native/media';
 import { SecretPage } from './../pages/secret/secret';
@@ -24,6 +25,7 @@ import { VirtualControllerPage } from './../pages/virtual-controller/virtual-con
 import { MyApp } from './app.component';
 
 import { BackgroundMode } from '@ionic-native/background-mode';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
@@ -74,6 +76,7 @@ const cloudSettings: CloudSettings = {
     Mission03HqPageModule,
     Mission03PageModule,
     BtConnectPageModule,
+    QrTestPageModule,
     IonicModule.forRoot(MyApp),
     CloudModule.forRoot(cloudSettings)
   ],
@@ -97,6 +100,7 @@ const cloudSettings: CloudSettings = {
     VirtualControllerPage
   ],
   providers: [
+    BarcodeScanner,
     BluetoothSerial,
     ScreenOrientation,
     SplashScreen,
