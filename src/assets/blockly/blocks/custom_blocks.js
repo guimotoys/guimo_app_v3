@@ -88,7 +88,7 @@ Blockly.Blocks['guimo_repeat'] = {
     this.setInputsInline(false);
     this.setNextStatement(false, null);
     this.setColour(150);
-    this.setTooltip('Repetir de 1 a 5 vezes');
+    this.setTooltip('Repetir de 1 a 10 vezes');
     this.setHelpUrl('');
   }
 };
@@ -119,6 +119,23 @@ Blockly.Blocks['trocar_cara'] = {
     this.setNextStatement(true, "String");
     this.setColour(60);
     this.setTooltip('Trocar o rosto do guimo');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.Blocks['ifelse_guimo'] = {
+  init: function() {
+    this.appendStatementInput("Se")
+        .setCheck(null)
+        .setAlign(Blockly.ALIGN_RIGHT)
+        .appendField("Se")
+        .appendField(new Blockly.FieldDropdown([["INFRA_D","infrad"], ["INFRA_E","infrae"], ["AMBOS","ambos"]]), "ifcond");
+    this.appendStatementInput("Senao")
+        .setCheck(null)
+        .appendField("senão");
+    this.setPreviousStatement(true, null);
+    this.setColour(150);
+    this.setTooltip('Se... senão');
     this.setHelpUrl('');
   }
 };

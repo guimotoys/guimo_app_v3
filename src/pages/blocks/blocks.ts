@@ -57,13 +57,13 @@ export class BlocksPage {
     Blockly.JavaScript.addReservedWords('code');
     var code = Blockly.JavaScript.workspaceToCode(this.workspace);
     let codes = code.split(',');
-    codes.splice(-1,1);
-  
+    
+    console.log(codes);
     let i =0;
     let tam = codes.length -1;
     let repeatQtd = parseInt(codes[tam]);
 
-    if(!isNaN(repeatQtd)){
+    /*if(!isNaN(repeatQtd)){
         var codesLength = codes.length - 1;
         var code;
         var arrayCodes: Array<any> = [];
@@ -90,11 +90,11 @@ export class BlocksPage {
         };
       }
 
-      if(isNaN(repeatQtd)){
+      /*if(isNaN(repeatQtd)){
         for(var n = 0; n < codes.length; n++){
           this.runCodeSleepLoop(n, codes[n],500);
         }
-      }
+      }*/
   }
 
   private runCodeSleepLoop(i:number, code:any,time:number){

@@ -43,8 +43,6 @@ Blockly.JavaScript['guimo_repeat'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var code = branch;
   code += dropdown_times+",";
-   // console.log(statements_repeat);
-  
   //code += branch; 
   return code;
 };
@@ -67,5 +65,16 @@ Blockly.JavaScript['trocar_cara'] = function(block) {
   var dropdown_trocar_cara = block.getFieldValue('trocar_cara');
   // TODO: Assemble JavaScript into code variable.
   var code = dropdown_trocar_cara+'\n,';
+  return code;
+};
+
+Blockly.JavaScript['ifelse_guimo'] = function(block) {
+  var dropdown_ifcond = block.getFieldValue('ifcond');
+  var statements_se = Blockly.JavaScript.statementToCode(block, 'Se');
+  var statements_senao = Blockly.JavaScript.statementToCode(block, 'Senao');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "cond:"+dropdown_ifcond+", if:"+ statements_se+", else:"+ statements_senao+",";
+  //var code = statements_se;
+  
   return code;
 };
