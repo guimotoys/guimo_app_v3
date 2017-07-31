@@ -61,7 +61,6 @@ export class Mission01Page {
 
         if (this.firstRun) {
           this.firstRun = false;
-          this.blt.write('coracao1\n').then(() => { console.log('enviado coracao1') });
           this.overlayMsg = "";
           this.overlayTitle = "Dica";
           this.overlayImg = "assets/imgs/tutorial1_3.jpg"
@@ -195,6 +194,7 @@ export class Mission01Page {
 
       if (codes.length == 1 && this.firstRun) {
         /**/
+        this.blt.write('coracao1\n').then(() => { console.log('enviado coracao1') });
         this.spinHide = false;
       }
 
@@ -214,7 +214,7 @@ export class Mission01Page {
       this.secndRun = false;
       this.firstRun = false;
       if (repeatQtd == 1) {
-        this.blt.write('coracao1\n').then(() => { console.log('enviando coracao3') });
+        this.blt.write('coracao1\n').then(() => { console.log('enviando coracao1') });
         this.overlayMsg = "<i class='fa fa-frown-o' color='danger'></i>  O Guimo precisa bater o coração 3 vezes";
         this.overlayTitle = "Oops";
         this.overlayImg = "";
@@ -224,7 +224,7 @@ export class Mission01Page {
       }
 
       if (repeatQtd == 2) {
-        this.blt.write('coracao2\n').then(() => { console.log('enviando coracao3') });
+        this.blt.write('coracao2\n').then(() => { console.log('enviando coracao2') });
         this.overlayMsg = "Não parece correto <i class='fa fa-frown-o' color='danger'></i> <br> O Guimo precisa bater o coração 3 vezes";
         this.overlayTitle = "Oops";
         this.overlayImg = ""

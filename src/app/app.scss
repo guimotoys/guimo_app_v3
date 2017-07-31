@@ -47,3 +47,20 @@
     right: 15px;
     box-shadow: 5px 5px 2px #111;
 }
+
+.spinpos{
+    height: 100%;
+    width: 100%;
+    margin: auto;
+    position: absolute;
+    top:40%;
+    color: #fff;
+    font-size: 1.3em;
+}
+
+ion-spinner .spinner{
+    width: 36px;
+    height: 36px;
+    stroke: #fff;
+    fill: #fff;
+}

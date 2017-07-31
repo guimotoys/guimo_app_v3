@@ -21,11 +21,11 @@
   </ion-grid>
 
   <ion-fab right bottom>
-    <button ion-fab color="secondary" [hidden]="!hidePage" (click)="runCode()"><ion-icon name="play" ></ion-icon></button>
+    <button ion-fab color="secondary" [hidden]="(!hidePage || !spinHide)" (click)="runCode()"><ion-icon name="play" ></ion-icon></button>
   </ion-fab>
 
   <ion-fab left bottom> 
-    <button ion-fab color="pink" mini [hidden]="!hidePage" (click)="back()"><ion-icon name="close" ></ion-icon></button>
+    <button ion-fab color="pink" mini [hidden]="(!hidePage || !spinHide)" (click)="back()"><ion-icon name="close" ></ion-icon></button>
   </ion-fab>
 
   <div class="count-blocks">
@@ -41,6 +41,13 @@
       </p>
       <br>
       <button ion-button color="pink" *ngIf="final" class="animated pulse infinite" (click)="finishMission()">Sair</button>
+    </div>
+  </div>
+
+  <div class="overlay-page" padding text-center [hidden]="spinHide">
+    <div class="spinpos">
+      <ion-spinner class="spinner"></ion-spinner><br> 
+      Você deveria estar olhando para o guimo!!!
     </div>
   </div>
  
