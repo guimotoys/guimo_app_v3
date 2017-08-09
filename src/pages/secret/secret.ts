@@ -72,18 +72,15 @@ export class SecretPage {
     this.feedback = 'Saúde setada para ' + param;
   }
 
-  openMissions() {
-    this.guimoDb.openMissions().then(() => {
-      console.log('openMissions');
-      this.feedback = 'Missões abertas';
-    }).catch(err => { console.log(err) });
+  openMissions(mission) {
+    this.guimo.activeScreen = Guimo.SCREEN_SICK;
+    this.blt.write(this.guimo.activeScreen);
+    
+    this.guimoDb.updateMissions(mission,1);
   }
 
-  closeMissions() {
-    this.guimoDb.resetMissions().then(() => {
-      console.log('closeMissions');
-      this.feedback = 'Missões fechadas';
-    }).catch(err => { console.log(err) });
+  closeMissions(mission) {
+    this.guimoDb.updateMissions(mission,0);
   }
 
   openAllMenu() {

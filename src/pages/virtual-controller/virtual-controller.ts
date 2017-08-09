@@ -2,7 +2,8 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform } from 'ionic-angular';
-declare var VirtualJoystick: any;
+import { MediaPlugin, MediaObject } from '@ionic-native/media';
+//declare var VirtualJoystick: any;
 /*
   Generated class for the VirtualController page.
 
@@ -14,56 +15,30 @@ declare var VirtualJoystick: any;
   templateUrl: 'virtual-controller.html'
 })
 export class VirtualControllerPage {
-  force:any = 0;
+  force: any = 0;
   angle: any = 0;
   direction: any = "";
-  interval:any = null;
+  interval: any = null;
+  isDisabled: boolean = false;
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public plt:Platform,
-    private scr:ScreenOrientation,
-    private blt:BluetoothSerial) {
-    
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public plt: Platform,
+    private scr: ScreenOrientation,
+    private blt: BluetoothSerial,
+    private media: MediaPlugin) {
+
   }
 
-  ionViewWillLoad(){
-    this.plt.ready().then(()=>{
+  ionViewWillLoad() {
+    this.plt.ready().then(() => {
       this.scr.lock(this.scr.ORIENTATIONS.LANDSCAPE);
 
-      var joystick = new VirtualJoystick({
-        container:document.getElementById('space'),
-        baseX: 110,
-        baseY: 100,
-        stationaryBase:true,
-        limitStickTravel:true,
-        stickRadius: 50,
-        strokeStyle:'white',
-        mouseSupport: true
-      });
 
-      this.interval = setInterval(()=>{
-        if(joystick.right()){
-          this.blt.write('r\n');
-        }
-
-        if(joystick.left()){
-          this.blt.write('l\n');
-        }
-
-        if(joystick.up()){
-          this.blt.write('f\n');
-        }
-
-        if(joystick.down()){
-          this.blt.write('b\n');
-        }
-
-      },260);
-    })
+    });
   }
 
-  ionViewWillLeave(){
+  ionViewWillLeave() {
     this.scr.lock(this.scr.ORIENTATIONS.PORTRAIT);
     //clearInterval(this.interval);
   }
@@ -72,16 +47,35 @@ export class VirtualControllerPage {
     console.log('ionViewDidLoad VirtualControllerPage');
   }
 
-  /**
-   * Map rage function 
-   * @param value value to map
-   * @param low1 lower range that value is
-   * @param high1 higher ranger that value is
-   * @param low2 lower range that value will be
-   * @param high2 higher range tha value will be
-   */
-  map_range(value, low1, high1, low2, high2) {
-    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+  sendMov(cmd: string) {
+    console.log(this.isDisabled);
+    if (!this.isDisabled) {
+      this.isDisabled = true;
+      setTimeout(() => {
+        this.blt.write(cmd).then(() => {
+          setTimeout(() => {
+            console.log('disabled button');
+            this.isDisabled = false;
+          }, 150);
+        });
+      }, 500);
+    }
+
+  }
+
+  buzinar() {
+    const file: MediaObject = this.media.create('/android_asset/www/assets/sounds/carhornx.mp3',
+      (status) => console.log(status),
+      () => console.log('Action is successful.'),
+      (error) => console.error(error.message));
+
+    setTimeout(() => {
+      file.play();
+    }, 400);
+
+    setTimeout(() => {
+      file.release();
+    }, 2300);
   }
 
 }
