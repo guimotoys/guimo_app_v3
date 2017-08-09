@@ -76,11 +76,13 @@ export class FoodsPage {
   }
 
   giveFood(id:number){
+    
     if(this.guimo.food <= 0){
       this.guimo.checkFoodStatus();
     }
 
     if(this.guimo.food < 100){
+      this.guimo.vibrateFast();
       if(id == 1){
         this.blt.write(Guimo.SCREEN_FRIES);
         this.guimo.addFood(8);

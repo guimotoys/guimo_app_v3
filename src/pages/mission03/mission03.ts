@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, Events } from 'io
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { GuimoDb } from './../../providers/guimo-db';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { Guimo } from "../../providers/guimo";
 declare var Blockly: any;
 /**
  * Generated class for the Mission03Page page.
@@ -34,7 +35,8 @@ export class Mission03Page {
     private screenOrientation: ScreenOrientation,
     private alertCtrl: AlertController,
     private evt: Events,
-    private guimoDb: GuimoDb) {
+    private guimoDb: GuimoDb,
+    private guimo: Guimo) {
     this.evt.subscribe('guimo:continue', (data) => {
       if (data == true) {
         this.spinHide = true;
@@ -129,7 +131,12 @@ export class Mission03Page {
 
       if (codes.length == 1) {
         this.spinHide = false;
-        this.blt.write('pocao1\n').then(() => { console.log('enviado coracao1') });
+        this.blt.write('pocao1\n').then(() => {
+          console.log('enviado pocao1')
+          setTimeout(() => {
+            this.guimo.vibrateFast();
+          }, 700);
+        });
         this.pocao = 1;
       }
 
@@ -139,7 +146,12 @@ export class Mission03Page {
 
       if (codes.length == 2) {
         this.spinHide = false;
-        this.blt.write('pocao2\n').then(() => { console.log('enviado coracao2') });
+        this.blt.write('pocao2\n').then(() => {
+          console.log('enviado coracao2');
+          setTimeout(() => {
+            this.guimo.vibrateFast();
+          }, 700)
+        });
         this.pocao = 2;
       }
 
@@ -148,13 +160,23 @@ export class Mission03Page {
     if (!isNaN(repeatQtd)) {
       console.log(repeatQtd);
       if (repeatQtd == 1) {
-        this.blt.write('pocao1\n').then(() => { console.log('enviado pocao1') });
+        this.blt.write('pocao1\n').then(() => {
+          console.log('enviado pocao1');
+          setTimeout(() => {
+            this.guimo.vibrateFast();
+          }, 700)
+        });
         this.pocao = 1;
         this.spinHide = false;
       }
       if (repeatQtd == 2) {
         this.pocao = 2;
-        this.blt.write('pocao2\n').then(() => { console.log('enviado pocao2') });
+        this.blt.write('pocao2\n').then(() => {
+          console.log('enviado pocao2');
+          setTimeout(() => {
+            this.guimo.vibrateFast();
+          }, 700)
+        });
         this.spinHide = false;
       }
 
@@ -162,7 +184,12 @@ export class Mission03Page {
         this.pocao = 3;
         this.final = true;
         this.spinHide = false;
-        this.blt.write('pocao3\n').then(() => { console.log('enviando pocao3') });
+        this.blt.write('pocao3\n').then(() => {
+          console.log('enviando pocao3');
+          setTimeout(() => {
+            this.guimo.vibrateFast();
+          }, 700)
+        });
         //Atualiza missão 3 pra status 2 (concluída)
         this.guimoDb.updateMissions(3, 2);
         //atualiza próxima missão para status 1 (liberada)
@@ -175,7 +202,7 @@ export class Mission03Page {
           setTimeout(() => {
             this.hidePage = false;
             console.log('Mostra medalha');
-          }, 500);
+          }, 700);
         }, 4000);
 
       }

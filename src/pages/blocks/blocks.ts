@@ -82,7 +82,7 @@ export class BlocksPage {
     //splitIf.splice(splitIf[splitIf.length - 1],1);
     //console.log(splitIf);
 
-  
+
     /** Tem If */
     if (splitIf.length == 2) {
       let codeHelper = splitIf[1].split('else:');
@@ -91,27 +91,27 @@ export class BlocksPage {
       let cond = codeIf[0];
 
       codeIf.splice(codeIf.length - 1, 1);
-      codeIf.splice(0,1);
+      codeIf.splice(0, 1);
       codeElse.splice(codeElse.length - 1, 1);
       qtd = parseInt(codeElse[codeElse.length - 1]);
-      
+
       if (isNaN(qtd)) {
         qtd = 1;
       } else {
         codeElse.splice(codeElse.length - 1, 1);
       }
-      console.log(codeIf,codeElse);
+      console.log(codeIf, codeElse);
 
       /** Roda blocos de acordo com multiplicador de correção */
-    /** Multiplicador é numero que determina o tempo que cada bloco será executado*/
-    this.runCodeWithIf(splitIf, cond, codeIf, codeElse, qtd)
+      /** Multiplicador é numero que determina o tempo que cada bloco será executado*/
+      this.runCodeWithIf(splitIf, cond, codeIf, codeElse, qtd)
 
-     // Não tem If 
-  } else {
-    codes.splice(codes.length - 1, 1);
-    this.cleanArrayCode(codes);
-    this.runCodeWithoutIf(codes);
-  }
+      // Não tem If 
+    } else {
+      codes.splice(codes.length - 1, 1);
+      this.cleanArrayCode(codes);
+      this.runCodeWithoutIf(codes);
+    }
 
     codes = this.cleanArrayCode(codes);
 
@@ -155,12 +155,14 @@ export class BlocksPage {
       }
 
 
+      this.guimo.vibrateFast();
       for (var n = 0; n < arrayCodeRun.length; n++) {
         this.runCodeSleepLoop(n, arrayCodeRun[n], 500);
       };
     }
 
     if (isNaN(repeatQtd)) {
+      this.guimo.vibrateFast();
       for (var n = 0; n < codes.length; n++) {
         this.runCodeSleepLoop(n, codes[n], 500);
       }
@@ -186,6 +188,7 @@ export class BlocksPage {
           }
         }
 
+        this.guimo.vibrateFast();
         for (var n = 0; n < arrayCodeRun.length; n++) {
           this.runCodeSleepLoop(n, arrayCodeRun[n], 500);
         };
@@ -198,6 +201,7 @@ export class BlocksPage {
           }
         }
 
+        this.guimo.vibrateFast();
         for (var n = 0; n < arrayCodeRun.length; n++) {
           this.runCodeSleepLoop(n, arrayCodeRun[n], 500);
         }
@@ -221,6 +225,7 @@ export class BlocksPage {
           }
         }
 
+        this.guimo.vibrateFast();
         for (var n = 0; n < arrayCodeRun.length; n++) {
           this.runCodeSleepLoop(n, arrayCodeRun[n], 500);
         };
@@ -234,6 +239,7 @@ export class BlocksPage {
           }
         }
 
+        this.guimo.vibrateFast();
         for (var n = 0; n < arrayCodeRun.length; n++) {
           this.runCodeSleepLoop(n, arrayCodeRun[n], 500);
         };

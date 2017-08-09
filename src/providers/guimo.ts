@@ -370,4 +370,32 @@ export class Guimo {
     this.events.publish('guimo:health', this.health);
   }
 
+  public segueFaixa(){
+    this.bluetoothSerial.write('segue\n');
+  }
+
+  public vibrate() {
+    this.bluetoothSerial.write('vib\n').then(() => {
+      setTimeout(() => {
+        this.bluetoothSerial.write('paravib\n');
+      }, 200);
+    });
+  }
+
+  public vibrateFast() {
+    this.bluetoothSerial.write('vib\n').then(() => {
+      setTimeout(() => {
+        this.bluetoothSerial.write('paravib\n');
+      }, 200);
+    });
+
+    setTimeout(() => {
+      this.bluetoothSerial.write('vib\n').then(() => {
+        setTimeout(() => {
+          this.bluetoothSerial.write('paravib\n');
+        }, 600);
+      });
+    }, 300)
+  }
+
 }

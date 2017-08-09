@@ -66,6 +66,7 @@ export class ScreenChangePage {
   }
 
   sendScreen(id:number){
+    this.guimo.vibrateFast();
     switch(id){
       case 1:
         this.blt.write(Guimo.SCREEN_DEFAULT).then(() =>{

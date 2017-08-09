@@ -95,4 +95,8 @@ export class HomeMenuComponent implements OnInit{
         this.nav.push(MissionsPage);
       }
   }
+
+  segueFaixa(){
+    this.guimo.segueFaixa();
+  }
 }

@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController, Events } from 'ionic-angular
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { GuimoDb } from './../../providers/guimo-db';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial';
+import { Guimo } from "../../providers/guimo";
 declare var Blockly: any;
 
 /*
@@ -54,7 +55,8 @@ export class Mission01Page {
     private screenOrientation: ScreenOrientation,
     private alertCtrl: AlertController,
     private evt: Events,
-    private guimoDb: GuimoDb) {
+    private guimoDb: GuimoDb,
+    private guimo: Guimo) {
     this.evt.subscribe('guimo:continue', (data) => {
       if (data == true) {
         this.spinHide = true;
@@ -71,7 +73,7 @@ export class Mission01Page {
           }, 1000);
         }
 
-        if(this.secndRun){
+        if (this.secndRun) {
           this.overlayMsg = "";
           this.overlayTitle = "Dica";
           this.overlayImg = "assets/imgs/tutorial1_4.jpg"
@@ -81,7 +83,7 @@ export class Mission01Page {
           }, 700);
         }
 
-        if(this.final){
+        if (this.final) {
           this.overlayMsg = "<i class='fa fa-smile-o' color='secondary'></i> Você concluiu a primeira missão!!";
           this.overlayTitle = "Parabéns";
           this.overlayImg = "assets/imgs/medalha_hq.jpg"
@@ -179,7 +181,7 @@ export class Mission01Page {
   }
 
   runCode() {
-
+    
     Blockly.JavaScript.addReservedWords('code');
     var code = Blockly.JavaScript.workspaceToCode(this.workspace);
     let codes = code.split(',');
@@ -194,7 +196,12 @@ export class Mission01Page {
 
       if (codes.length == 1 && this.firstRun) {
         /**/
-        this.blt.write('coracao1\n').then(() => { console.log('enviado coracao1') });
+        this.blt.write('coracao1\n').then(() => { 
+          console.log('enviado coracao1') 
+          setTimeout(()=>{
+            this.guimo.vibrateFast();
+          },500)
+        });
         this.spinHide = false;
       }
 
@@ -202,10 +209,15 @@ export class Mission01Page {
         this.secndRun = true;
         this.firstRun = false;
         this.spinHide = false;
-        this.blt.write('coracao2\n').then(() => { console.log('enviado coracao2') });
+        this.blt.write('coracao2\n').then(() => { 
+          console.log('enviado coracao2'); 
+          setTimeout(()=>{
+            this.guimo.vibrateFast();
+          },500)
+        });
         this.toolbox.innerHTML += '<block type="guimo_repeat_m1" colour="210"></block>';
         this.workspace.updateToolbox(this.toolbox);
-        
+
       }
 
     }
@@ -214,7 +226,12 @@ export class Mission01Page {
       this.secndRun = false;
       this.firstRun = false;
       if (repeatQtd == 1) {
-        this.blt.write('coracao1\n').then(() => { console.log('enviando coracao1') });
+        this.blt.write('coracao1\n').then(() => { 
+          console.log('enviando coracao1');
+          setTimeout(()=>{
+            this.guimo.vibrateFast();
+          },500)
+        });
         this.overlayMsg = "<i class='fa fa-frown-o' color='danger'></i>  O Guimo precisa bater o coração 3 vezes";
         this.overlayTitle = "Oops";
         this.overlayImg = "";
@@ -224,7 +241,12 @@ export class Mission01Page {
       }
 
       if (repeatQtd == 2) {
-        this.blt.write('coracao2\n').then(() => { console.log('enviando coracao2') });
+        this.blt.write('coracao2\n').then(() => { 
+          console.log('enviando coracao2'); 
+          setTimeout(()=>{
+            this.guimo.vibrateFast();
+          },500)
+        });
         this.overlayMsg = "Não parece correto <i class='fa fa-frown-o' color='danger'></i> <br> O Guimo precisa bater o coração 3 vezes";
         this.overlayTitle = "Oops";
         this.overlayImg = ""
@@ -234,14 +256,19 @@ export class Mission01Page {
       }
 
       if (repeatQtd > 2) {
-        
+
         this.spinHide = false;
-        this.blt.write('coracao3\n').then(() => { console.log('enviando coracao3') });
-        
+        this.blt.write('coracao3\n').then(() => { 
+          console.log('enviando coracao3');
+          setTimeout(()=>{
+            this.guimo.vibrateFast();
+          },500)
+        });
+
         this.guimoDb.updateMissions(2, 1).then(() => {
           this.final = true;
           this.guimoDb.updateMissions(1, 2);
-          this.style = { width: '35%', height: '70%' };          
+          this.style = { width: '35%', height: '70%' };
         });
       }
 
