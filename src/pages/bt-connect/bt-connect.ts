@@ -167,6 +167,19 @@ export class BtConnectPage {
           if(bdata == "continue\r\n"){
             this.events.publish("guimo:continue",true);
           }
+
+          if(bdata == "sensorD\r\n"){
+            this.events.publish('guimo:if', 'sensord');
+          }
+          if(bdata == "sensorE\r\n"){
+            this.events.publish('guimo:if', 'sensore');
+          }
+          if(bdata == "ambos\r\n"){
+            this.events.publish('guimo:if', 'ambos');
+          }
+          if(bdata == "nenhum\r\n"){
+            this.events.publish('guimo:if', 'nenhum');
+          }
         });
         setTimeout(() => {
           if (this.cheatCount < 5) {

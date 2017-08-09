@@ -43,7 +43,8 @@ export class Guimo {
   private _energy: number = 100;
   private _food: number = 100;
   private _activeScreen: string = Guimo.SCREEN_DEFAULT;
-  private _menuOptions: boolean = false;
+  //Open the menu options
+  private _menuOptions: boolean = true;
   public foodNotif: boolean = false;
   public energyNotif: boolean = false;
   public healthNotif: boolean = false;

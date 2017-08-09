@@ -73,7 +73,7 @@ Blockly.JavaScript['ifelse_guimo'] = function(block) {
   var statements_se = Blockly.JavaScript.statementToCode(block, 'Se');
   var statements_senao = Blockly.JavaScript.statementToCode(block, 'Senao');
   // TODO: Assemble JavaScript into code variable.
-  var code = "cond:"+dropdown_ifcond+", if:"+ statements_se+", else:"+ statements_senao+",";
+  var code = "if:"+dropdown_ifcond+","+statements_se+",else:"+statements_senao+",";
   //var code = statements_se;
   
   return code;

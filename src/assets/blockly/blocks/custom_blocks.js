@@ -129,7 +129,7 @@ Blockly.Blocks['ifelse_guimo'] = {
         .setCheck(null)
         .setAlign(Blockly.ALIGN_RIGHT)
         .appendField("Se")
-        .appendField(new Blockly.FieldDropdown([["INFRA_D","infrad"], ["INFRA_E","infrae"], ["AMBOS","ambos"]]), "ifcond");
+        .appendField(new Blockly.FieldDropdown([["Sensor D","sensord"], ["Sensor E","sensore"], ["AMBOS","ambos"], ["NENHUM","nenhum"]]), "ifcond");
     this.appendStatementInput("Senao")
         .setCheck(null)
         .appendField("senão");
